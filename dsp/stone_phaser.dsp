@@ -1,6 +1,6 @@
 declare name "Stone Phaser";
 declare author "Jean Pierre Cimalando";
-declare version "1.2.1";
+declare version "1.2.2";
 declare license "CC0-1.0";
 
 // Référence :
@@ -15,14 +15,14 @@ import("stdfaust.lib");
 /////////////
 
 bypass = checkbox("[0] Bypass");
-lfotype = hslider("[1] Color", 1, 0, 1, 1);
-lf = hslider("[2] LFO frequency [unit:Hz] [scale:log]", 0.2, 0.01, 5., 0.01) : si.smoo;
-fb = hslider("[3] Feedback depth [unit:%]", 75, 0, 99, 1) : *(0.01) : si.smoo;
-fbHf = hslider("[4] Feedback bass cut [unit:Hz] [scale:log]", 500., 10., 5000., 1.) : si.smoo;
+color = hslider("[1] Color", 1, 0, 1, 1);
+lf = hslider("[2] LFO frequency [unit:Hz] [scale:log]", 0.2, 0.01, 5., 0.01) : tsmooth;
+fb = hslider("[3] Feedback depth [unit:%]", 75, 0, 99, 1) : *(0.01) : tsmooth;
+fbHf = hslider("[4] Feedback bass cut [unit:Hz] [scale:log]", 500., 10., 5000., 1.) : tsmooth;
 dw = hslider("[5] Dry/wet mix [unit:%]", 50, 0, 100, 1) : *(0.01);
-w = sin(dw*(ma.PI/2)) : si.smoo;
-d = cos(dw*(ma.PI/2)) : si.smoo;
-ph = hslider("[6] Stereo phase [unit:deg]", 45., 0., 359., 1.) : /(360.) : si.smoo;
+w = sin(dw*(ma.PI/2)) : tsmooth;
+d = cos(dw*(ma.PI/2)) : tsmooth;
+ph = hslider("[6] Stereo phase [unit:deg]", 45., 0., 359., 1.) : /(360.) : tsmooth;
 
 //////////////////////////
 // All-pass filter unit //
@@ -48,6 +48,12 @@ lowpass1(f) = fi.iir((1.-p), (-p)) with {
   p = exp(-2.*ma.PI*f/ma.SR);
 };
 
+////////////////////////////////////////////
+// Smooth filter with fixed time constant //
+////////////////////////////////////////////
+
+tsmooth = si.smooth(ba.tau2pole(t)) with { t = 100e-3; };
+
 //////////
 // LFOs //
 //////////
@@ -68,15 +74,19 @@ lfoAnalogTriangle(roundness, pos, y1, y2) = val*(y2-y1)+y1 with {
 // Phaser //
 ////////////
 
-mono_phaser(x, lfo_pos) = ba.if(bypass, x, dry + wet) with {
+mono_phaser(x, lfo_pos) = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet) with {
   dry = x*d;
   wet = (x <: highpass1(33.0) : (+:a1:a2:a3:a4)~feedback)*w;
 
-  feedback = highpass1(fbHf) : *(ba.if(lfotype, fb, 0.1*fb));
+  fadeBypass = bypass : tsmooth;
 
-  modFreq = ba.midikey2hz(ba.if(lfotype,
-                                lfoAnalogTriangle(0.95, lfo_pos, ba.hz2midikey(80.), ba.hz2midikey(2200.)),
-                                lfoAnalogTriangle(0.95, lfo_pos, ba.hz2midikey(300.), ba.hz2midikey(6000.))));
+  colorFb = ba.if(color, fb, 0.1*fb) : tsmooth;
+  feedback = highpass1(fbHf) : *(colorFb);
+
+  lfoLoF = ba.if(color, ba.hz2midikey(80.), ba.hz2midikey(300.)) : tsmooth;
+  lfoHiF = ba.if(color, ba.hz2midikey(2200.), ba.hz2midikey(6000.)) : tsmooth;
+
+  modFreq = ba.midikey2hz(lfoAnalogTriangle(0.95, lfo_pos, lfoLoF, lfoHiF));
 
   a1 = allpass1(modFreq);
   a2 = allpass1(modFreq);
