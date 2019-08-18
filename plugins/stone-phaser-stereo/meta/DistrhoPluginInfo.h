@@ -9,7 +9,7 @@
 #pragma once
 
 #define DISTRHO_PLUGIN_BRAND "Jean Pierre Cimalando"
-#define DISTRHO_PLUGIN_NAME "stone-phaser-stereo"
+#define DISTRHO_PLUGIN_NAME "Stone phaser stereo"
 #define DISTRHO_PLUGIN_URI "http://jpcima.sdf1.org/lv2/stone-phaser-stereo"
 
 #define DISTRHO_PLUGIN_HAS_UI 0
