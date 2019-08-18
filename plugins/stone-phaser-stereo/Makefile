@@ -12,8 +12,33 @@ BINDIR ?= $(PREFIX)/bin
 LIBDIR ?= $(PREFIX)/lib
 DSSI_DIR ?= $(LIBDIR)/dssi
 LADSPA_DIR ?= $(LIBDIR)/ladspa
+ifneq ($(MACOS_OR_WINDOWS),true)
 LV2_DIR ?= $(LIBDIR)/lv2
 VST_DIR ?= $(LIBDIR)/vst
+endif
+ifeq ($(MACOS),true)
+LV2_DIR ?= /Library/Audio/Plug-Ins/LV2
+VST_DIR ?= /Library/Audio/Plug-Ins/VST
+endif
+ifeq ($(WINDOWS),true)
+LV2_DIR ?= $(COMMONPROGRAMFILES)/LV2
+VST_DIR ?= $(COMMONPROGRAMFILES)/VST2
+endif
+
+USER_DSSI_DIR ?= $(HOME)/.dssi
+USER_LADSPA_DIR ?= $(HOME)/.ladspa
+ifneq ($(MACOS_OR_WINDOWS),true)
+USER_LV2_DIR ?= $(HOME)/.lv2
+USER_VST_DIR ?= $(HOME)/.vst
+endif
+ifeq ($(MACOS),true)
+USER_LV2_DIR ?= $(HOME)/Library/Audio/Plug-Ins/LV2
+USER_VST_DIR ?= $(HOME)/Library/Audio/Plug-Ins/VST
+endif
+ifeq ($(WINDOWS),true)
+USER_LV2_DIR ?= $(APPDATA)/LV2
+USER_VST_DIR ?= $(APPDATA)/VST
+endif
 
 # --------------------------------------------------------------
 # Project name, used for binaries
@@ -64,9 +89,11 @@ endif
 endif
 
 ifeq ($(BUILD_DSSI),true)
+ifneq ($(MACOS_OR_WINDOWS),true)
 ifeq ($(HAVE_DGL),true)
 ifeq ($(HAVE_LIBLO),true)
 TARGETS += dssi
+endif
 endif
 endif
 endif
@@ -79,7 +106,13 @@ all: $(TARGETS)
 
 install: all
 ifeq ($(BUILD_DSSI),true)
+ifneq ($(MACOS_OR_WINDOWS),true)
+ifeq ($(HAVE_DGL),true)
+ifeq ($(HAVE_LIBLO),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(DESTDIR)$(DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
+endif
+endif
+endif
 endif
 ifeq ($(BUILD_LADSPA),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) $(DESTDIR)$(LADSPA_DIR)/$(NAME)-ladspa$(LIB_EXT)
@@ -100,7 +133,13 @@ endif
 
 install-user: all
 ifeq ($(BUILD_DSSI),true)
+ifneq ($(MACOS_OR_WINDOWS),true)
+ifeq ($(HAVE_DGL),true)
+ifeq ($(HAVE_LIBLO),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(USER_DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
+endif
+endif
+endif
 endif
 ifeq ($(BUILD_LADSPA),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) $(USER_LADSPA_DIR)/$(NAME)-ladspa$(LIB_EXT)
