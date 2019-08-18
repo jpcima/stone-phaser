@@ -79,49 +79,43 @@ all: $(TARGETS)
 
 install: all
 ifeq ($(BUILD_DSSI),true)
-	@install -d $(DESTDIR)$(DSSI_DIR)
-	@install -m 755 -t $(DESTDIR)$(DSSI_DIR) $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(DESTDIR)$(DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
 ifeq ($(BUILD_LADSPA),true)
-	@install -d $(DESTDIR)$(LADSPA_DIR)
-	@install -m 755 -t $(DESTDIR)$(LADSPA_DIR) $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) $(DESTDIR)$(LADSPA_DIR)/$(NAME)-ladspa$(LIB_EXT)
 endif
 ifeq ($(BUILD_VST2),true)
-	@install -d $(DESTDIR)$(VST_DIR)
-	@install -m 755 -t $(DESTDIR)$(VST_DIR) $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) $(DESTDIR)$(VST_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -d $(DESTDIR)$(LV2_DIR)
-	@cp -rf $(TARGET_DIR)/$(NAME).lv2 $(DESTDIR)$(LV2_DIR)
+	@install -dm755 $(DESTDIR)$(LV2_DIR)/$(NAME).lv2 && \
+		install -m644 $(TARGET_DIR)/$(NAME).lv2/*.ttl $(DESTDIR)$(LV2_DIR)/$(NAME).lv2 && \
+		install -m755 $(TARGET_DIR)/$(NAME).lv2/*.so $(DESTDIR)$(LV2_DIR)/$(NAME).lv2
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
-	@install -d $(DESTDIR)$(BINDIR)
-	@install -m 755 -t $(DESTDIR)$(BINDIR) $(TARGET_DIR)/$(NAME)$(APP_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)$(APP_EXT) $(DESTDIR)$(BINDIR)/$(NAME)$(APP_EXT)
 endif
 endif
 
 install-user: all
 ifeq ($(BUILD_DSSI),true)
-	@install -d $(HOME)/.dssi
-	@install -m 755 -t $(HOME)/.dssi $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(USER_DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
 ifeq ($(BUILD_LADSPA),true)
-	@install -d $(HOME)/.ladspa
-	@install -m 755 -t $(HOME)/.ladspa $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) $(USER_LADSPA_DIR)/$(NAME)-ladspa$(LIB_EXT)
 endif
 ifeq ($(BUILD_VST2),true)
-	@install -d $(HOME)/.vst
-	@install -m 755 -t $(HOME)/.vst $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) $(USER_VST_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -d $(HOME)/.lv2
-	@cp -rf $(TARGET_DIR)/$(NAME).lv2 $(HOME)/.lv2
+	@install -dm755 $(USER_LV2_DIR)/$(NAME).lv2 && \
+		install -m644 $(TARGET_DIR)/$(NAME).lv2/*.ttl $(USER_LV2_DIR)/$(NAME).lv2 && \
+		install -m755 $(TARGET_DIR)/$(NAME).lv2/*.so $(USER_LV2_DIR)/$(NAME).lv2
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
-	@install -d $(HOME)/bin
-	@install -m 755 -t $(HOME)/bin $(TARGET_DIR)/$(NAME)$(APP_EXT)
+	@install -Dm755 $(TARGET_DIR)/$(NAME)$(APP_EXT) $(HOME)/bin/$(NAME)$(APP_EXT)
 endif
 endif
 
