@@ -79,41 +79,49 @@ all: $(TARGETS)
 
 install: all
 ifeq ($(BUILD_DSSI),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) -t $(DESTDIR)$(DSSI_DIR)
+	@install -d $(DESTDIR)$(DSSI_DIR)
+	@install -m 755 -t $(DESTDIR)$(DSSI_DIR) $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
 ifeq ($(BUILD_LADSPA),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) -t $(DESTDIR)$(LADSPA_DIR)
+	@install -d $(DESTDIR)$(LADSPA_DIR)
+	@install -m 755 -t $(DESTDIR)$(LADSPA_DIR) $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT)
 endif
 ifeq ($(BUILD_VST2),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) -t $(DESTDIR)$(VST_DIR)
+	@install -d $(DESTDIR)$(VST_DIR)
+	@install -m 755 -t $(DESTDIR)$(VST_DIR) $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -dm755 $(DESTDIR)$(LV2_DIR) && \
-		cp -rf $(TARGET_DIR)/$(NAME).lv2 $(DESTDIR)$(LV2_DIR)
+	@install -d $(DESTDIR)$(LV2_DIR)
+	@cp -rf $(TARGET_DIR)/$(NAME).lv2 $(DESTDIR)$(LV2_DIR)
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)$(APP_EXT) -t $(DESTDIR)$(BINDIR)
+	@install -d $(DESTDIR)$(BINDIR)
+	@install -m 755 -t $(DESTDIR)$(BINDIR) $(TARGET_DIR)/$(NAME)$(APP_EXT)
 endif
 endif
 
 install-user: all
 ifeq ($(BUILD_DSSI),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) -t $(HOME)/.dssi
+	@install -d $(HOME)/.dssi
+	@install -m 755 -t $(HOME)/.dssi $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
 ifeq ($(BUILD_LADSPA),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT) -t $(HOME)/.ladspa
+	@install -d $(HOME)/.ladspa
+	@install -m 755 -t $(HOME)/.ladspa $(TARGET_DIR)/$(NAME)-ladspa$(LIB_EXT)
 endif
 ifeq ($(BUILD_VST2),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) -t $(HOME)/.vst
+	@install -d $(HOME)/.vst
+	@install -m 755 -t $(HOME)/.vst $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -dm755 $(HOME)/.lv2 && \
-		cp -rf $(TARGET_DIR)/$(NAME).lv2 $(HOME)/.lv2
+	@install -d $(HOME)/.lv2
+	@cp -rf $(TARGET_DIR)/$(NAME).lv2 $(HOME)/.lv2
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
-	@install -Dm755 $(TARGET_DIR)/$(NAME)$(APP_EXT) -t $(HOME)/bin
+	@install -d $(HOME)/bin
+	@install -m 755 -t $(HOME)/bin $(TARGET_DIR)/$(NAME)$(APP_EXT)
 endif
 endif
 
