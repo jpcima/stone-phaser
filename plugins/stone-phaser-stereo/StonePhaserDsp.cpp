@@ -1317,7 +1317,13 @@ namespace mydsp_meta {
 	FMSTATIC constexpr scale_t active_scale[] = {scale_t::linear, scale_t::linear, scale_t::log, scale_t::linear, scale_t::log, scale_t::linear, scale_t::linear};
 	FMSTATIC const char *const active_tooltip[] = {u8"", u8"", u8"", u8"", u8"", u8"", u8""};
 
-	FMSTATIC const metadata_t *const active_metadata[] = {(metadata_t[]){}, (metadata_t[]){}, (metadata_t[]){{u8"scale", u8"log"}, {u8"unit", u8"Hz"}}, (metadata_t[]){{u8"unit", u8"%"}}, (metadata_t[]){{u8"scale", u8"log"}, {u8"unit", u8"Hz"}}, (metadata_t[]){{u8"unit", u8"%"}}, (metadata_t[]){{u8"unit", u8"deg"}}};
+	FMSTATIC const metadata_t active_metadata_2[] = {{u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
+	FMSTATIC const metadata_t active_metadata_3[] = {{u8"unit", u8"%"}};
+	FMSTATIC const metadata_t active_metadata_4[] = {{u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
+	FMSTATIC const metadata_t active_metadata_5[] = {{u8"unit", u8"%"}};
+	FMSTATIC const metadata_t active_metadata_6[] = {{u8"unit", u8"deg"}};
+
+	FMSTATIC const metadata_t *const active_metadata[] = {nullptr, nullptr, active_metadata_2, active_metadata_3, active_metadata_4, active_metadata_5, active_metadata_6};
 	FMSTATIC constexpr std::size_t active_metadata_size[] = {0, 0, 2, 1, 2, 1, 1};
 
 	FMSTATIC inline void active_set(FAUSTCLASS &x, unsigned idx, FAUSTFLOAT v) { *(FAUSTFLOAT *)((char *)&x + active_offsets[idx]) = v; }
