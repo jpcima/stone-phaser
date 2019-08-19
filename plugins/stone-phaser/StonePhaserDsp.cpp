@@ -363,21 +363,27 @@ class mydsp : public dsp {
 	virtual void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("Stone Phaser");
 		ui_interface->declare(&fCheckbox0, "0", "");
+		ui_interface->declare(&fCheckbox0, "md.symbol", "bypass");
 		ui_interface->addCheckButton("Bypass", &fCheckbox0);
 		ui_interface->declare(&fHslider1, "1", "");
+		ui_interface->declare(&fHslider1, "md.symbol", "color");
 		ui_interface->addHorizontalSlider("Color", &fHslider1, 1.0f, 0.0f, 1.0f, 1.0f);
 		ui_interface->declare(&fHslider3, "2", "");
+		ui_interface->declare(&fHslider3, "md.symbol", "lfo_frequency");
 		ui_interface->declare(&fHslider3, "scale", "log");
 		ui_interface->declare(&fHslider3, "unit", "Hz");
 		ui_interface->addHorizontalSlider("LFO frequency", &fHslider3, 0.200000003f, 0.00999999978f, 5.0f, 0.00999999978f);
 		ui_interface->declare(&fHslider0, "3", "");
+		ui_interface->declare(&fHslider0, "md.symbol", "feedback_depth");
 		ui_interface->declare(&fHslider0, "unit", "%");
 		ui_interface->addHorizontalSlider("Feedback depth", &fHslider0, 75.0f, 0.0f, 99.0f, 1.0f);
 		ui_interface->declare(&fHslider2, "4", "");
+		ui_interface->declare(&fHslider2, "md.symbol", "feedback_hpf_cutoff");
 		ui_interface->declare(&fHslider2, "scale", "log");
 		ui_interface->declare(&fHslider2, "unit", "Hz");
 		ui_interface->addHorizontalSlider("Feedback bass cut", &fHslider2, 500.0f, 10.0f, 5000.0f, 1.0f);
 		ui_interface->declare(&fHslider4, "5", "");
+		ui_interface->declare(&fHslider4, "md.symbol", "mix");
 		ui_interface->declare(&fHslider4, "unit", "%");
 		ui_interface->addHorizontalSlider("Dry/wet mix", &fHslider4, 50.0f, 0.0f, 100.0f, 1.0f);
 		ui_interface->closeBox();
@@ -1074,7 +1080,7 @@ namespace mydsp_meta {
 	FMSTATIC constexpr active_type_t active_type[] = {active_type_t::checkbox, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider};
 	FMSTATIC constexpr int active_id[] = {1, 2, 3, 4, 5, 6};
 	FMSTATIC const char *const active_label[] = {u8"Bypass", u8"Color", u8"LFO frequency", u8"Feedback depth", u8"Feedback bass cut", u8"Dry/wet mix"};
-	FMSTATIC const char *const active_symbol[] = {u8"Bypass", u8"Color", u8"LFO_frequency", u8"Feedback_depth", u8"Feedback_bass_cut", u8"Dry_wet_mix"};
+	FMSTATIC const char *const active_symbol[] = {u8"bypass", u8"color", u8"lfo_frequency", u8"feedback_depth", u8"feedback_hpf_cutoff", u8"mix"};
 	FMSTATIC const std::size_t active_offsets[] = {(size_t)&((FAUSTCLASS *)0)->fCheckbox0, (size_t)&((FAUSTCLASS *)0)->fHslider1, (size_t)&((FAUSTCLASS *)0)->fHslider3, (size_t)&((FAUSTCLASS *)0)->fHslider0, (size_t)&((FAUSTCLASS *)0)->fHslider2, (size_t)&((FAUSTCLASS *)0)->fHslider4};
 	FMSTATIC constexpr FAUSTFLOAT active_init[] = {0, 1, 0.2, 75, 500, 50};
 	FMSTATIC constexpr FAUSTFLOAT active_min[] = {0, 0, 0.01, 0, 10, 0};
@@ -1085,13 +1091,15 @@ namespace mydsp_meta {
 	FMSTATIC constexpr scale_t active_scale[] = {scale_t::linear, scale_t::linear, scale_t::log, scale_t::linear, scale_t::log, scale_t::linear};
 	FMSTATIC const char *const active_tooltip[] = {u8"", u8"", u8"", u8"", u8"", u8""};
 
-	FMSTATIC const metadata_t active_metadata_2[] = {{u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
-	FMSTATIC const metadata_t active_metadata_3[] = {{u8"unit", u8"%"}};
-	FMSTATIC const metadata_t active_metadata_4[] = {{u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
-	FMSTATIC const metadata_t active_metadata_5[] = {{u8"unit", u8"%"}};
+	FMSTATIC const metadata_t active_metadata_0[] = {{u8"md.symbol", u8"bypass"}};
+	FMSTATIC const metadata_t active_metadata_1[] = {{u8"md.symbol", u8"color"}};
+	FMSTATIC const metadata_t active_metadata_2[] = {{u8"md.symbol", u8"lfo_frequency"}, {u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
+	FMSTATIC const metadata_t active_metadata_3[] = {{u8"md.symbol", u8"feedback_depth"}, {u8"unit", u8"%"}};
+	FMSTATIC const metadata_t active_metadata_4[] = {{u8"md.symbol", u8"feedback_hpf_cutoff"}, {u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
+	FMSTATIC const metadata_t active_metadata_5[] = {{u8"md.symbol", u8"mix"}, {u8"unit", u8"%"}};
 
-	FMSTATIC const metadata_t *const active_metadata[] = {nullptr, nullptr, active_metadata_2, active_metadata_3, active_metadata_4, active_metadata_5};
-	FMSTATIC constexpr std::size_t active_metadata_size[] = {0, 0, 2, 1, 2, 1};
+	FMSTATIC const metadata_t *const active_metadata[] = {active_metadata_0, active_metadata_1, active_metadata_2, active_metadata_3, active_metadata_4, active_metadata_5};
+	FMSTATIC constexpr std::size_t active_metadata_size[] = {1, 1, 3, 2, 3, 2};
 
 	FMSTATIC inline void active_set(FAUSTCLASS &x, unsigned idx, FAUSTFLOAT v) { *(FAUSTFLOAT *)((char *)&x + active_offsets[idx]) = v; }
 	FMSTATIC inline FAUSTFLOAT active_get(const FAUSTCLASS &x, unsigned idx) { return *(const FAUSTFLOAT *)((const char *)&x + active_offsets[idx]); }
