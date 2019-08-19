@@ -121,9 +121,8 @@ ifeq ($(BUILD_VST2),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) $(DESTDIR)$(VST_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -dm755 $(DESTDIR)$(LV2_DIR)/$(NAME).lv2 && \
-		install -m644 $(TARGET_DIR)/$(NAME).lv2/*.ttl $(DESTDIR)$(LV2_DIR)/$(NAME).lv2 && \
-		install -m755 $(TARGET_DIR)/$(NAME).lv2/*.so $(DESTDIR)$(LV2_DIR)/$(NAME).lv2
+	@install -dm755 $(DESTDIR)$(LV2_DIR) && \
+		cp -rfd $(TARGET_DIR)/$(NAME).lv2 $(DESTDIR)$(LV2_DIR)
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
@@ -148,9 +147,8 @@ ifeq ($(BUILD_VST2),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-vst$(LIB_EXT) $(USER_VST_DIR)/$(NAME)-vst$(LIB_EXT)
 endif
 ifeq ($(BUILD_LV2),true)
-	@install -dm755 $(USER_LV2_DIR)/$(NAME).lv2 && \
-		install -m644 $(TARGET_DIR)/$(NAME).lv2/*.ttl $(USER_LV2_DIR)/$(NAME).lv2 && \
-		install -m755 $(TARGET_DIR)/$(NAME).lv2/*.so $(USER_LV2_DIR)/$(NAME).lv2
+	@install -dm755 $(USER_LV2_DIR) && \
+		cp -rfd $(TARGET_DIR)/$(NAME).lv2 $(USER_LV2_DIR)
 endif
 ifeq ($(BUILD_JACK),true)
 ifeq ($(HAVE_JACK),true)
@@ -172,4 +170,13 @@ dsp:
 
 # --------------------------------------------------------------
 
-.PHONY: all install install-user dsp
+all: copy-modgui
+
+copy-modgui:
+	@install -d $(TARGET_DIR)/$(NAME).lv2
+	cp -f ../../modgui/$(NAME)/modgui.ttl $(TARGET_DIR)/$(NAME).lv2
+	cp -rf ../../modgui/$(NAME)/modgui $(TARGET_DIR)/$(NAME).lv2
+
+# --------------------------------------------------------------
+
+.PHONY: all install install-user dsp copy-modgui

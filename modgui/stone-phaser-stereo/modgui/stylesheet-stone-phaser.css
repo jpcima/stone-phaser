@@ -1,0 +1,236 @@
+#stone-control-group-top{{{cns}}} {
+    left:0;
+    right:0;
+    top:14px;
+}
+
+#stone-control-group-top{{{cns}}} .mod-knob {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#stone-control-group-left{{{cns}}} {
+    left:40px;
+    top:160px;
+}
+
+.stone-status-label{{cns}} {
+    position:absolute;
+    right:76px;
+    top:238px;
+    font-size:11px;
+    font-weight:bold;
+    color:white;
+}
+
+#stone-control-group-center{{{cns}}} {
+    left:0;
+    right:0;
+    top:140px;
+}
+
+#stone-control-group-center{{{cns}}} .mod-knob {
+    height:120px;
+    width:120px;
+}
+
+#stone-control-group-center{{{cns}}} .mod-knob .mod-knob-image {
+    background-size:auto 120px;
+    height:120px;
+    width:120px;
+}
+
+#stone-control-group-center{{{cns}}} .mod-knob > span.mod-knob-title {
+    bottom:-18px;
+}
+
+/* = CONTAINER
+================================================ */
+.mod-pedal-stone{{{cns}}} {
+    background-position: 0 0;
+    background-repeat:no-repeat;
+    position:absolute;
+    height:510px;
+    width:400px;
+    /* border-radius: 105px; */
+}
+
+/* = PLUGIN'S AUTHOR
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-plugin-brand {
+    left:46px;
+    position:absolute;
+    text-transform:uppercase;
+    top:270px;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-plugin-brand h1 {
+    border-color:white;
+    border-radius:12px;
+    border-style:solid;
+    border-width:4px;
+    padding:3px 9px 0;
+    color:white;
+    font-family:"Nexa";
+    font-size:32px;
+}
+
+/* = PLUGIN'S NAME
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-plugin-name {
+    left:30px;
+    overflow:hidden;
+    position:absolute;
+    right:30px;
+    text-align:center;
+    top:330px;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-plugin-name h1 {
+    font-family:"Questrial";
+    font-size:24px;
+    line-height:1;
+}
+
+/* = LIGHT ON/OFF
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-light {
+    height:32px;
+    margin:0 auto;
+    position:absolute;
+    right:80px;
+    top:190px;
+    width:32px;
+}
+
+/* = FOOTSWITCH
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-footswitch {
+    background-image:url(/resources/pedals/footswitch.png{{{ns}}});
+    background-position:bottom center;
+    background-repeat:no-repeat;
+    background-size:auto 132px;
+    bottom:150px;
+    cursor:pointer;
+    height:66px;
+    width:66px;
+    left:13px;
+    margin:auto;
+    position:absolute !important;
+    right:13px;
+    z-index:30;
+}
+.mod-pedal-stone{{{cns}}} .mod-footswitch.on {
+    background-position-y: top !important
+}
+
+/* = INPUTS/OUTPUTS
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-pedal-input,
+.mod-pedal-stone{{{cns}}} .mod-pedal-output {
+    top:136px;
+}
+
+/* = BACKGROUND IMAGES - Colour of the pedal
+================================================ */
+.mod-pedal-stone{{{cns}}}.mod-gray { background-image:url(/resources/pedals/stone/gray.png{{{ns}}}); }
+
+
+/* = COLORS - Color of the pedals labels
+================================================ */
+.mod-pedal-stone{{{cns}}}.mod-gray .mod-enumerated
+{
+    background-image:url(/resources/utils/dropdown-arrow-black.png{{{ns}}});
+}
+
+/* STYLES FOR THE BOXY KNOB */
+
+/* = KNOBS
+================================================ */
+.mod-pedal-stone{{{cns}}} .mod-control-group {
+    height:141px;
+    position:absolute;
+    text-align:center;
+    margin:0 6px;
+    z-index:30;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-knob {
+    display:inline-block;
+    position:relative;
+    text-align:center;
+    height:100px;
+    width:79px;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-knob .mod-knob-image {
+    background-image:url(/resources/knobs/stone/stone.png{{{ns}}});
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-size:auto 79px;
+    position:relative;
+    overflow:hidden;
+    height:79px;
+    width:79px;
+}
+
+.mod-pedal-stone{{{cns}}}.mod-gray .mod-control-group .mod-knob > span.mod-knob-title {
+    color:white;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-knob > span.mod-knob-title {
+    bottom:6px;
+    display:block;
+    font-size:11px;
+    font-weight:bold;
+    height:11px;
+    left:0;
+    line-height:1;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    position:absolute;
+    right:0;
+    text-transform:uppercase;
+}
+
+/* STYLES FOR THE STONE SWITCH */
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-switch {
+    display:inline-block;
+    height:100px;
+    position:relative;
+    text-align:center;
+    width:79px;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-switch .mod-switch-image {
+    background-image:url(/resources/switches/stone/stone.png{{{ns}}});
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-size:auto 79px;
+    height:79px;
+    position:relative;
+    overflow:hidden;
+    width:79px;
+}
+
+.mod-pedal-stone{{{cns}}}.mod-gray .mod-control-group .mod-switch > span.mod-switch-title {
+    color:white;
+}
+
+.mod-pedal-stone{{{cns}}} .mod-control-group .mod-switch > span.mod-switch-title {
+    bottom:6px;
+    display:block;
+    font-size:11px;
+    font-weight:bold;
+    height:11px;
+    left:0;
+    line-height:1;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    position:absolute;
+    right:0;
+    text-transform:uppercase;
+}
