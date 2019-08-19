@@ -37,6 +37,11 @@ endif
 
 # --------------------------------------------------------------
 
+dsp:
+	$(foreach p,$(PLUGINS),$(MAKE) dsp -C plugins/$(p);)
+
+# --------------------------------------------------------------
+
 clean:
 	$(MAKE) clean -C dpf/utils/lv2-ttl-generator
 	$(foreach p,$(PLUGINS),$(MAKE) clean -C plugins/$(p);)
@@ -50,4 +55,4 @@ install-user: all
 
 # --------------------------------------------------------------
 
-.PHONY: all clean install install-user plugins submodule
+.PHONY: all clean install install-user submodule libs plugins gen dsp
