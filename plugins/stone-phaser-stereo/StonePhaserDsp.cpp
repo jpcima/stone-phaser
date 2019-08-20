@@ -1491,20 +1491,20 @@ namespace mydsp_meta {
 	FMSTATIC inline void active_set(FAUSTCLASS &x, unsigned idx, FAUSTFLOAT v) { *(FAUSTFLOAT *)((char *)&x + active_offsets[idx]) = v; }
 	FMSTATIC inline FAUSTFLOAT active_get(const FAUSTCLASS &x, unsigned idx) { return *(const FAUSTFLOAT *)((const char *)&x + active_offsets[idx]); }
 
-	FMSTATIC inline void set_Bypass(FAUSTCLASS &x, FAUSTFLOAT v) { x.fCheckbox0 = v; }
-	FMSTATIC inline void set_Color(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider1 = v; }
-	FMSTATIC inline void set_LFO_frequency(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider3 = v; }
-	FMSTATIC inline void set_Feedback_depth(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider0 = v; }
-	FMSTATIC inline void set_Feedback_bass_cut(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider2 = v; }
-	FMSTATIC inline void set_Dry_wet_mix(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider4 = v; }
-	FMSTATIC inline void set_Stereo_phase(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider5 = v; }
-	FMSTATIC inline FAUSTFLOAT get_Bypass(const FAUSTCLASS &x) { return x.fCheckbox0; }
-	FMSTATIC inline FAUSTFLOAT get_Color(const FAUSTCLASS &x) { return x.fHslider1; }
-	FMSTATIC inline FAUSTFLOAT get_LFO_frequency(const FAUSTCLASS &x) { return x.fHslider3; }
-	FMSTATIC inline FAUSTFLOAT get_Feedback_depth(const FAUSTCLASS &x) { return x.fHslider0; }
-	FMSTATIC inline FAUSTFLOAT get_Feedback_bass_cut(const FAUSTCLASS &x) { return x.fHslider2; }
-	FMSTATIC inline FAUSTFLOAT get_Dry_wet_mix(const FAUSTCLASS &x) { return x.fHslider4; }
-	FMSTATIC inline FAUSTFLOAT get_Stereo_phase(const FAUSTCLASS &x) { return x.fHslider5; }
+	FMSTATIC inline void set_bypass(FAUSTCLASS &x, FAUSTFLOAT v) { x.fCheckbox0 = v; }
+	FMSTATIC inline void set_color(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider1 = v; }
+	FMSTATIC inline void set_lfo_frequency(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider3 = v; }
+	FMSTATIC inline void set_feedback_depth(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider0 = v; }
+	FMSTATIC inline void set_feedback_hpf_cutoff(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider2 = v; }
+	FMSTATIC inline void set_mix(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider4 = v; }
+	FMSTATIC inline void set_stereo_phase(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider5 = v; }
+	FMSTATIC inline FAUSTFLOAT get_bypass(const FAUSTCLASS &x) { return x.fCheckbox0; }
+	FMSTATIC inline FAUSTFLOAT get_color(const FAUSTCLASS &x) { return x.fHslider1; }
+	FMSTATIC inline FAUSTFLOAT get_lfo_frequency(const FAUSTCLASS &x) { return x.fHslider3; }
+	FMSTATIC inline FAUSTFLOAT get_feedback_depth(const FAUSTCLASS &x) { return x.fHslider0; }
+	FMSTATIC inline FAUSTFLOAT get_feedback_hpf_cutoff(const FAUSTCLASS &x) { return x.fHslider2; }
+	FMSTATIC inline FAUSTFLOAT get_mix(const FAUSTCLASS &x) { return x.fHslider4; }
+	FMSTATIC inline FAUSTFLOAT get_stereo_phase(const FAUSTCLASS &x) { return x.fHslider5; }
 
 	FMSTATIC constexpr passive_type_t passive_type[] = {};
 	FMSTATIC constexpr int passive_id[] = {};
