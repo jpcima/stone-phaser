@@ -173,7 +173,6 @@ class mydsp : public dsp {
 	float fRec17_perm[4];
 	float fRec23_perm[4];
 	float fRec24_perm[4];
-	float fConst9;
 	FAUSTFLOAT fHslider5;
 	float fRec25_perm[4];
 	float fRec22_perm[4];
@@ -277,7 +276,6 @@ class mydsp : public dsp {
 		fConst6 = (0.5f * (fConst3 + 1.0f));
 		fConst7 = (0.0f - fConst6);
 		fConst8 = (2764.60156f / fConst0);
-		fConst9 = (0.00277777785f * fConst2);
 		
 	}
 	
@@ -288,7 +286,7 @@ class mydsp : public dsp {
 		fHslider2 = FAUSTFLOAT(500.0f);
 		fHslider3 = FAUSTFLOAT(0.20000000000000001f);
 		fHslider4 = FAUSTFLOAT(50.0f);
-		fHslider5 = FAUSTFLOAT(45.0f);
+		fHslider5 = FAUSTFLOAT(0.0f);
 		
 	}
 	
@@ -445,7 +443,7 @@ class mydsp : public dsp {
 		ui_interface->declare(&fHslider5, "6", "");
 		ui_interface->declare(&fHslider5, "md.symbol", "stereo_phase");
 		ui_interface->declare(&fHslider5, "unit", "deg");
-		ui_interface->addHorizontalSlider("Stereo phase", &fHslider5, 45.0f, 0.0f, 359.0f, 1.0f);
+		ui_interface->addHorizontalSlider("Stereo phase", &fHslider5, 0.0f, -180.0f, 180.0f, 1.0f);
 		ui_interface->closeBox();
 		
 	}
@@ -513,7 +511,7 @@ class mydsp : public dsp {
 		float* fRec23 = &fRec23_tmp[4];
 		float fRec24_tmp[36];
 		float* fRec24 = &fRec24_tmp[4];
-		float fSlow10 = (fConst9 * float(fHslider5));
+		float fSlow10 = (fConst2 * ((0.00277777785f * float(fHslider5)) + 1.0f));
 		float fRec25_tmp[36];
 		float* fRec25 = &fRec25_tmp[4];
 		float fZec10[32];
@@ -1420,7 +1418,7 @@ class mydsp : public dsp {
 	FAUST_ADDHORIZONTALSLIDER("Feedback depth", fHslider0, 75.0f, 0.0f, 99.0f, 1.0f);
 	FAUST_ADDHORIZONTALSLIDER("Feedback bass cut", fHslider2, 500.0f, 10.0f, 5000.0f, 1.0f);
 	FAUST_ADDHORIZONTALSLIDER("Dry/wet mix", fHslider4, 50.0f, 0.0f, 100.0f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("Stereo phase", fHslider5, 45.0f, 0.0f, 359.0f, 1.0f);
+	FAUST_ADDHORIZONTALSLIDER("Stereo phase", fHslider5, 0.0f, -180.0f, 180.0f, 1.0f);
 #endif
 #undef virtual
 
@@ -1468,9 +1466,9 @@ namespace mydsp_meta {
 	FMSTATIC const char *const active_label[] = {u8"Bypass", u8"Color", u8"LFO frequency", u8"Feedback depth", u8"Feedback bass cut", u8"Dry/wet mix", u8"Stereo phase"};
 	FMSTATIC const char *const active_symbol[] = {u8"bypass", u8"color", u8"lfo_frequency", u8"feedback_depth", u8"feedback_hpf_cutoff", u8"mix", u8"stereo_phase"};
 	FMSTATIC const std::size_t active_offsets[] = {(size_t)&((FAUSTCLASS *)0)->fCheckbox0, (size_t)&((FAUSTCLASS *)0)->fHslider1, (size_t)&((FAUSTCLASS *)0)->fHslider3, (size_t)&((FAUSTCLASS *)0)->fHslider0, (size_t)&((FAUSTCLASS *)0)->fHslider2, (size_t)&((FAUSTCLASS *)0)->fHslider4, (size_t)&((FAUSTCLASS *)0)->fHslider5};
-	FMSTATIC constexpr FAUSTFLOAT active_init[] = {0, 1, 0.2, 75, 500, 50, 45};
-	FMSTATIC constexpr FAUSTFLOAT active_min[] = {0, 0, 0.01, 0, 10, 0, 0};
-	FMSTATIC constexpr FAUSTFLOAT active_max[] = {1, 1, 5, 99, 5000, 100, 359};
+	FMSTATIC constexpr FAUSTFLOAT active_init[] = {0, 1, 0.2, 75, 500, 50, 0};
+	FMSTATIC constexpr FAUSTFLOAT active_min[] = {0, 0, 0.01, 0, 10, 0, -180};
+	FMSTATIC constexpr FAUSTFLOAT active_max[] = {1, 1, 5, 99, 5000, 100, 180};
 	FMSTATIC constexpr FAUSTFLOAT active_step[] = {1, 1, 0.01, 1, 1, 1, 1};
 
 	FMSTATIC const char *const active_unit[] = {u8"", u8"", u8"Hz", u8"%", u8"Hz", u8"%", u8"deg"};

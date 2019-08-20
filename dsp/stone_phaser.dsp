@@ -22,7 +22,7 @@ fbHf = hslider("[4] Feedback bass cut [md.symbol:feedback_hpf_cutoff] [unit:Hz] 
 dw = hslider("[5] Dry/wet mix [md.symbol:mix] [unit:%]", 50, 0, 100, 1) : *(0.01);
 w = sin(dw*(ma.PI/2)) : tsmooth;
 d = cos(dw*(ma.PI/2)) : tsmooth;
-ph = hslider("[6] Stereo phase [md.symbol:stereo_phase] [unit:deg]", 45., 0., 359., 1.) : /(360.) : tsmooth;
+ph = hslider("[6] Stereo phase [md.symbol:stereo_phase] [unit:deg]", 0., -180., +180., 1.) : /(360.) : +(1.) : tsmooth;
 
 //////////////////////////
 // All-pass filter unit //
