@@ -8,6 +8,7 @@
 
 #include "PhaserPlugin.hpp"
 #include "StonePhaserDsp.cpp"
+#include "blink/DenormalDisabler.h"
 #include <cmath>
 #include <cstring>
 
@@ -90,6 +91,7 @@ void PhaserPlugin::activate()
 
 void PhaserPlugin::run(const float **inputs, float **outputs, uint32_t frames)
 {
+    WebCore::DenormalDisabler dd;
     fDsp->compute(frames, (float **)inputs, outputs);
 }
 

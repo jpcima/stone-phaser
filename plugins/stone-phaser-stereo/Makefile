@@ -66,6 +66,7 @@ FILES_DSP = \
 include ../../dpf/Makefile.plugins.mk
 
 BUILD_CXX_FLAGS += -Imeta
+BUILD_CXX_FLAGS += -Ithirdparty
 
 # --------------------------------------------------------------
 # Enable all selected plugin types
