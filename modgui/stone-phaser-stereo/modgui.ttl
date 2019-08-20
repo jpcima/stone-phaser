@@ -25,7 +25,7 @@
         ] , [
             lv2:index 3 ;
             lv2:symbol "feedback_hpf_cutoff" ;
-            lv2:name "Fb cass cut" ;
+            lv2:name "Fb bass cut" ;
         ] , [
             lv2:index 4 ;
             lv2:symbol "mix" ;
