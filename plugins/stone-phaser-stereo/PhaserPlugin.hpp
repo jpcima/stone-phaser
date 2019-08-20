@@ -28,7 +28,7 @@ protected:
         return "stone-phaser-stereo";
     }
 
-    const char *getDescription() const override
+    const char *getDescription() const noexcept override
     {
         return "A classic analog phaser effect (stereo)";
     }
@@ -38,9 +38,9 @@ protected:
         return "Jean Pierre Cimalando";
     }
 
-    const char *getHomePage() const override
+    const char *getHomePage() const noexcept override
     {
-        return "http://jpcima.sdf1.org/lv2/stone-phaser-stereo";
+        return "https://github.com/jpcima/stone-phaser";
     }
 
     const char *getLicense() const noexcept override
