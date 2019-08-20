@@ -40,7 +40,7 @@ void PhaserPlugin::initParameter(uint32_t index, Parameter &parameter)
     switch (index) {
     case 0:
         DISTRHO_SAFE_ASSERT(!strcmp(mydsp_meta::active_label[index], "Bypass"));
-        parameter.designation = kParameterDesignationBypass;
+        parameter.initDesignation(kParameterDesignationBypass);
         break;
     default:
         mydsp_meta::init_active_parameter(index, parameter);
