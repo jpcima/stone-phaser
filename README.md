@@ -10,3 +10,9 @@ This is an analog phaser with similarity to the Small Stone. It has a color swit
 
 - `make`
 - `sudo make install` (for system), or `make install-user` (for user)
+
+## Change log
+
+**0.1.0**
+
+- initial software release
