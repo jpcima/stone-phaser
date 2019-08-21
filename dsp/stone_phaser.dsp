@@ -70,6 +70,10 @@ lfoAnalogTriangle(roundness, pos, y1, y2) = val*(y2-y1)+y1 with {
   val = sineTri(roundness, pos);
 };
 
+lfoExponentialTriangle(roundness, slopeUp, slopeDown, pos, y1, y2) = val*(y2-y1)+y1 with {
+  val = expTri(roundness, slopeUp, slopeDown, pos);
+};
+
 ////////////
 // Phaser //
 ////////////
@@ -87,6 +91,7 @@ mono_phaser(x, lfo_pos) = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet) wit
   lfoHiF = ba.if(color, ba.hz2midikey(2200.), ba.hz2midikey(6000.)) : tsmooth;
 
   modFreq = ba.midikey2hz(lfoAnalogTriangle(0.95, lfo_pos, lfoLoF, lfoHiF));
+  //modFreq = ba.midikey2hz(lfoExponentialTriangle(128., 0.6, 0.9, lfo_pos, lfoLoF, lfoHiF));
 
   a1 = allpass1(modFreq);
   a2 = allpass1(modFreq);
@@ -133,6 +138,29 @@ sineTri(roundness, pos) = lerp(tab, pos, ts) with {
   wrap(x)=x-floor(x)
   set xrange [0:1]
   plot(sineTri(0.99, x))
+*/
+
+expTriWaveform(roundness, slopeUp, slopeDown, tablesize) = ba.if(x<0.5, expUp, expDown) with {
+  normExp(a, b, x) = (1.-pow(a, -b*x))/(1.-pow(a, -b));
+  expUp = 1.-normExp(roundness, slopeUp, (-x+0.5)*2);
+  expDown = 1.-normExp(roundness, slopeDown, (x-0.5)*2);
+  x = wrap(float(ba.time)/float(tablesize));
+  wrap(p) = p-float(int(p));
+};
+
+expTri(roundness, slopeUp, slopeDown, pos) = lerp(tab, pos, ts) with {
+  ts = 128;
+  tab(i) = rdtable(ts, expTriWaveform(roundness, slopeUp, slopeDown, ts), i);
+};
+
+/*
+  # Gnuplot code of the expTri function
+  roundness=128
+  slopeUp = 0.6
+  slopeDown = 0.9
+  normExp(a,b,x)=(1.-a**-(b*x))/(1.-a**-b)
+  set xrange [0:1]
+  plot (x<0.5) ? (1.-normExp(roundness, slopeUp, (-x+0.5)*2)) : (1.-normExp(roundness, slopeDown, (x-0.5)*2))
 */
 
 //////////
