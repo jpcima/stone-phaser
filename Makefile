@@ -8,7 +8,7 @@ PLUGINS := stone-phaser stone-phaser-stereo
 
 # --------------------------------------------------------------
 
-ifneq ($(shell test -d dpf && echo 1),1)
+ifneq ($(shell test -f dpf/Makefile.base.mk && echo 1),1)
 $(error DPF is missing, run "git submodule update --init")
 endif
 
