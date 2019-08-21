@@ -10,6 +10,17 @@ This effect is supported on [MOD devices](https://www.moddevices.com/).
 
 ![screenshot](modgui/stone-phaser/modgui/screenshot-stone-phaser.png)
 
+## Downloads
+
+**Stable**
+
+- GNU/Linux: download packages from [Open Build Service](https://software.opensuse.org/download.html?project=home%3Ajpcima&package=stone-phaser).
+- All: download from [Github releases](https://github.com/jpcima/stone-phaser/releases).
+
+**Development**
+
+- All: download from [Automatic builds](https://github.com/jpcima/stone-phaser/releases/tag/automatic).
+
 ## How to build and install
 
 - `make`
