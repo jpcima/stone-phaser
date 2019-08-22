@@ -166,9 +166,9 @@ FAUST_FLAGS = -uim -vec
 FAUSTMD_FLAGS = $(patsubst %,-X%,$(FAUST_FLAGS))
 
 dsp:
-	faust $(FAUST_FLAGS) -a ../../dsp/architecture.cpp ../../dsp/stone_phaser_stereo.dsp > StonePhaserDsp.cpp
-	faustmd $(FAUSTMD_FLAGS) ../../dsp/stone_phaser_stereo.dsp >> StonePhaserDsp.cpp
-	cat ../../dsp/footer.cpp >> StonePhaserDsp.cpp
+	faust $(FAUST_FLAGS) -a ../../dsp/architecture.cpp ../../dsp/stone_phaser_stereo.dsp > gen/StonePhaserDsp.cpp
+	faustmd $(FAUSTMD_FLAGS) ../../dsp/stone_phaser_stereo.dsp >> gen/StonePhaserDsp.cpp
+	cat ../../dsp/footer.cpp >> gen/StonePhaserDsp.cpp
 
 # --------------------------------------------------------------
 
