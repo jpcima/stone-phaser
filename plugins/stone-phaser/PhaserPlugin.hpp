@@ -13,7 +13,7 @@
 
 // -----------------------------------------------------------------------
 
-class PhaserPlugin : public Plugin {
+class PhaserPlugin : public DISTRHO::Plugin {
 public:
     PhaserPlugin();
     ~PhaserPlugin();
@@ -72,7 +72,7 @@ protected:
     // -------------------------------------------------------------------
     // Init
 
-    void initParameter(uint32_t index, Parameter &parameter) override;
+    void initParameter(uint32_t index, DISTRHO::Parameter &parameter) override;
 
     // -------------------------------------------------------------------
     // Internal data

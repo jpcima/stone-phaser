@@ -41,8 +41,24 @@ endif
 
 # --------------------------------------------------------------
 
+BUILD_UI ?= true
+
+ifeq ($(BUILD_UI),true)
+plugins: dgl
+
+dgl:
+	$(MAKE) -C dpf/dgl ../build/libdgl-cairo.a
+endif
+
+# --------------------------------------------------------------
+
 dsp:
 	$(foreach p,$(PLUGINS),$(MAKE) dsp -C plugins/$(p);)
+
+# --------------------------------------------------------------
+
+artwork:
+	$(MAKE) artwork -C plugins/stone-phaser
 
 # --------------------------------------------------------------
 
@@ -59,4 +75,4 @@ install-user: all
 
 # --------------------------------------------------------------
 
-.PHONY: all clean install install-user submodule libs plugins gen dsp
+.PHONY: all submodule libs plugins gen dgl dsp artwork clean install install-user

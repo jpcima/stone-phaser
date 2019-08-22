@@ -55,10 +55,39 @@ BUILD_DSSI ?= false
 BUILD_LADSPA ?= true
 
 # --------------------------------------------------------------
+# Type of user interface
+
+BUILD_UI ?= true
+ifeq ($(BUILD_UI),true)
+UI_TYPE = cairo
+else
+UI_TYPE = none
+endif
+
+# --------------------------------------------------------------
 # Files to build
 
 FILES_DSP = \
-	PhaserPlugin.cpp
+	PhaserPlugin.cpp \
+	$(FILES_SHARED)
+
+ifeq ($(BUILD_UI),true)
+FILES_UI = \
+	PhaserUI.cpp \
+	Artwork.cpp \
+	ui/components/KnobSkin.cpp \
+	ui/components/SkinIndicator.cpp \
+	ui/components/SkinSlider.cpp \
+	ui/components/SkinToggleButton.cpp \
+	ui/FontEngine.cpp \
+	ui/Fontstash.cpp \
+	ui/Cairo++.cpp \
+	$(FILES_SHARED)
+endif
+
+FILES_SHARED = \
+	PhaserShared.cpp \
+	gen/StonePhaserDsp.cpp
 
 # --------------------------------------------------------------
 # Do some magic
@@ -68,12 +97,18 @@ include ../../dpf/Makefile.plugins.mk
 BUILD_CXX_FLAGS += -Imeta
 BUILD_CXX_FLAGS += -Igen
 BUILD_CXX_FLAGS += -Ithirdparty/blink
+BUILD_CXX_FLAGS += -Ithirdparty/fontstash
+BUILD_CXX_FLAGS += -Ithirdparty/stb
+
+ifeq ($(BUILD_UI),true)
+BUILD_CXX_FLAGS += -DDISTRHO_PLUGIN_HAS_UI=1
+endif
 
 # --------------------------------------------------------------
 # Enable all selected plugin types
 
 ifeq ($(BUILD_LV2),true)
-ifeq ($(HAVE_DGL),true)
+ifeq ($(BUILD_UI),true)
 TARGETS += lv2_sep
 else
 TARGETS += lv2_dsp
@@ -92,7 +127,7 @@ endif
 
 ifeq ($(BUILD_DSSI),true)
 ifneq ($(MACOS_OR_WINDOWS),true)
-ifeq ($(HAVE_DGL),true)
+ifeq ($(BUILD_UI),true)
 ifeq ($(HAVE_LIBLO),true)
 TARGETS += dssi
 endif
@@ -109,7 +144,7 @@ all: $(TARGETS)
 install: all
 ifeq ($(BUILD_DSSI),true)
 ifneq ($(MACOS_OR_WINDOWS),true)
-ifeq ($(HAVE_DGL),true)
+ifeq ($(BUILD_UI),true)
 ifeq ($(HAVE_LIBLO),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(DESTDIR)$(DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
@@ -135,7 +170,7 @@ endif
 install-user: all
 ifeq ($(BUILD_DSSI),true)
 ifneq ($(MACOS_OR_WINDOWS),true)
-ifeq ($(HAVE_DGL),true)
+ifeq ($(BUILD_UI),true)
 ifeq ($(HAVE_LIBLO),true)
 	@install -Dm755 $(TARGET_DIR)/$(NAME)-dssi$(LIB_EXT) $(USER_DSSI_DIR)/$(NAME)-dssi$(LIB_EXT)
 endif
@@ -169,6 +204,11 @@ dsp:
 
 # --------------------------------------------------------------
 
+artwork:
+	python ../../dpf/utils/res2c.py Artwork artwork
+
+# --------------------------------------------------------------
+
 all: copy-modgui
 
 copy-modgui:
@@ -178,4 +218,4 @@ copy-modgui:
 
 # --------------------------------------------------------------
 
-.PHONY: all install install-user dsp copy-modgui
+.PHONY: all install install-user dsp artwork copy-modgui

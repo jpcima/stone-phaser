@@ -12,8 +12,7 @@
 #define DISTRHO_PLUGIN_NAME "Stone phaser stereo"
 #define DISTRHO_PLUGIN_URI "http://jpcima.sdf1.org/lv2/stone-phaser-stereo"
 
-#define DISTRHO_PLUGIN_HAS_UI 0
-#define DISTRHO_UI_USE_NANOVG 0
+// #define DISTRHO_PLUGIN_HAS_UI 1
 
 #define DISTRHO_PLUGIN_IS_RT_SAFE 1
 #define DISTRHO_PLUGIN_NUM_INPUTS 2

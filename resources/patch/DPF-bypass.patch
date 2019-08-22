@@ -1,0 +1,150 @@
+diff --git a/distrho/DistrhoUI.hpp b/distrho/DistrhoUI.hpp
+index ecebc36..03fff4c 100644
+--- a/distrho/DistrhoUI.hpp
++++ b/distrho/DistrhoUI.hpp
+@@ -39,6 +39,8 @@ typedef DGL_NAMESPACE::Widget UIWidget;
+ # include "OpenGL.hpp"
+ #endif
+ 
++#define DISTRHO_UI_PATCH_INVERTED_BYPASS
++
+ START_NAMESPACE_DISTRHO
+ 
+ /* ------------------------------------------------------------------------------------------------------------
+@@ -69,6 +71,15 @@ public:
+     */
+     virtual ~UI();
+ 
++   /**
++      Gets whether this UI receives the bypass value inverted.
++    */
++    bool hasInvertedBypass() const
++    {
++        return fHasInvertedBypass;
++    }
++
++
+ #if DISTRHO_UI_USER_RESIZABLE && !DISTRHO_PLUGIN_HAS_EXTERNAL_UI
+    /**
+       Set geometry constraints for the UI when resized by the user, and optionally scale UI automatically.
+@@ -233,6 +244,7 @@ protected:
+     // -------------------------------------------------------------------------------------------------------
+ 
+ private:
++    bool fHasInvertedBypass;
+     struct PrivateData;
+     PrivateData* const pData;
+     friend class UIExporter;
+diff --git a/distrho/src/DistrhoUI.cpp b/distrho/src/DistrhoUI.cpp
+index cc08140..4402655 100644
+--- a/distrho/src/DistrhoUI.cpp
++++ b/distrho/src/DistrhoUI.cpp
+@@ -33,6 +33,7 @@ uintptr_t   g_nextWindowId     = 0;
+ #else
+ Window*     d_lastUiWindow     = nullptr;
+ #endif
++bool g_hasInvertedBypass = false;
+ 
+ /* ------------------------------------------------------------------------------------------------------------
+  * UI */
+@@ -40,10 +41,12 @@ Window*     d_lastUiWindow     = nullptr;
+ #if DISTRHO_PLUGIN_HAS_EXTERNAL_UI
+ UI::UI(uint width, uint height)
+     : UIWidget(width, height),
++      fHasInvertedBypass(g_hasInvertedBypass),
+       pData(new PrivateData()) {}
+ #else
+ UI::UI(uint width, uint height)
+     : UIWidget(*d_lastUiWindow),
++      fHasInvertedBypass(g_hasInvertedBypass),
+       pData(new PrivateData())
+ {
+     ((UIWidget*)this)->pData->needsFullViewport = false;
+diff --git a/distrho/src/DistrhoUIInternal.hpp b/distrho/src/DistrhoUIInternal.hpp
+index f1ebb33..83d68e6 100644
+--- a/distrho/src/DistrhoUIInternal.hpp
++++ b/distrho/src/DistrhoUIInternal.hpp
+@@ -44,6 +44,7 @@ extern uintptr_t   g_nextWindowId;
+ #else
+ extern Window*     d_lastUiWindow;
+ #endif
++extern bool g_hasInvertedBypass;
+ 
+ // -----------------------------------------------------------------------
+ // UI callbacks
+@@ -151,37 +152,41 @@ struct UI::PrivateData {
+ 
+ #if DISTRHO_PLUGIN_HAS_EXTERNAL_UI
+ static inline
+-UI* createUiWrapper(void* const dspPtr, const uintptr_t winId, const double scaleFactor, const char* const bundlePath)
++UI* createUiWrapper(void* const dspPtr, const uintptr_t winId, const double scaleFactor, const char* const bundlePath, bool hasInvertedBypass = false)
+ {
+     d_lastUiDspPtr    = dspPtr;
+     g_nextWindowId    = winId;
+     g_nextScaleFactor = scaleFactor;
+     g_nextBundlePath  = bundlePath;
++    g_hasInvertedBypass = hasInvertedBypass;
+     UI* const ret     = createUI();
+     d_lastUiDspPtr    = nullptr;
+     g_nextWindowId    = 0;
+     g_nextScaleFactor = 1.0;
+     g_nextBundlePath  = nullptr;
++    g_hasInvertedBypass = false;
+     return ret;
+ }
+ #else // DISTRHO_PLUGIN_HAS_EXTERNAL_UI
+ static inline
+-UI* createUiWrapper(void* const dspPtr, Window* const window)
++UI* createUiWrapper(void* const dspPtr, Window* const window, bool hasInvertedBypass = false)
+ {
+     d_lastUiDspPtr = dspPtr;
+     d_lastUiWindow = window;
++    g_hasInvertedBypass = hasInvertedBypass;
+     UI* const ret  = createUI();
+     d_lastUiDspPtr = nullptr;
+     d_lastUiWindow = nullptr;
++    g_hasInvertedBypass = false;
+     return ret;
+ }
+ 
+ class UIExporterWindow : public Window
+ {
+ public:
+-    UIExporterWindow(Application& app, const intptr_t winId, const double scaleFactor, void* const dspPtr)
++    UIExporterWindow(Application& app, const intptr_t winId, const double scaleFactor, void* const dspPtr, bool hasInvertedBypass = false)
+         : Window(app, winId, scaleFactor, DISTRHO_UI_USER_RESIZABLE),
+-          fUI(createUiWrapper(dspPtr, this)),
++          fUI(createUiWrapper(dspPtr, this, hasInvertedBypass)),
+           fIsReady(false)
+     {
+         DISTRHO_SAFE_ASSERT_RETURN(fUI != nullptr,);
+@@ -260,12 +265,13 @@ public:
+                const setSizeFunc setSizeCall,
+                const float scaleFactor = 1.0f,
+                void* const dspPtr = nullptr,
+-               const char* const bundlePath = nullptr)
++               const char* const bundlePath = nullptr,
++               bool hasInvertedBypass = false)
+ #if DISTRHO_PLUGIN_HAS_EXTERNAL_UI
+-        : fUI(createUiWrapper(dspPtr, winId, scaleFactor, bundlePath)),
++        : fUI(createUiWrapper(dspPtr, winId, scaleFactor, bundlePath, hasInvertedBypass)),
+ #else
+         : glApp(),
+-          glWindow(glApp, winId, scaleFactor, dspPtr),
++          glWindow(glApp, winId, scaleFactor, dspPtr, hasInvertedBypass),
+           fChangingSize(false),
+           fUI(glWindow.getUI()),
+ #endif
+diff --git a/distrho/src/DistrhoUILV2.cpp b/distrho/src/DistrhoUILV2.cpp
+index 140909b..b25b8ff 100644
+--- a/distrho/src/DistrhoUILV2.cpp
++++ b/distrho/src/DistrhoUILV2.cpp
+@@ -54,7 +54,7 @@ public:
+           const LV2_Options_Option* options, const LV2_URID_Map* const uridMap, const LV2UI_Resize* const uiResz, const LV2UI_Touch* uiTouch,
+           const LV2UI_Controller controller, const LV2UI_Write_Function writeFunc,
+           const float scaleFactor, LV2UI_Widget* const widget, void* const dspPtr)
+-        : fUI(this, winId, editParameterCallback, setParameterCallback, setStateCallback, sendNoteCallback, setSizeCallback, scaleFactor, dspPtr, bundlePath),
++        : fUI(this, winId, editParameterCallback, setParameterCallback, setStateCallback, sendNoteCallback, setSizeCallback, scaleFactor, dspPtr, bundlePath, true),
+           fUridMap(uridMap),
+           fUiResize(uiResz),
+           fUiTouch(uiTouch),
