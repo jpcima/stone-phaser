@@ -25,12 +25,20 @@ protected:
 
     const char *getLabel() const noexcept override
     {
+#if DISTRHO_PLUGIN_NUM_INPUTS == 1
         return "stone-phaser";
+#elif DISTRHO_PLUGIN_NUM_INPUTS == 2
+        return "stone-phaser-stereo";
+#endif
     }
 
     const char *getDescription() const noexcept override
     {
+#if DISTRHO_PLUGIN_NUM_INPUTS == 1
         return "A classic analog phaser effect";
+#elif DISTRHO_PLUGIN_NUM_INPUTS == 2
+        return "A classic analog phaser effect (stereo)";
+#endif
     }
 
     const char *getMaker() const noexcept override
@@ -55,7 +63,11 @@ protected:
 
     int64_t getUniqueId() const noexcept override
     {
+#if DISTRHO_PLUGIN_NUM_INPUTS == 1
         return d_cconst('s', 's', 'p', '1');
+#elif DISTRHO_PLUGIN_NUM_INPUTS == 2
+        return d_cconst('s', 's', 'p', '2');
+#endif
     }
 
     // -------------------------------------------------------------------
