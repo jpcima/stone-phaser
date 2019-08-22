@@ -67,7 +67,7 @@ include ../../dpf/Makefile.plugins.mk
 
 BUILD_CXX_FLAGS += -Imeta
 BUILD_CXX_FLAGS += -Igen
-BUILD_CXX_FLAGS += -Ithirdparty
+BUILD_CXX_FLAGS += -Ithirdparty/blink
 
 # --------------------------------------------------------------
 # Enable all selected plugin types
@@ -159,16 +159,13 @@ endif
 endif
 
 # --------------------------------------------------------------
-FAUST ?= faust
-FAUSTMD ?= faustmd
-
-FAUST_FLAGS = -uim -vec
-FAUSTMD_FLAGS = $(patsubst %,-X%,$(FAUST_FLAGS))
+FAUSTPP ?= faustpp
+FAUSTPP_FLAGS = -X-vec
 
 dsp:
-	faust $(FAUST_FLAGS) -a ../../dsp/architecture.cpp ../../dsp/stone_phaser_stereo.dsp > gen/StonePhaserDsp.cpp
-	faustmd $(FAUSTMD_FLAGS) ../../dsp/stone_phaser_stereo.dsp >> gen/StonePhaserDsp.cpp
-	cat ../../dsp/footer.cpp >> gen/StonePhaserDsp.cpp
+	@install -d gen
+	$(FAUSTPP) $(FAUSTPP_FLAGS) -a ../../dsp/architecture.cpp -DIdentifier=StonePhaserDsp ../../dsp/stone_phaser_stereo.dsp > gen/StonePhaserDsp.cpp
+	$(FAUSTPP) $(FAUSTPP_FLAGS) -a ../../dsp/architecture.hpp -DIdentifier=StonePhaserDsp ../../dsp/stone_phaser_stereo.dsp > gen/StonePhaserDsp.hpp
 
 # --------------------------------------------------------------
 

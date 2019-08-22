@@ -14,15 +14,15 @@ import("stdfaust.lib");
 // Control //
 /////////////
 
-bypass = checkbox("[0] Bypass [md.symbol:bypass]");
-color = hslider("[1] Color [md.symbol:color]", 1, 0, 1, 1);
-lf = hslider("[2] LFO frequency [md.symbol:lfo_frequency] [unit:Hz] [scale:log]", 0.2, 0.01, 5., 0.01) : tsmooth;
-fb = hslider("[3] Feedback depth [md.symbol:feedback_depth] [unit:%]", 75, 0, 99, 1) : *(0.01) : tsmooth;
-fbHf = hslider("[4] Feedback bass cut [md.symbol:feedback_hpf_cutoff] [unit:Hz] [scale:log]", 500., 10., 5000., 1.) : tsmooth;
-dw = hslider("[5] Dry/wet mix [md.symbol:mix] [unit:%]", 50, 0, 100, 1) : *(0.01);
+bypass = checkbox("[0] Bypass [symbol:bypass]");
+color = hslider("[1] Color [symbol:color] [boolean]", 1, 0, 1, 1);
+lf = hslider("[2] LFO frequency [symbol:lfo_frequency] [unit:Hz] [scale:log]", 0.2, 0.01, 5., 0.01) : tsmooth;
+fb = hslider("[3] Feedback depth [symbol:feedback_depth] [unit:%] [integer]", 75, 0, 99, 1) : *(0.01) : tsmooth;
+fbHf = hslider("[4] Feedback bass cut [symbol:feedback_hpf_cutoff] [unit:Hz] [scale:log]", 500., 10., 5000., 1.) : tsmooth;
+dw = hslider("[5] Dry/wet mix [symbol:mix] [unit:%] [integer]", 50, 0, 100, 1) : *(0.01);
 w = sin(dw*(ma.PI/2)) : tsmooth;
 d = cos(dw*(ma.PI/2)) : tsmooth;
-ph = hslider("[6] Stereo phase [md.symbol:stereo_phase] [unit:deg]", 0., -180., +180., 1.) : /(360.) : +(1.) : tsmooth;
+ph = hslider("[6] Stereo phase [symbol:stereo_phase] [unit:deg] [integer]", 0., -180., +180., 1.) : /(360.) : +(1.) : tsmooth;
 
 //////////////////////////
 // All-pass filter unit //

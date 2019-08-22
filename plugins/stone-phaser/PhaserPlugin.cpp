@@ -12,18 +12,17 @@
 #include <cmath>
 #include <cstring>
 
-static_assert(DISTRHO_PLUGIN_NUM_INPUTS == mydsp_meta::inputs,
+static_assert(DISTRHO_PLUGIN_NUM_INPUTS == StonePhaserDsp::inputs,
               "The number of inputs does not match.");
-static_assert(DISTRHO_PLUGIN_NUM_OUTPUTS == mydsp_meta::outputs,
+static_assert(DISTRHO_PLUGIN_NUM_OUTPUTS == StonePhaserDsp::outputs,
               "The number of outputs does not match.");
 
 // -----------------------------------------------------------------------
 
 PhaserPlugin::PhaserPlugin()
-    : Plugin(mydsp_meta::actives, 0, 0),
-      fDsp(new mydsp)
+    : Plugin(StonePhaserDsp::parameters, 0, 0)
 {
-    fDsp->init(getSampleRate());
+    fDsp.init(getSampleRate());
 }
 
 PhaserPlugin::~PhaserPlugin()
@@ -35,15 +34,32 @@ PhaserPlugin::~PhaserPlugin()
 
 void PhaserPlugin::initParameter(uint32_t index, Parameter &parameter)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < mydsp_meta::actives,);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters,);
 
     switch (index) {
-    case 0:
-        DISTRHO_SAFE_ASSERT(!strcmp(mydsp_meta::active_label[index], "Bypass"));
+    case StonePhaserDsp::p_bypass:
         parameter.initDesignation(kParameterDesignationBypass);
         break;
     default:
-        mydsp_meta::init_active_parameter(index, parameter);
+        parameter.name = StonePhaserDsp::parameter_label(index);
+        parameter.symbol = StonePhaserDsp::parameter_symbol(index);
+        parameter.unit = StonePhaserDsp::parameter_unit(index);
+        parameter.hints = kParameterIsAutomable;
+
+        const StonePhaserDsp::ParameterRange *pr = StonePhaserDsp::parameter_range(index);
+        parameter.ranges.min = pr->min;
+        parameter.ranges.max = pr->max;
+        parameter.ranges.def = pr->init;
+
+        if (StonePhaserDsp::parameter_is_trigger(index))
+            parameter.hints |= kParameterIsTrigger;
+        if (StonePhaserDsp::parameter_is_boolean(index))
+            parameter.hints |= kParameterIsBoolean;
+        if (StonePhaserDsp::parameter_is_integer(index))
+            parameter.hints |= kParameterIsInteger;
+        if (StonePhaserDsp::parameter_is_logarithmic(index))
+            parameter.hints |= kParameterIsLogarithmic;
+
         break;
     }
 }
@@ -56,8 +72,7 @@ void PhaserPlugin::initParameter(uint32_t index, Parameter &parameter)
 */
 void PhaserPlugin::sampleRateChanged(double newSampleRate)
 {
-    fDsp->instanceConstants(newSampleRate);
-    fDsp->instanceClear();
+    fDsp.init(newSampleRate);
 }
 
 /**
@@ -65,9 +80,9 @@ void PhaserPlugin::sampleRateChanged(double newSampleRate)
 */
 float PhaserPlugin::getParameterValue(uint32_t index) const
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < mydsp_meta::actives, 0);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, 0);
 
-    return mydsp_meta::active_get(*fDsp, index);
+    return fDsp.get_parameter(index);
 }
 
 /**
@@ -75,9 +90,9 @@ float PhaserPlugin::getParameterValue(uint32_t index) const
 */
 void PhaserPlugin::setParameterValue(uint32_t index, float value)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < mydsp_meta::actives,);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters,);
 
-    mydsp_meta::active_set(*fDsp, index, value);
+    fDsp.set_parameter(index, value);
 }
 
 // -----------------------------------------------------------------------
@@ -85,14 +100,18 @@ void PhaserPlugin::setParameterValue(uint32_t index, float value)
 
 void PhaserPlugin::activate()
 {
-    fDsp->instanceClear();
+    fDsp.clear();
 }
 
 
 void PhaserPlugin::run(const float **inputs, float **outputs, uint32_t frames)
 {
     WebCore::DenormalDisabler dd;
-    fDsp->compute(frames, (float **)inputs, outputs);
+#if DISTRHO_PLUGIN_NUM_INPUTS == 1
+    fDsp.process(inputs[0], outputs[0], frames);
+#elif DISTRHO_PLUGIN_NUM_INPUTS == 2
+    fDsp.process(inputs[0], inputs[1], outputs[0], outputs[1], frames);
+#endif
 }
 
 // -----------------------------------------------------------------------

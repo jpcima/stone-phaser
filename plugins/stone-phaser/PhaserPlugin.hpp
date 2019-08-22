@@ -8,9 +8,8 @@
 
 #pragma once
 #include "DistrhoPlugin.hpp"
+#include "StonePhaserDsp.hpp"
 #include <memory>
-
-class mydsp;
 
 // -----------------------------------------------------------------------
 
@@ -98,7 +97,7 @@ protected:
     // -------------------------------------------------------------------
 
 private:
-    std::unique_ptr<mydsp> fDsp;
+    StonePhaserDsp fDsp;
 
     DISTRHO_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PhaserPlugin)
 };

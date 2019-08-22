@@ -1,26 +1,30 @@
-/* ------------------------------------------------------------
-author: "Jean Pierre Cimalando"
-license: "CC0-1.0"
-name: "Stone Phaser Stereo"
-version: "1.2"
-Code generated with Faust 2.15.11 (https://faust.grame.fr)
-Compilation options: -vec -lv 0 -vs 32 -ftz 0 -mcd 16
------------------------------------------------------------- */
+//-----------------------------------------------------------------------------
+// This file was generated using the Faust compiler (https://faust.grame.fr),
+// and the Faust post-processor (https://github.com/jpcima/faustpp).
+//
+// Source: stone_phaser_stereo.dsp
+// Name: Stone Phaser Stereo
+// Author: Jean Pierre Cimalando
+// Copyright: 
+// License: CC0-1.0
+// Version: 1.2
+//-----------------------------------------------------------------------------
 
-#ifndef  __mydsp_H__
-#define  __mydsp_H__
+#include "StonePhaserDsp.hpp"
 
-#include <cmath>
-#include <cstdint>
+//------------------------------------------------------------------------------
+// Begin the Faust code section
 
-template <class T> T min(T a, T b) { return (a < b) ? a : b; }
-template <class T> T max(T a, T b) { return (a > b) ? a : b; }
+template <class T> inline T min(T a, T b) { return (a < b) ? a : b; }
+template <class T> inline T max(T a, T b) { return (a > b) ? a : b; }
 
+// dummy
 class Meta {
 public:
     void declare(...) {}
 };
 
+// dummy
 class UI {
 public:
     void openHorizontalBox(...) {}
@@ -34,15 +38,20 @@ public:
     void addVerticalBargraph(...) {}
 };
 
+// dummy
 class dsp {
+public:
 };
 
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
+#if defined(__GNUC__)
+#   pragma GCC diagnostic push
+#   pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
-#define virtual /* do not make methods virtual */
+#define virtual // do not declare any methods virtual
+#define private public // do not hide any members
+#define protected public // do not hide any members
+
 
 #ifndef FAUSTFLOAT
 #define FAUSTFLOAT float
@@ -55,7 +64,7 @@ class dsp {
 
 class mydspSIG0 {
 	
-  public:
+  private:
 	
 	int iRec15[2];
 	
@@ -136,7 +145,7 @@ static float ftbl0mydspSIG0[128];
 
 class mydsp : public dsp {
 	
- public:
+ private:
 	
 	int fSamplingFreq;
 	float fConst0;
@@ -417,31 +426,35 @@ class mydsp : public dsp {
 	virtual void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("Stone Phaser Stereo");
 		ui_interface->declare(&fCheckbox0, "0", "");
-		ui_interface->declare(&fCheckbox0, "md.symbol", "bypass");
+		ui_interface->declare(&fCheckbox0, "symbol", "bypass");
 		ui_interface->addCheckButton("Bypass", &fCheckbox0);
 		ui_interface->declare(&fHslider1, "1", "");
-		ui_interface->declare(&fHslider1, "md.symbol", "color");
+		ui_interface->declare(&fHslider1, "boolean", "");
+		ui_interface->declare(&fHslider1, "symbol", "color");
 		ui_interface->addHorizontalSlider("Color", &fHslider1, 1.0f, 0.0f, 1.0f, 1.0f);
 		ui_interface->declare(&fHslider3, "2", "");
-		ui_interface->declare(&fHslider3, "md.symbol", "lfo_frequency");
 		ui_interface->declare(&fHslider3, "scale", "log");
+		ui_interface->declare(&fHslider3, "symbol", "lfo_frequency");
 		ui_interface->declare(&fHslider3, "unit", "Hz");
 		ui_interface->addHorizontalSlider("LFO frequency", &fHslider3, 0.200000003f, 0.00999999978f, 5.0f, 0.00999999978f);
 		ui_interface->declare(&fHslider0, "3", "");
-		ui_interface->declare(&fHslider0, "md.symbol", "feedback_depth");
+		ui_interface->declare(&fHslider0, "integer", "");
+		ui_interface->declare(&fHslider0, "symbol", "feedback_depth");
 		ui_interface->declare(&fHslider0, "unit", "%");
 		ui_interface->addHorizontalSlider("Feedback depth", &fHslider0, 75.0f, 0.0f, 99.0f, 1.0f);
 		ui_interface->declare(&fHslider2, "4", "");
-		ui_interface->declare(&fHslider2, "md.symbol", "feedback_hpf_cutoff");
 		ui_interface->declare(&fHslider2, "scale", "log");
+		ui_interface->declare(&fHslider2, "symbol", "feedback_hpf_cutoff");
 		ui_interface->declare(&fHslider2, "unit", "Hz");
 		ui_interface->addHorizontalSlider("Feedback bass cut", &fHslider2, 500.0f, 10.0f, 5000.0f, 1.0f);
 		ui_interface->declare(&fHslider4, "5", "");
-		ui_interface->declare(&fHslider4, "md.symbol", "mix");
+		ui_interface->declare(&fHslider4, "integer", "");
+		ui_interface->declare(&fHslider4, "symbol", "mix");
 		ui_interface->declare(&fHslider4, "unit", "%");
 		ui_interface->addHorizontalSlider("Dry/wet mix", &fHslider4, 50.0f, 0.0f, 100.0f, 1.0f);
 		ui_interface->declare(&fHslider5, "6", "");
-		ui_interface->declare(&fHslider5, "md.symbol", "stereo_phase");
+		ui_interface->declare(&fHslider5, "integer", "");
+		ui_interface->declare(&fHslider5, "symbol", "stereo_phase");
 		ui_interface->declare(&fHslider5, "unit", "deg");
 		ui_interface->addHorizontalSlider("Stereo phase", &fHslider5, 0.0f, -180.0f, 180.0f, 1.0f);
 		ui_interface->closeBox();
@@ -1407,162 +1420,406 @@ class mydsp : public dsp {
 
 };
 
-#ifdef FAUST_UIMACROS
-	#define FAUST_INPUTS 2
-	#define FAUST_OUTPUTS 2
-	#define FAUST_ACTIVES 7
-	#define FAUST_PASSIVES 0
-	FAUST_ADDCHECKBOX("Bypass", fCheckbox0);
-	FAUST_ADDHORIZONTALSLIDER("Color", fHslider1, 1.0f, 0.0f, 1.0f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("LFO frequency", fHslider3, 0.20000000000000001f, 0.01f, 5.0f, 0.01f);
-	FAUST_ADDHORIZONTALSLIDER("Feedback depth", fHslider0, 75.0f, 0.0f, 99.0f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("Feedback bass cut", fHslider2, 500.0f, 10.0f, 5000.0f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("Dry/wet mix", fHslider4, 50.0f, 0.0f, 100.0f, 1.0f);
-	FAUST_ADDHORIZONTALSLIDER("Stereo phase", fHslider5, 0.0f, -180.0f, 180.0f, 1.0f);
-#endif
+
 #undef virtual
+#undef private
+#undef protected
 
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
+#if defined(__GNUC__)
+#   pragma GCC diagnostic pop
 #endif
 
-#endif
-#ifndef __mydsp_meta_H__
-#define __mydsp_meta_H__
+//------------------------------------------------------------------------------
+// End the Faust code section
 
-#include <cstddef>
-
-#ifndef FAUSTMETA
-#define FAUSTMETA mydsp_meta
-#endif
-
-#ifdef __GNUC__
-#define FMSTATIC __attribute__((unused)) static
-#else
-#define FMSTATIC static
-#endif
-
-namespace mydsp_meta {
-	struct metadata_t { const char *key; const char *value; };
-	enum class active_type_t { button, checkbox, vslider, hslider, nentry };
-	enum class passive_type_t { vbargraph, hbargraph };
-	enum class scale_t { linear, log, exp };
-
-	FMSTATIC constexpr char name[] = u8"Stone Phaser Stereo";
-	FMSTATIC constexpr char author[] = u8"Jean Pierre Cimalando";
-	FMSTATIC constexpr char copyright[] = u8"";
-	FMSTATIC constexpr char license[] = u8"CC0-1.0";
-	FMSTATIC constexpr char version[] = u8"1.2";
-	FMSTATIC constexpr char classname[] = u8"mydsp";
-	FMSTATIC constexpr unsigned inputs = 2;
-	FMSTATIC constexpr unsigned outputs = 2;
-	FMSTATIC constexpr unsigned actives = 7;
-	FMSTATIC constexpr unsigned passives = 0;
-
-	FMSTATIC const metadata_t metadata[] = {{u8"author", u8"Jean Pierre Cimalando"}, {u8"basics.lib/name", u8"Faust Basic Element Library"}, {u8"basics.lib/version", u8"0.0"}, {u8"filename", u8"stone_phaser_stereo"}, {u8"filters.lib/name", u8"Faust Filters Library"}, {u8"filters.lib/version", u8"0.0"}, {u8"license", u8"CC0-1.0"}, {u8"maths.lib/author", u8"GRAME"}, {u8"maths.lib/copyright", u8"GRAME"}, {u8"maths.lib/license", u8"LGPL with exception"}, {u8"maths.lib/name", u8"Faust Math Library"}, {u8"maths.lib/version", u8"2.1"}, {u8"name", u8"Stone Phaser Stereo"}, {u8"oscillators.lib/name", u8"Faust Oscillator Library"}, {u8"oscillators.lib/version", u8"0.0"}, {u8"signals.lib/name", u8"Faust Signal Routing Library"}, {u8"signals.lib/version", u8"0.0"}, {u8"stone_phaser.dsp/author", u8"Jean Pierre Cimalando"}, {u8"stone_phaser.dsp/license", u8"CC0-1.0"}, {u8"stone_phaser.dsp/name", u8"Stone Phaser"}, {u8"stone_phaser.dsp/version", u8"1.2.2"}, {u8"version", u8"1.2"}};
-
-	FMSTATIC constexpr active_type_t active_type[] = {active_type_t::checkbox, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider, active_type_t::hslider};
-	FMSTATIC constexpr int active_id[] = {1, 2, 3, 4, 5, 6, 7};
-	FMSTATIC const char *const active_label[] = {u8"Bypass", u8"Color", u8"LFO frequency", u8"Feedback depth", u8"Feedback bass cut", u8"Dry/wet mix", u8"Stereo phase"};
-	FMSTATIC const char *const active_symbol[] = {u8"bypass", u8"color", u8"lfo_frequency", u8"feedback_depth", u8"feedback_hpf_cutoff", u8"mix", u8"stereo_phase"};
-	FMSTATIC const std::size_t active_offsets[] = {(size_t)&((FAUSTCLASS *)0)->fCheckbox0, (size_t)&((FAUSTCLASS *)0)->fHslider1, (size_t)&((FAUSTCLASS *)0)->fHslider3, (size_t)&((FAUSTCLASS *)0)->fHslider0, (size_t)&((FAUSTCLASS *)0)->fHslider2, (size_t)&((FAUSTCLASS *)0)->fHslider4, (size_t)&((FAUSTCLASS *)0)->fHslider5};
-	FMSTATIC constexpr FAUSTFLOAT active_init[] = {0, 1, 0.2, 75, 500, 50, 0};
-	FMSTATIC constexpr FAUSTFLOAT active_min[] = {0, 0, 0.01, 0, 10, 0, -180};
-	FMSTATIC constexpr FAUSTFLOAT active_max[] = {1, 1, 5, 99, 5000, 100, 180};
-	FMSTATIC constexpr FAUSTFLOAT active_step[] = {1, 1, 0.01, 1, 1, 1, 1};
-
-	FMSTATIC const char *const active_unit[] = {u8"", u8"", u8"Hz", u8"%", u8"Hz", u8"%", u8"deg"};
-	FMSTATIC constexpr scale_t active_scale[] = {scale_t::linear, scale_t::linear, scale_t::log, scale_t::linear, scale_t::log, scale_t::linear, scale_t::linear};
-	FMSTATIC const char *const active_tooltip[] = {u8"", u8"", u8"", u8"", u8"", u8"", u8""};
-
-	FMSTATIC const metadata_t active_metadata_0[] = {{u8"md.symbol", u8"bypass"}};
-	FMSTATIC const metadata_t active_metadata_1[] = {{u8"md.symbol", u8"color"}};
-	FMSTATIC const metadata_t active_metadata_2[] = {{u8"md.symbol", u8"lfo_frequency"}, {u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
-	FMSTATIC const metadata_t active_metadata_3[] = {{u8"md.symbol", u8"feedback_depth"}, {u8"unit", u8"%"}};
-	FMSTATIC const metadata_t active_metadata_4[] = {{u8"md.symbol", u8"feedback_hpf_cutoff"}, {u8"scale", u8"log"}, {u8"unit", u8"Hz"}};
-	FMSTATIC const metadata_t active_metadata_5[] = {{u8"md.symbol", u8"mix"}, {u8"unit", u8"%"}};
-	FMSTATIC const metadata_t active_metadata_6[] = {{u8"md.symbol", u8"stereo_phase"}, {u8"unit", u8"deg"}};
-
-	FMSTATIC const metadata_t *const active_metadata[] = {active_metadata_0, active_metadata_1, active_metadata_2, active_metadata_3, active_metadata_4, active_metadata_5, active_metadata_6};
-	FMSTATIC constexpr std::size_t active_metadata_size[] = {1, 1, 3, 2, 3, 2, 2};
-
-	FMSTATIC inline void active_set(FAUSTCLASS &x, unsigned idx, FAUSTFLOAT v) { *(FAUSTFLOAT *)((char *)&x + active_offsets[idx]) = v; }
-	FMSTATIC inline FAUSTFLOAT active_get(const FAUSTCLASS &x, unsigned idx) { return *(const FAUSTFLOAT *)((const char *)&x + active_offsets[idx]); }
-
-	FMSTATIC inline void set_bypass(FAUSTCLASS &x, FAUSTFLOAT v) { x.fCheckbox0 = v; }
-	FMSTATIC inline void set_color(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider1 = v; }
-	FMSTATIC inline void set_lfo_frequency(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider3 = v; }
-	FMSTATIC inline void set_feedback_depth(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider0 = v; }
-	FMSTATIC inline void set_feedback_hpf_cutoff(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider2 = v; }
-	FMSTATIC inline void set_mix(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider4 = v; }
-	FMSTATIC inline void set_stereo_phase(FAUSTCLASS &x, FAUSTFLOAT v) { x.fHslider5 = v; }
-	FMSTATIC inline FAUSTFLOAT get_bypass(const FAUSTCLASS &x) { return x.fCheckbox0; }
-	FMSTATIC inline FAUSTFLOAT get_color(const FAUSTCLASS &x) { return x.fHslider1; }
-	FMSTATIC inline FAUSTFLOAT get_lfo_frequency(const FAUSTCLASS &x) { return x.fHslider3; }
-	FMSTATIC inline FAUSTFLOAT get_feedback_depth(const FAUSTCLASS &x) { return x.fHslider0; }
-	FMSTATIC inline FAUSTFLOAT get_feedback_hpf_cutoff(const FAUSTCLASS &x) { return x.fHslider2; }
-	FMSTATIC inline FAUSTFLOAT get_mix(const FAUSTCLASS &x) { return x.fHslider4; }
-	FMSTATIC inline FAUSTFLOAT get_stereo_phase(const FAUSTCLASS &x) { return x.fHslider5; }
-
-	FMSTATIC constexpr passive_type_t passive_type[] = {};
-	FMSTATIC constexpr int passive_id[] = {};
-	FMSTATIC const char *const passive_label[] = {};
-	FMSTATIC const char *const passive_symbol[] = {};
-	FMSTATIC const std::size_t passive_offsets[] = {};
-	FMSTATIC constexpr FAUSTFLOAT passive_init[] = {};
-	FMSTATIC constexpr FAUSTFLOAT passive_min[] = {};
-	FMSTATIC constexpr FAUSTFLOAT passive_max[] = {};
-	FMSTATIC constexpr FAUSTFLOAT passive_step[] = {};
-
-	FMSTATIC const char *const passive_unit[] = {};
-	FMSTATIC constexpr scale_t passive_scale[] = {};
-	FMSTATIC const char *const passive_tooltip[] = {};
-
-	FMSTATIC const metadata_t *const passive_metadata[] = {};
-	FMSTATIC constexpr std::size_t passive_metadata_size[] = {};
-
-	FMSTATIC inline FAUSTFLOAT passive_get(const FAUSTCLASS &x, unsigned idx) { return *(const FAUSTFLOAT *)((const char *)&x + passive_offsets[idx]); }
-
-}
-
-#undef FMSTATIC
-#endif // __mydsp_meta_H__
-#include <DistrhoPlugin.hpp>
-
-namespace FAUSTMETA {
-
-static void init_active_parameter(uint32_t index, DISTRHO::Parameter &parameter)
+StonePhaserDsp::StonePhaserDsp()
+    : fDsp(new mydsp)
 {
-    FAUSTFLOAT step = FAUSTMETA::active_step[index];
-    FAUSTFLOAT min = FAUSTMETA::active_min[index];
-    FAUSTFLOAT max = FAUSTMETA::active_max[index];
-    FAUSTFLOAT init = FAUSTMETA::active_init[index];
-    FAUSTMETA::active_type_t type = FAUSTMETA::active_type[index];
-    FAUSTMETA::scale_t scale = FAUSTMETA::active_scale[index];
-
-    parameter.name = FAUSTMETA::active_label[index];
-    parameter.symbol = FAUSTMETA::active_symbol[index];
-    parameter.unit = FAUSTMETA::active_unit[index];
-    parameter.hints = kParameterIsAutomable;
-
-    parameter.ranges.min = min;
-    parameter.ranges.max = max;
-    parameter.ranges.def = init;
-
-    if (type == FAUSTMETA::active_type_t::button)
-        parameter.hints |= kParameterIsTrigger;
-    else if (type == FAUSTMETA::active_type_t::checkbox) {
-        parameter.hints |= kParameterIsBoolean|kParameterIsInteger;
-    }
-    else {
-        if (step == 1 && (int)min == min && (int)max == max && (int)init == init) {
-            parameter.hints |= kParameterIsInteger;
-            if ((int)min + (int)step == (int)max)
-                parameter.hints |= kParameterIsBoolean;
-        }
-    }
-    if (scale == FAUSTMETA::scale_t::log)
-        parameter.hints |= kParameterIsLogarithmic;
+    fDsp->instanceResetUserInterface();
 }
 
-} // namespace FAUSTMETA
+StonePhaserDsp::~StonePhaserDsp()
+{
+    delete fDsp;
+}
+
+void StonePhaserDsp::init(float sample_rate)
+{
+    mydsp &dsp = *fDsp;
+    dsp.classInit(sample_rate);
+    dsp.instanceConstants(sample_rate);
+    dsp.instanceClear();
+}
+
+void StonePhaserDsp::clear() noexcept
+{
+    fDsp->instanceClear();
+}
+
+void StonePhaserDsp::process(
+    const float *in0,const float *in1,
+    float *out0,float *out1,
+    unsigned count) noexcept
+{
+    float *inputs[] = {
+        const_cast<float *>(in0),const_cast<float *>(in1),
+    };
+    float *outputs[] = {
+        out0,out1,
+    };
+    fDsp->compute(count, inputs, outputs);
+}
+
+const char *StonePhaserDsp::parameter_label(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return "Bypass";
+    
+    case 1:
+        return "Color";
+    
+    case 2:
+        return "LFO frequency";
+    
+    case 3:
+        return "Feedback depth";
+    
+    case 4:
+        return "Feedback bass cut";
+    
+    case 5:
+        return "Dry/wet mix";
+    
+    case 6:
+        return "Stereo phase";
+    
+    default:
+        return 0;
+    }
+}
+
+const char *StonePhaserDsp::parameter_symbol(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return "bypass";
+    
+    case 1:
+        return "color";
+    
+    case 2:
+        return "lfo_frequency";
+    
+    case 3:
+        return "feedback_depth";
+    
+    case 4:
+        return "feedback_hpf_cutoff";
+    
+    case 5:
+        return "mix";
+    
+    case 6:
+        return "stereo_phase";
+    
+    default:
+        return 0;
+    }
+}
+
+const char *StonePhaserDsp::parameter_unit(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return "";
+    
+    case 1:
+        return "";
+    
+    case 2:
+        return "Hz";
+    
+    case 3:
+        return "%";
+    
+    case 4:
+        return "Hz";
+    
+    case 5:
+        return "%";
+    
+    case 6:
+        return "deg";
+    
+    default:
+        return 0;
+    }
+}
+
+const StonePhaserDsp::ParameterRange *StonePhaserDsp::parameter_range(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0: {
+        static const ParameterRange range = { 0.0, 0.0, 1.0 };
+        return &range;
+    }
+    
+    case 1: {
+        static const ParameterRange range = { 1.0, 0.0, 1.0 };
+        return &range;
+    }
+    
+    case 2: {
+        static const ParameterRange range = { 0.20000000298023224, 0.009999999776482582, 5.0 };
+        return &range;
+    }
+    
+    case 3: {
+        static const ParameterRange range = { 75.0, 0.0, 99.0 };
+        return &range;
+    }
+    
+    case 4: {
+        static const ParameterRange range = { 500.0, 10.0, 5000.0 };
+        return &range;
+    }
+    
+    case 5: {
+        static const ParameterRange range = { 50.0, 0.0, 100.0 };
+        return &range;
+    }
+    
+    case 6: {
+        static const ParameterRange range = { 0.0, -180.0, 180.0 };
+        return &range;
+    }
+    
+    default:
+        return 0;
+    }
+}
+
+bool StonePhaserDsp::parameter_is_trigger(unsigned index) noexcept
+{
+    switch (index) {
+    
+    default:
+        return false;
+    }
+}
+
+bool StonePhaserDsp::parameter_is_boolean(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return true;
+    
+    case 1:
+        return true;
+    
+    default:
+        return false;
+    }
+}
+
+bool StonePhaserDsp::parameter_is_integer(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return true;
+    
+    case 1:
+        return true;
+    
+    case 3:
+        return true;
+    
+    case 5:
+        return true;
+    
+    case 6:
+        return true;
+    
+    default:
+        return false;
+    }
+}
+
+bool StonePhaserDsp::parameter_is_logarithmic(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 2:
+        return true;
+    
+    case 4:
+        return true;
+    
+    default:
+        return false;
+    }
+}
+
+float StonePhaserDsp::get_parameter(unsigned index) const noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return fDsp->fCheckbox0;
+    
+    case 1:
+        return fDsp->fHslider1;
+    
+    case 2:
+        return fDsp->fHslider3;
+    
+    case 3:
+        return fDsp->fHslider0;
+    
+    case 4:
+        return fDsp->fHslider2;
+    
+    case 5:
+        return fDsp->fHslider4;
+    
+    case 6:
+        return fDsp->fHslider5;
+    
+    default:
+        return 0;
+    }
+}
+
+void StonePhaserDsp::set_parameter(unsigned index, float value) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        fDsp->fCheckbox0 = value;
+        break;
+    
+    case 1:
+        fDsp->fHslider1 = value;
+        break;
+    
+    case 2:
+        fDsp->fHslider3 = value;
+        break;
+    
+    case 3:
+        fDsp->fHslider0 = value;
+        break;
+    
+    case 4:
+        fDsp->fHslider2 = value;
+        break;
+    
+    case 5:
+        fDsp->fHslider4 = value;
+        break;
+    
+    case 6:
+        fDsp->fHslider5 = value;
+        break;
+    
+    default:
+        break;
+    }
+}
+
+
+float StonePhaserDsp::get_bypass() const noexcept
+{
+    return fDsp->fCheckbox0;
+}
+
+void StonePhaserDsp::set_bypass(float value) noexcept
+{
+    fDsp->fCheckbox0 = value;
+}
+
+float StonePhaserDsp::get_color() const noexcept
+{
+    return fDsp->fHslider1;
+}
+
+void StonePhaserDsp::set_color(float value) noexcept
+{
+    fDsp->fHslider1 = value;
+}
+
+float StonePhaserDsp::get_lfo_frequency() const noexcept
+{
+    return fDsp->fHslider3;
+}
+
+void StonePhaserDsp::set_lfo_frequency(float value) noexcept
+{
+    fDsp->fHslider3 = value;
+}
+
+float StonePhaserDsp::get_feedback_depth() const noexcept
+{
+    return fDsp->fHslider0;
+}
+
+void StonePhaserDsp::set_feedback_depth(float value) noexcept
+{
+    fDsp->fHslider0 = value;
+}
+
+float StonePhaserDsp::get_feedback_hpf_cutoff() const noexcept
+{
+    return fDsp->fHslider2;
+}
+
+void StonePhaserDsp::set_feedback_hpf_cutoff(float value) noexcept
+{
+    fDsp->fHslider2 = value;
+}
+
+float StonePhaserDsp::get_mix() const noexcept
+{
+    return fDsp->fHslider4;
+}
+
+void StonePhaserDsp::set_mix(float value) noexcept
+{
+    fDsp->fHslider4 = value;
+}
+
+float StonePhaserDsp::get_stereo_phase() const noexcept
+{
+    return fDsp->fHslider5;
+}
+
+void StonePhaserDsp::set_stereo_phase(float value) noexcept
+{
+    fDsp->fHslider5 = value;
+}
+
+
+#if __cplusplus >= 201103L
+StonePhaserDsp::StonePhaserDsp(StonePhaserDsp &&other) noexcept
+    : fDsp(other.fDsp)
+{
+    other.fDsp = 0;
+}
+
+StonePhaserDsp &StonePhaserDsp::operator=(StonePhaserDsp &&other) noexcept
+{
+    if (this != &other) {
+        delete fDsp;
+        fDsp = other.fDsp;
+        other.fDsp = 0;
+    }
+    return *this;
+}
+#endif
