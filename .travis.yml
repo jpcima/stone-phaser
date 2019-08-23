@@ -83,26 +83,6 @@ matrix:
         - echo "A classic analog phaser effect" > description-pak
         - sudo checkinstall --type=debian --install=no --default --pkgname=stone-phaser --pkgversion="`git describe --abbrev=0 | sed 's/^v//'``git log -n 1 --pretty=format:"+%cd~git%h" --date=short master | sed 's/-//g'`" --pkgarch=amd64 --pkgrelease=0jpc1 --pkglicense=BSL-1.0 --pkggroup=sound --maintainer="jp-dev@inbox.ru" --nodoc
         - sudo mv -f *.deb release/stone-phaser-"$_BUILD".deb
-    - os: linux
-      sudo: required
-      dist: trusty
-      env:
-        - _BITS=32
-        - _BUILD=linux32
-      before_install:
-        - sudo dpkg --add-architecture i386
-        - sudo apt-get update -qq
-      install:
-        - sudo apt-get install checkinstall libc6-dev-i386 lib32stdc++-4.8-dev libc6:i386 libstdc++6:i386 libcairo2-dev:i386 libfontconfig1-dev:i386 libfreetype6-dev:i386 libpng-dev:i386
-      script:
-        - bash .travis/script-linux.sh
-        - cp -drfv bin stone-phaser-"$_BUILD"
-        - rm -f stone-phaser-"$_BUILD"/README
-        - install -d release
-        - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
-        - echo "A classic analog phaser effect" > description-pak
-        - sudo checkinstall --type=debian --install=no --default --pkgname=stone-phaser --pkgversion="`git describe --abbrev=0 | sed 's/^v//'``git log -n 1 --pretty=format:"+%cd~git%h" --date=short master | sed 's/-//g'`" --pkgarch=i386 --pkgrelease=0jpc1 --pkglicense=BSL-1.0 --pkggroup=sound --maintainer="jp-dev@inbox.ru" --nodoc
-        - sudo mv -f *.deb release/stone-phaser-"$_BUILD".deb
 
 before_script:
   - sed -i~ 's%/usr/local%/usr%g' plugins/*/Makefile
