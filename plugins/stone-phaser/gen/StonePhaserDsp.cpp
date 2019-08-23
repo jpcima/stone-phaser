@@ -43,9 +43,24 @@ class dsp {
 public:
 };
 
+#define FAUSTPP_VIRTUAL // do not declare any methods virtual
+#define FAUSTPP_PRIVATE public // do not hide any members
+#define FAUSTPP_PROTECTED public // do not hide any members
+
+
 #if defined(__GNUC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wunused-parameter"
+#endif
+
+#ifndef FAUSTPP_PRIVATE
+#   define FAUSTPP_PRIVATE private
+#endif
+#ifndef FAUSTPP_PROTECTED
+#   define FAUSTPP_PROTECTED protected
+#endif
+#ifndef FAUSTPP_VIRTUAL
+#   define FAUSTPP_VIRTUAL virtual
 #endif
 
 #ifndef FAUSTFLOAT
@@ -56,14 +71,10 @@ public:
 #include <cmath>
 #include <math.h>
 
-#define virtual // do not declare any methods virtual
-#define private public // do not hide any members
-#define protected public // do not hide any members
-
 
 class mydspSIG0 {
 	
-  private:
+  FAUSTPP_PRIVATE:
 	
 	int iRec15[2];
 	
@@ -144,7 +155,7 @@ static float ftbl0mydspSIG0[128];
 
 class mydsp : public dsp {
 	
- private:
+ FAUSTPP_PRIVATE:
 	
 	int fSamplingFreq;
 	float fConst0;
@@ -203,15 +214,15 @@ class mydsp : public dsp {
 		m->declare("version", "1.2.2");
 	}
 
-	virtual int getNumInputs() {
+	FAUSTPP_VIRTUAL int getNumInputs() {
 		return 1;
 		
 	}
-	virtual int getNumOutputs() {
+	FAUSTPP_VIRTUAL int getNumOutputs() {
 		return 1;
 		
 	}
-	virtual int getInputRate(int channel) {
+	FAUSTPP_VIRTUAL int getInputRate(int channel) {
 		int rate;
 		switch (channel) {
 			case 0: {
@@ -227,7 +238,7 @@ class mydsp : public dsp {
 		return rate;
 		
 	}
-	virtual int getOutputRate(int channel) {
+	FAUSTPP_VIRTUAL int getOutputRate(int channel) {
 		int rate;
 		switch (channel) {
 			case 0: {
@@ -252,7 +263,7 @@ class mydsp : public dsp {
 		
 	}
 	
-	virtual void instanceConstants(int samplingFreq) {
+	FAUSTPP_VIRTUAL void instanceConstants(int samplingFreq) {
 		fSamplingFreq = samplingFreq;
 		fConst0 = std::min<float>(192000.0f, std::max<float>(1.0f, float(fSamplingFreq)));
 		fConst1 = std::exp((0.0f - (10.0f / fConst0)));
@@ -266,7 +277,7 @@ class mydsp : public dsp {
 		
 	}
 	
-	virtual void instanceResetUserInterface() {
+	FAUSTPP_VIRTUAL void instanceResetUserInterface() {
 		fCheckbox0 = FAUSTFLOAT(0.0f);
 		fHslider0 = FAUSTFLOAT(75.0f);
 		fHslider1 = FAUSTFLOAT(1.0f);
@@ -276,7 +287,7 @@ class mydsp : public dsp {
 		
 	}
 	
-	virtual void instanceClear() {
+	FAUSTPP_VIRTUAL void instanceClear() {
 		for (int l0 = 0; (l0 < 4); l0 = (l0 + 1)) {
 			fRec0_perm[l0] = 0.0f;
 			
@@ -348,27 +359,27 @@ class mydsp : public dsp {
 		
 	}
 	
-	virtual void init(int samplingFreq) {
+	FAUSTPP_VIRTUAL void init(int samplingFreq) {
 		classInit(samplingFreq);
 		instanceInit(samplingFreq);
 	}
 	
-	virtual void instanceInit(int samplingFreq) {
+	FAUSTPP_VIRTUAL void instanceInit(int samplingFreq) {
 		instanceConstants(samplingFreq);
 		instanceResetUserInterface();
 		instanceClear();
 	}
 	
-	virtual mydsp* clone() {
+	FAUSTPP_VIRTUAL mydsp* clone() {
 		return new mydsp();
 	}
 	
-	virtual int getSampleRate() {
+	FAUSTPP_VIRTUAL int getSampleRate() {
 		return fSamplingFreq;
 		
 	}
 	
-	virtual void buildUserInterface(UI* ui_interface) {
+	FAUSTPP_VIRTUAL void buildUserInterface(UI* ui_interface) {
 		ui_interface->openVerticalBox("Stone Phaser");
 		ui_interface->declare(&fCheckbox0, "0", "");
 		ui_interface->declare(&fCheckbox0, "symbol", "bypass");
@@ -401,7 +412,7 @@ class mydsp : public dsp {
 		
 	}
 	
-	virtual void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
+	FAUSTPP_VIRTUAL void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 		FAUSTFLOAT* input0_ptr = inputs[0];
 		FAUSTFLOAT* output0_ptr = outputs[0];
 		float fSlow0 = (fConst2 * float(fCheckbox0));
@@ -1035,14 +1046,10 @@ class mydsp : public dsp {
 
 };
 
-
-#undef virtual
-#undef private
-#undef protected
-
 #if defined(__GNUC__)
 #   pragma GCC diagnostic pop
 #endif
+
 
 //------------------------------------------------------------------------------
 // End the Faust code section

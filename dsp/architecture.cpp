@@ -43,25 +43,12 @@ class dsp {
 public:
 };
 
-#if defined(__GNUC__)
-#   pragma GCC diagnostic push
-#   pragma GCC diagnostic ignored "-Wunused-parameter"
-#endif
-
-#define virtual // do not declare any methods virtual
-#define private public // do not hide any members
-#define protected public // do not hide any members
+#define FAUSTPP_VIRTUAL // do not declare any methods virtual
+#define FAUSTPP_PRIVATE public // do not hide any members
+#define FAUSTPP_PROTECTED public // do not hide any members
 
 {{intrinsic_code}}
 {{class_code}}
-
-#undef virtual
-#undef private
-#undef protected
-
-#if defined(__GNUC__)
-#   pragma GCC diagnostic pop
-#endif
 
 //------------------------------------------------------------------------------
 // End the Faust code section
