@@ -21,10 +21,48 @@ This effect is supported on [MOD devices](https://www.moddevices.com/).
 
 - All: download from [Automatic builds](https://github.com/jpcima/stone-phaser/releases/tag/automatic).
 
-## How to build and install
+## Build instructions
 
-- `make`
-- `sudo make install` (for system), or `make install-user` (for user)
+1. Obtain prerequisites
+
+Install needed packages:
+
+- `git`
+- `build-essential`
+- `pkg-config`
+- `libx11-dev`
+- `libcairo2-dev`
+- `libjack-jackd2-dev` or `libjack-dev`
+- `mesa-common-dev`
+
+2. Check out the repository and submodules
+
+```
+git clone https://github.com/jpcima/stone-phaser.git
+cd stone-phaser
+git submodule update --init
+```
+
+3. Patch DPF
+
+This recommended patch works around a current bug in LV2 graphical interfaces.
+
+```
+patch -d dpf -p 1 -i "`pwd`/resources/patch/DPF-bypass.patch"
+```
+
+4. Compile
+
+```
+make
+```
+
+5. Install
+
+```
+sudo make install  # to install in system directories, or
+make install-user  # to install in the home directory
+``` 
 
 ## Change log
 
