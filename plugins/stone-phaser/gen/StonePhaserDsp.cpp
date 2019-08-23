@@ -48,11 +48,6 @@ public:
 #   pragma GCC diagnostic ignored "-Wunused-parameter"
 #endif
 
-#define virtual // do not declare any methods virtual
-#define private public // do not hide any members
-#define protected public // do not hide any members
-
-
 #ifndef FAUSTFLOAT
 #define FAUSTFLOAT float
 #endif 
@@ -60,6 +55,10 @@ public:
 #include <algorithm>
 #include <cmath>
 #include <math.h>
+
+#define virtual // do not declare any methods virtual
+#define private public // do not hide any members
+#define protected public // do not hide any members
 
 
 class mydspSIG0 {

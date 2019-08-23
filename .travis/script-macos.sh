@@ -25,4 +25,5 @@ export LDFLAGS="-L/opt/local/lib"
 # ---------------------------------------------------------------------------------------------------------------------
 # build the plugin
 
-MACOS=true make $MAKE_ARGS
+# TODO setup cairo UI build...
+MACOS=true BUILD_UI=false make $MAKE_ARGS

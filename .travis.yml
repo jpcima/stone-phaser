@@ -73,9 +73,7 @@ matrix:
       before_install:
         - sudo apt-get update -qq
       install:
-        - sudo apt-get install checkinstall
-      before_script:
-        - sed -i 's%/usr/local%/usr%g' plugins/*/Makefile
+        - sudo apt-get install checkinstall libcairo2-dev
       script:
         - bash .travis/script-linux.sh
         - cp -drfv bin stone-phaser-"$_BUILD"
@@ -95,9 +93,7 @@ matrix:
         - sudo dpkg --add-architecture i386
         - sudo apt-get update -qq
       install:
-        - sudo apt-get install checkinstall libc6-dev-i386 lib32stdc++-4.8-dev libc6:i386 libstdc++6:i386
-      before_script:
-        - sed -i 's%/usr/local%/usr%g' plugins/*/Makefile
+        - sudo apt-get install checkinstall libc6-dev-i386 lib32stdc++-4.8-dev libc6:i386 libstdc++6:i386 libcairo2-dev:i386 libfontconfig1-dev:i386 libfreetype6-dev:i386 libpng-dev:i386
       script:
         - bash .travis/script-linux.sh
         - cp -drfv bin stone-phaser-"$_BUILD"
@@ -107,6 +103,10 @@ matrix:
         - echo "A classic analog phaser effect" > description-pak
         - sudo checkinstall --type=debian --install=no --default --pkgname=stone-phaser --pkgversion="`git describe --abbrev=0 | sed 's/^v//'``git log -n 1 --pretty=format:"+%cd~git%h" --date=short master | sed 's/-//g'`" --pkgarch=i386 --pkgrelease=0jpc1 --pkglicense=BSL-1.0 --pkggroup=sound --maintainer="jp-dev@inbox.ru" --nodoc
         - sudo mv -f *.deb release/stone-phaser-"$_BUILD".deb
+
+before_script:
+  - sed -i~ 's%/usr/local%/usr%g' plugins/*/Makefile
+  - patch -d dpf -p1 -i "`pwd`"/resources/patch/DPF-bypass.patch
 
 before_deploy:
   - |
