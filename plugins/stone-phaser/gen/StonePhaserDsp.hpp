@@ -55,6 +55,7 @@ public:
     };
 
     static const char *parameter_label(unsigned index) noexcept;
+    static const char *parameter_short_label(unsigned index) noexcept;
     static const char *parameter_symbol(unsigned index) noexcept;
     static const char *parameter_unit(unsigned index) noexcept;
     static const ParameterRange *parameter_range(unsigned index) noexcept;

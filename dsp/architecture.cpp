@@ -103,6 +103,18 @@ const char *{{Identifier}}::parameter_label(unsigned index) noexcept
     }
 }
 
+const char *{{Identifier}}::parameter_short_label(unsigned index) noexcept
+{
+    switch (index) {
+    {% for w in active %}
+    case {{loop.index}}:
+        return {{cstr(default(w.meta.abbrev,""))}};
+    {% endfor%}
+    default:
+        return 0;
+    }
+}
+
 const char *{{Identifier}}::parameter_symbol(unsigned index) noexcept
 {
     switch (index) {

@@ -11,6 +11,7 @@ void InitParameter(uint32_t index, DISTRHO::Parameter &parameter)
         break;
     default:
         parameter.name = StonePhaserDsp::parameter_label(index);
+        parameter.shortName = StonePhaserDsp::parameter_short_label(index);
         parameter.symbol = StonePhaserDsp::parameter_symbol(index);
         parameter.unit = StonePhaserDsp::parameter_unit(index);
         parameter.hints = DISTRHO::kParameterIsAutomable;

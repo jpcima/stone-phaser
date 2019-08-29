@@ -399,6 +399,7 @@ class mydsp : public dsp {
 		ui_interface->declare(&fHslider0, "unit", "%");
 		ui_interface->addHorizontalSlider("Feedback depth", &fHslider0, 75.0f, 0.0f, 99.0f, 1.0f);
 		ui_interface->declare(&fHslider2, "4", "");
+		ui_interface->declare(&fHslider2, "abbrev", "Fb bass cut");
 		ui_interface->declare(&fHslider2, "scale", "log");
 		ui_interface->declare(&fHslider2, "symbol", "feedback_hpf_cutoff");
 		ui_interface->declare(&fHslider2, "unit", "Hz");
@@ -1113,6 +1114,33 @@ const char *StonePhaserDsp::parameter_label(unsigned index) noexcept
     
     case 5:
         return "Dry/wet mix";
+    
+    default:
+        return 0;
+    }
+}
+
+const char *StonePhaserDsp::parameter_short_label(unsigned index) noexcept
+{
+    switch (index) {
+    
+    case 0:
+        return "";
+    
+    case 1:
+        return "";
+    
+    case 2:
+        return "";
+    
+    case 3:
+        return "";
+    
+    case 4:
+        return "Fb bass cut";
+    
+    case 5:
+        return "";
     
     default:
         return 0;
