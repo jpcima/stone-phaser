@@ -10,50 +10,6 @@ cache:
 
 matrix:
   include:
-    - os: linux
-      sudo: required
-      dist: trusty
-      env:
-        - _BUILD=win32
-        - _MINGW=mingw32
-        - _HOST=i686-w64-mingw32
-      before_install:
-        - sudo add-apt-repository ppa:kxstudio-debian/kxstudio -y
-        - sudo add-apt-repository ppa:kxstudio-debian/mingw -y
-        - sudo add-apt-repository ppa:kxstudio-debian/toolchain -y
-        - sudo apt-get update -qq
-        - sudo apt-get install kxstudio-repos
-        - sudo apt-get update -qq
-      install:
-        - sudo apt-get install -y g++ pkg-config "${_MINGW}"-x-gcc "${_MINGW}"-x-pkgconfig wine
-      script:
-        - bash .travis/script-mingw.sh
-        - cp -drfv bin stone-phaser-"$_BUILD"
-        - rm -f stone-phaser-"$_BUILD"/README
-        - install -d release
-        - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
-    - os: linux
-      sudo: required
-      dist: trusty
-      env:
-        - _BUILD=win64
-        - _MINGW=mingw64
-        - _HOST=x86_64-w64-mingw32
-      before_install:
-        - sudo add-apt-repository ppa:kxstudio-debian/kxstudio -y
-        - sudo add-apt-repository ppa:kxstudio-debian/mingw -y
-        - sudo add-apt-repository ppa:kxstudio-debian/toolchain -y
-        - sudo apt-get update -qq
-        - sudo apt-get install kxstudio-repos
-        - sudo apt-get update -qq
-      install:
-        - sudo apt-get install -y g++ pkg-config "${_MINGW}"-x-gcc "${_MINGW}"-x-pkgconfig wine
-      script:
-        - bash .travis/script-mingw.sh
-        - cp -drfv bin stone-phaser-"$_BUILD"
-        - rm -f stone-phaser-"$_BUILD"/README
-        - install -d release
-        - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
     - os: osx
       sudo: required
       env:
@@ -68,25 +24,6 @@ matrix:
         - rm -f stone-phaser-"$_BUILD"/README
         - install -d release
         - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
-    - os: linux
-      sudo: required
-      dist: trusty
-      env:
-        - _BITS=64
-        - _BUILD=linux64
-      before_install:
-        - sudo apt-get update -qq
-      install:
-        - sudo apt-get install checkinstall libcairo2-dev
-      script:
-        - bash .travis/script-linux.sh
-        - cp -drfv bin stone-phaser-"$_BUILD"
-        - rm -f stone-phaser-"$_BUILD"/README
-        - install -d release
-        - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
-        - echo "A classic analog phaser effect" > description-pak
-        - sudo checkinstall --type=debian --install=no --default --pkgname=stone-phaser --pkgversion="`git describe --abbrev=0 | sed 's/^v//'``git log -n 1 --pretty=format:"+%cd~git%h" --date=short master | sed 's/-//g'`" --pkgarch=amd64 --pkgrelease=0jpc1 --pkglicense=BSL-1.0 --pkggroup=sound --maintainer="jp-dev@inbox.ru" --nodoc
-        - sudo mv -f *.deb release/stone-phaser-"$_BUILD".deb
 
 before_script:
   - sed -i~ 's%/usr/local%/usr%g' plugins/*/Makefile
