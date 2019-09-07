@@ -66,6 +66,11 @@ make install-user  # to install in the home directory
 
 ## Change log
 
+**0.1.1**
+
+- add the graphical user interface
+- improve the integration of Faust source code
+
 **0.1.0**
 
 - initial software release
