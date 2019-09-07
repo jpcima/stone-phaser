@@ -59,7 +59,7 @@ private:
     FontEngine &fFontEngine;
     std::string fText;
     Font fTextFont;
-    ColorRGBA8 fTextColor;
+    // ColorRGBA8 fTextColor;
     int fTextAlign = 0;
     PointF fTextOffset;
 };
