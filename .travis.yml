@@ -17,7 +17,7 @@ matrix:
       before_install:
         - source .travis/macports-ci install
       install:
-        - sudo port -v install cairo
+        - sudo port -v install cairo -opengl -x11
       script:
         - bash .travis/script-macos.sh
         - cp -av bin stone-phaser-"$_BUILD"
