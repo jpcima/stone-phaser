@@ -48,6 +48,11 @@ plugins: dgl
 
 dgl:
 	$(MAKE) -C dpf/dgl ../build/libdgl-cairo.a
+
+clean-dgl:
+	$(MAKE) -C dpf/dgl clean
+
+clean: clean-dgl
 endif
 
 # --------------------------------------------------------------
@@ -75,4 +80,4 @@ install-user: all
 
 # --------------------------------------------------------------
 
-.PHONY: all submodule libs plugins gen dgl dsp artwork clean install install-user
+.PHONY: all submodule libs plugins gen dgl dsp artwork clean clean-dgl install install-user
