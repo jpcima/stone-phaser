@@ -66,6 +66,10 @@ make install-user  # to install in the home directory
 
 ## Change log
 
+**0.1.2**
+
+- fix bypass parameter not set when saved and reloaded
+
 **0.1.1**
 
 - add the graphical user interface
