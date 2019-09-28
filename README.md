@@ -62,7 +62,7 @@ make
 ```
 sudo make install  # to install in system directories, or
 make install-user  # to install in the home directory
-``` 
+```
 
 ## Change log
 
