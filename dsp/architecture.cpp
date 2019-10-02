@@ -47,7 +47,6 @@ public:
 #define FAUSTPP_PRIVATE public // do not hide any members
 #define FAUSTPP_PROTECTED public // do not hide any members
 
-{{intrinsic_code}}
 {{class_code}}
 
 //------------------------------------------------------------------------------

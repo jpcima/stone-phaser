@@ -47,7 +47,6 @@ public:
 #define FAUSTPP_PRIVATE public // do not hide any members
 #define FAUSTPP_PROTECTED public // do not hide any members
 
-
 #if defined(__GNUC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -63,13 +62,24 @@ public:
 #   define FAUSTPP_VIRTUAL virtual
 #endif
 
+#ifndef FAUSTPP_BEGIN_NAMESPACE
+#   define FAUSTPP_BEGIN_NAMESPACE
+#endif
+#ifndef FAUSTPP_END_NAMESPACE
+#   define FAUSTPP_END_NAMESPACE
+#endif
+
+FAUSTPP_BEGIN_NAMESPACE
+
 #ifndef FAUSTFLOAT
 #define FAUSTFLOAT float
 #endif 
 
+FAUSTPP_END_NAMESPACE
 #include <algorithm>
 #include <cmath>
 #include <math.h>
+FAUSTPP_BEGIN_NAMESPACE
 
 
 class mydspSIG0 {
@@ -1046,6 +1056,8 @@ class mydsp : public dsp {
 	}
 
 };
+FAUSTPP_END_NAMESPACE
+
 
 #if defined(__GNUC__)
 #   pragma GCC diagnostic pop
