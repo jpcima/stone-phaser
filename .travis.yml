@@ -12,44 +12,42 @@ matrix:
   include:
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       env:
         - _BUILD=win32
         - _MINGW=mingw32
         - _HOST=i686-w64-mingw32
       before_install:
-        - sudo add-apt-repository ppa:kxstudio-debian/kxstudio -y
-        - sudo add-apt-repository ppa:kxstudio-debian/mingw -y
-        - sudo add-apt-repository ppa:kxstudio-debian/toolchain -y
-        - sudo apt-get update -qq
-        - sudo apt-get install kxstudio-repos
-        - sudo apt-get update -qq
+        - docker pull jpcima/arch-mingw
       install:
-        - sudo apt-get install -y g++ pkg-config "${_MINGW}"-x-gcc "${_MINGW}"-x-pkgconfig wine
+        - container=$(docker run -d -i -t -v /home:/home jpcima/arch-mingw /bin/bash)
+        - |
+          cross() {
+            docker exec -w "$(pwd)" -e "_BUILD=$_BUILD" -e "_MINGW=$_MINGW" -e "_HOST=$_HOST" -i -t "$container" "$@"
+          }
       script:
-        - bash .travis/script-mingw.sh
+        - cross bash .travis/script-mingw.sh
         - cp -drfv bin stone-phaser-"$_BUILD"
         - rm -f stone-phaser-"$_BUILD"/README
         - install -d release
         - zip -9 -r release/stone-phaser-"$_BUILD".zip stone-phaser-"$_BUILD"
     - os: linux
       sudo: required
-      dist: trusty
+      dist: bionic
       env:
         - _BUILD=win64
         - _MINGW=mingw64
         - _HOST=x86_64-w64-mingw32
       before_install:
-        - sudo add-apt-repository ppa:kxstudio-debian/kxstudio -y
-        - sudo add-apt-repository ppa:kxstudio-debian/mingw -y
-        - sudo add-apt-repository ppa:kxstudio-debian/toolchain -y
-        - sudo apt-get update -qq
-        - sudo apt-get install kxstudio-repos
-        - sudo apt-get update -qq
+        - docker pull jpcima/arch-mingw
       install:
-        - sudo apt-get install -y g++ pkg-config "${_MINGW}"-x-gcc "${_MINGW}"-x-pkgconfig wine
+        - container=$(docker run -d -i -t -v /home:/home jpcima/arch-mingw /bin/bash)
+        - |
+          cross() {
+            docker exec -w "$(pwd)" -e "_BUILD=$_BUILD" -e "_MINGW=$_MINGW" -e "_HOST=$_HOST" -i -t "$container" "$@"
+          }
       script:
-        - bash .travis/script-mingw.sh
+        - cross bash .travis/script-mingw.sh
         - cp -drfv bin stone-phaser-"$_BUILD"
         - rm -f stone-phaser-"$_BUILD"/README
         - install -d release

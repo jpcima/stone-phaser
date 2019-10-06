@@ -45,4 +45,4 @@ sed -i 's/"$GEN"/wine "$GEN"/g' dpf/utils/generate-ttl.sh
 # build the plugin
 
 # TODO setup cairo UI build...
-CROSS_COMPILING=true WINDOWS=true BUILD_UI=false make $MAKE_ARGS
+CROSS_COMPILING=true WINDOWS=true make $MAKE_ARGS
