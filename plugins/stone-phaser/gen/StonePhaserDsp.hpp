@@ -7,7 +7,7 @@
 // Author: Jean Pierre Cimalando
 // Copyright: 
 // License: CC0-1.0
-// Version: 1.2.2
+// Version: 1.2.3
 //-----------------------------------------------------------------------------
 
 #pragma once

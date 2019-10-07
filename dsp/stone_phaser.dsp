@@ -1,12 +1,16 @@
 declare name "Stone Phaser";
 declare author "Jean Pierre Cimalando";
-declare version "1.2.2";
+declare version "1.2.3";
 declare license "CC0-1.0";
 
 // Référence :
 //     Kiiski, R., Esqueda, F., & Välimäki, V. (2016).
 //     Time-variant gray-box modeling of a phaser pedal.
 //     In 19th International Conference on Digital Audio Effects (DAFx-16).
+//
+//     Huovilainen, A. (2005, September).
+//     Enhanced digital models for analog modulation effects.
+//     In Proc. Int. Conf. Digital Audio Effects (DAFx-05), Madrid, Spain (pp. 155-160).
 
 import("stdfaust.lib");
 
@@ -54,6 +58,23 @@ lowpass1(f) = fi.iir((1.-p), (-p)) with {
 
 tsmooth = si.smooth(ba.tau2pole(t)) with { t = 100e-3; };
 
+//////////////////////////////////////////////////
+// All-pass filter unit (OTA-based, non-linear) //
+//////////////////////////////////////////////////
+
+otaAllpass(f, x) = x + w letrec {
+  'w = w + (2 * R1 * Vt * g / R2) * fastTanh(-R2 * (x + x' + w) / (2 * R1 * Vt));
+}
+with {
+  g = 1 - exp(f * (-2 * ma.PI / ma.SR));
+  // components
+  R1 = 27e3;
+  R2 = 10e3;
+  C = 68e-9;
+  // characteristics
+  Vt = 25e-3;
+};
+
 //////////
 // LFOs //
 //////////
@@ -93,10 +114,13 @@ mono_phaser(x, lfo_pos) = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet) wit
   modFreq = ba.midikey2hz(lfoAnalogTriangle(0.95, lfo_pos, lfoLoF, lfoHiF));
   //modFreq = ba.midikey2hz(lfoExponentialTriangle(128., 0.6, 0.9, lfo_pos, lfoLoF, lfoHiF));
 
-  a1 = allpass1(modFreq);
-  a2 = allpass1(modFreq);
-  a3 = allpass1(modFreq);
-  a4 = allpass1(modFreq);
+  // allpassStage = allpass1;
+  allpassStage = otaAllpass;
+
+  a1 = allpassStage(modFreq);
+  a2 = allpassStage(modFreq);
+  a3 = allpassStage(modFreq);
+  a4 = allpassStage(modFreq);
 };
 
 stereo_phaser(x1, x2, lfo_pos) = mono_phaser(x1, lfo_pos), mono_phaser(x2, lfo_pos2) with {
@@ -108,11 +132,23 @@ stereo_phaser(x1, x2, lfo_pos) = mono_phaser(x1, lfo_pos), mono_phaser(x2, lfo_p
 // Utility //
 /////////////
 
+copysign(x, y) = ba.if(y<0, -1, +1) * abs(x);
+
 lerp(tab, pos, size) = (tab(i1), tab(i2)) : si.interpolate(mu) with {
   fracIndex = pos*size;
   i1 = int(fracIndex);
   i2 = (i1+1)%size;
   mu = fracIndex-float(i1);
+};
+
+fastTanh(x) = copysign((tab(i1), tab(i2)) : si.interpolate(mu), x) with {
+  xmax = 5.0; /* tabulated in the domain [0:xmax] */
+  size = 128;
+  tab = rdtable(size, (float(ba.time)/float(size-1)) : *(xmax) : ma.tanh);
+  pos = (float(size-1)/xmax)*abs(x);
+  mu = pos-int(pos);
+  i1 = min(int(pos), size-1);
+  i2 = min(int(pos)+1, size-1);
 };
 
 rsin(pos) = lerp(tab, pos, ts) with {
