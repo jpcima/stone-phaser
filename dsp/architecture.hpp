@@ -1,4 +1,5 @@
-//-----------------------------------------------------------------------------
+{% block HeaderLicenseBlock %}
+//------------------------------------------------------------------------------
 // This file was generated using the Faust compiler (https://faust.grame.fr),
 // and the Faust post-processor (https://github.com/jpcima/faustpp).
 //
@@ -8,17 +9,21 @@
 // Copyright: {{copyright}}
 // License: {{license}}
 // Version: {{version}}
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+{% endblock %}
+
+{% block HeaderPrologue %}
+{% if not (Identifier is defined and
+           Identifier == cid(Identifier)) %}
+{{fail("`Identifier` is undefined or invalid.")}}
+{% endif %}
+{% endblock %}
 
 #pragma once
 #ifndef {{Identifier}}_Faust_pp_Gen_HPP_
 #define {{Identifier}}_Faust_pp_Gen_HPP_
 
-#if __cplusplus < 201103L
-#   define noexcept
-#endif
-
-class {{class_name}};
+#include <memory>
 
 class {{Identifier}} {
 public:
@@ -33,15 +38,14 @@ public:
         {% for i in range(outputs) %}float *out{{i}},{% endfor %}
         unsigned count) noexcept;
 
-    enum { inputs = {{inputs}} };
-    enum { outputs = {{outputs}} };
-    enum { parameters = {{length(active)}} };
+    enum { NumInputs = {{inputs}} };
+    enum { NumOutputs = {{outputs}} };
+    enum { NumParameters = {{active|length}} };
 
     enum Parameter {
-        {% for w in active %}p_{{cid(default(w.meta.symbol,w.label))}},
+        {% for w in active %}p_{{cid(w.meta.symbol|default(w.label))}},
         {% endfor %}
     };
-
 
     struct ParameterRange {
         float init;
@@ -63,22 +67,21 @@ public:
     void set_parameter(unsigned index, float value) noexcept;
 
     {% for w in active %}
-    float get_{{cid(default(w.meta.symbol,w.label))}}() const noexcept;
-    void set_{{cid(default(w.meta.symbol,w.label))}}(float value) noexcept;
+    float get_{{cid(w.meta.symbol|default(w.label))}}() const noexcept;
+    void set_{{cid(w.meta.symbol|default(w.label))}}(float value) noexcept;
     {% endfor %}
 
-private:
-    {{class_name}} *fDsp;
-
-private:
-    {{Identifier}}(const {{Identifier}} &other);
-    {{Identifier}} &operator=(const {{Identifier}} &other);
-
-#if __cplusplus >= 201103L
 public:
-    {{Identifier}}({{Identifier}} &&other) noexcept;
-    {{Identifier}} &operator=({{Identifier}} &&other) noexcept;
-#endif
+    class BasicDsp;
+
+private:
+    std::unique_ptr<BasicDsp> fDsp;
+
+{% block ClassExtraDecls %}
+{% endblock %}
 };
+
+{% block HeaderEpilogue %}
+{% endblock %}
 
 #endif // {{Identifier}}_Faust_pp_Gen_HPP_

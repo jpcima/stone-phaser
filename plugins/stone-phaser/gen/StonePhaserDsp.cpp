@@ -1,4 +1,5 @@
-//-----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
 // This file was generated using the Faust compiler (https://faust.grame.fr),
 // and the Faust post-processor (https://github.com/jpcima/faustpp).
 //
@@ -8,25 +9,43 @@
 // Copyright: 
 // License: CC0-1.0
 // Version: 1.2.2
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+
+
+
+
+
 
 #include "StonePhaserDsp.hpp"
+
+
+
+#include <utility>
+#include <cmath>
+
+class StonePhaserDsp::BasicDsp {
+public:
+    virtual ~BasicDsp() {}
+};
 
 //------------------------------------------------------------------------------
 // Begin the Faust code section
 
+namespace {
+
 template <class T> inline T min(T a, T b) { return (a < b) ? a : b; }
 template <class T> inline T max(T a, T b) { return (a > b) ? a : b; }
 
-// dummy
 class Meta {
 public:
+    // dummy
     void declare(...) {}
 };
 
-// dummy
 class UI {
 public:
+    // dummy
     void openHorizontalBox(...) {}
     void openVerticalBox(...) {}
     void closeBox(...) {}
@@ -38,14 +57,18 @@ public:
     void addVerticalBargraph(...) {}
 };
 
-// dummy
-class dsp {
-public:
-};
+typedef StonePhaserDsp::BasicDsp dsp;
+
+} // namespace
 
 #define FAUSTPP_VIRTUAL // do not declare any methods virtual
 #define FAUSTPP_PRIVATE public // do not hide any members
 #define FAUSTPP_PROTECTED public // do not hide any members
+
+// define the DSP in the anonymous namespace
+#define FAUSTPP_BEGIN_NAMESPACE namespace {
+#define FAUSTPP_END_NAMESPACE }
+
 
 #if defined(__GNUC__)
 #   pragma GCC diagnostic push
@@ -1064,31 +1087,42 @@ FAUSTPP_END_NAMESPACE
 #endif
 
 
+
 //------------------------------------------------------------------------------
 // End the Faust code section
 
+
+
+
 StonePhaserDsp::StonePhaserDsp()
-    : fDsp(new mydsp)
 {
-    fDsp->instanceResetUserInterface();
+
+    mydsp *dsp = new mydsp;
+    fDsp.reset(dsp);
+    dsp->instanceResetUserInterface();
+
 }
 
 StonePhaserDsp::~StonePhaserDsp()
 {
-    delete fDsp;
 }
 
 void StonePhaserDsp::init(float sample_rate)
 {
-    mydsp &dsp = *fDsp;
+
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
     dsp.classInit(sample_rate);
     dsp.instanceConstants(sample_rate);
-    dsp.instanceClear();
+    clear();
+
 }
 
 void StonePhaserDsp::clear() noexcept
 {
-    fDsp->instanceClear();
+
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.instanceClear();
+
 }
 
 void StonePhaserDsp::process(
@@ -1096,13 +1130,16 @@ void StonePhaserDsp::process(
     float *out0,
     unsigned count) noexcept
 {
+
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
     float *inputs[] = {
         const_cast<float *>(in0),
     };
     float *outputs[] = {
         out0,
     };
-    fDsp->compute(count, inputs, outputs);
+    dsp.compute(count, inputs, outputs);
+
 }
 
 const char *StonePhaserDsp::parameter_label(unsigned index) noexcept
@@ -1218,32 +1255,32 @@ const StonePhaserDsp::ParameterRange *StonePhaserDsp::parameter_range(unsigned i
     switch (index) {
     
     case 0: {
-        static const ParameterRange range = { 0.0, 0.0, 1.0 };
+        static const ParameterRange range = { 0, 0, 1 };
         return &range;
     }
     
     case 1: {
-        static const ParameterRange range = { 1.0, 0.0, 1.0 };
+        static const ParameterRange range = { 1, 0, 1 };
         return &range;
     }
     
     case 2: {
-        static const ParameterRange range = { 0.20000000298023224, 0.009999999776482582, 5.0 };
+        static const ParameterRange range = { 0.2, 0.0099999998, 5 };
         return &range;
     }
     
     case 3: {
-        static const ParameterRange range = { 75.0, 0.0, 99.0 };
+        static const ParameterRange range = { 75, 0, 99 };
         return &range;
     }
     
     case 4: {
-        static const ParameterRange range = { 500.0, 10.0, 5000.0 };
+        static const ParameterRange range = { 500, 10, 5000 };
         return &range;
     }
     
     case 5: {
-        static const ParameterRange range = { 50.0, 0.0, 100.0 };
+        static const ParameterRange range = { 50, 0, 100 };
         return &range;
     }
     
@@ -1314,25 +1351,26 @@ bool StonePhaserDsp::parameter_is_logarithmic(unsigned index) noexcept
 
 float StonePhaserDsp::get_parameter(unsigned index) const noexcept
 {
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
     switch (index) {
     
     case 0:
-        return fDsp->fCheckbox0;
+        return dsp.fCheckbox0;
     
     case 1:
-        return fDsp->fHslider1;
+        return dsp.fHslider1;
     
     case 2:
-        return fDsp->fHslider3;
+        return dsp.fHslider3;
     
     case 3:
-        return fDsp->fHslider0;
+        return dsp.fHslider0;
     
     case 4:
-        return fDsp->fHslider2;
+        return dsp.fHslider2;
     
     case 5:
-        return fDsp->fHslider4;
+        return dsp.fHslider4;
     
     default:
         return 0;
@@ -1341,33 +1379,35 @@ float StonePhaserDsp::get_parameter(unsigned index) const noexcept
 
 void StonePhaserDsp::set_parameter(unsigned index, float value) noexcept
 {
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
     switch (index) {
     
     case 0:
-        fDsp->fCheckbox0 = value;
+        dsp.fCheckbox0 = value;
         break;
     
     case 1:
-        fDsp->fHslider1 = value;
+        dsp.fHslider1 = value;
         break;
     
     case 2:
-        fDsp->fHslider3 = value;
+        dsp.fHslider3 = value;
         break;
     
     case 3:
-        fDsp->fHslider0 = value;
+        dsp.fHslider0 = value;
         break;
     
     case 4:
-        fDsp->fHslider2 = value;
+        dsp.fHslider2 = value;
         break;
     
     case 5:
-        fDsp->fHslider4 = value;
+        dsp.fHslider4 = value;
         break;
     
     default:
+        (void)value;
         break;
     }
 }
@@ -1375,79 +1415,76 @@ void StonePhaserDsp::set_parameter(unsigned index, float value) noexcept
 
 float StonePhaserDsp::get_bypass() const noexcept
 {
-    return fDsp->fCheckbox0;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fCheckbox0;
 }
 
 void StonePhaserDsp::set_bypass(float value) noexcept
 {
-    fDsp->fCheckbox0 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fCheckbox0 = value;
 }
 
 float StonePhaserDsp::get_color() const noexcept
 {
-    return fDsp->fHslider1;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fHslider1;
 }
 
 void StonePhaserDsp::set_color(float value) noexcept
 {
-    fDsp->fHslider1 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fHslider1 = value;
 }
 
 float StonePhaserDsp::get_lfo_frequency() const noexcept
 {
-    return fDsp->fHslider3;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fHslider3;
 }
 
 void StonePhaserDsp::set_lfo_frequency(float value) noexcept
 {
-    fDsp->fHslider3 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fHslider3 = value;
 }
 
 float StonePhaserDsp::get_feedback_depth() const noexcept
 {
-    return fDsp->fHslider0;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fHslider0;
 }
 
 void StonePhaserDsp::set_feedback_depth(float value) noexcept
 {
-    fDsp->fHslider0 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fHslider0 = value;
 }
 
 float StonePhaserDsp::get_feedback_hpf_cutoff() const noexcept
 {
-    return fDsp->fHslider2;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fHslider2;
 }
 
 void StonePhaserDsp::set_feedback_hpf_cutoff(float value) noexcept
 {
-    fDsp->fHslider2 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fHslider2 = value;
 }
 
 float StonePhaserDsp::get_mix() const noexcept
 {
-    return fDsp->fHslider4;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    return dsp.fHslider4;
 }
 
 void StonePhaserDsp::set_mix(float value) noexcept
 {
-    fDsp->fHslider4 = value;
+    mydsp &dsp = static_cast<mydsp &>(*fDsp);
+    dsp.fHslider4 = value;
 }
 
 
-#if __cplusplus >= 201103L
-StonePhaserDsp::StonePhaserDsp(StonePhaserDsp &&other) noexcept
-    : fDsp(other.fDsp)
-{
-    other.fDsp = 0;
-}
 
-StonePhaserDsp &StonePhaserDsp::operator=(StonePhaserDsp &&other) noexcept
-{
-    if (this != &other) {
-        delete fDsp;
-        fDsp = other.fDsp;
-        other.fDsp = 0;
-    }
-    return *this;
-}
-#endif
+

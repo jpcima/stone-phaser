@@ -34,17 +34,17 @@ static std::unique_ptr<KnobSkin> sSkinLed;
 PhaserUI::PhaserUI()
     : UI(cairo_image_surface_get_width(sImgBackground.get()),
          cairo_image_surface_get_height(sImgBackground.get())),
-      fParameters(new DISTRHO::Parameter[StonePhaserDsp::parameters]),
-      fSliderForParameter(new SkinSlider *[StonePhaserDsp::parameters]()),
-      fToggleButtonForParameter(new SkinToggleButton *[StonePhaserDsp::parameters]()),
-      fIndicatorForParameter(new SkinIndicator *[StonePhaserDsp::parameters]()),
+      fParameters(new DISTRHO::Parameter[StonePhaserDsp::NumParameters]),
+      fSliderForParameter(new SkinSlider *[StonePhaserDsp::NumParameters]()),
+      fToggleButtonForParameter(new SkinToggleButton *[StonePhaserDsp::NumParameters]()),
+      fIndicatorForParameter(new SkinIndicator *[StonePhaserDsp::NumParameters]()),
       fFontEngine(new FontEngine)
 {
     #define RES_T(x, T) (T *)Artwork::x##Data, Artwork::x##DataSize
     fFontEngine->addFont("Cooper Hewitt", RES_T(CooperHewitt_Medium, const uint8_t));
     #undef RES_T
 
-    for (uint32_t index = 0; index < StonePhaserDsp::parameters; ++index)
+    for (uint32_t index = 0; index < StonePhaserDsp::NumParameters; ++index)
         InitParameter(index, fParameters[index]);
 
     int wFull = getWidth();
@@ -206,7 +206,7 @@ void PhaserUI::updateParameterValue(uint32_t index, float value)
 
 SkinSlider *PhaserUI::createKnobForParameter(unsigned index, const Rect &bounds, const KnobSkin &skin)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, nullptr);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, nullptr);
 
     SkinSlider *sl = createSubWidget<SkinSlider>(skin, this);
     fSliderForParameter[index] = sl;
@@ -229,7 +229,7 @@ SkinSlider *PhaserUI::createKnobForParameter(unsigned index, const Rect &bounds,
 
 SkinToggleButton *PhaserUI::createToggleButtonForParameter(unsigned index, const Rect &bounds, const KnobSkin &skin, bool invert)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, nullptr);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, nullptr);
 
     SkinToggleButton *cb = createSubWidget<SkinToggleButton>(skin, this);
     fToggleButtonForParameter[index] = cb;
@@ -255,7 +255,7 @@ SkinToggleButton *PhaserUI::createToggleButtonForParameter(unsigned index, const
 
 SkinIndicator *PhaserUI::createIndicatorForParameter(unsigned index, const Rect &bounds, const KnobSkin &skin, bool invert)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, nullptr);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, nullptr);
 
     SkinIndicator *in = createSubWidget<SkinIndicator>(skin, *fFontEngine, this);
     fIndicatorForParameter[index] = in;
@@ -272,7 +272,7 @@ SkinIndicator *PhaserUI::createIndicatorForParameter(unsigned index, const Rect 
 
 double PhaserUI::convertNormalizedToParameter(unsigned index, double value)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, 0.0)
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, 0.0)
 
     const DISTRHO::Parameter &param = fParameters[index];
     double min = param.ranges.min;
@@ -291,7 +291,7 @@ double PhaserUI::convertNormalizedToParameter(unsigned index, double value)
 
 double PhaserUI::convertNormalizedFromParameter(unsigned index, double value)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, 0.0)
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, 0.0)
 
     const DISTRHO::Parameter &param = fParameters[index];
     double min = param.ranges.min;

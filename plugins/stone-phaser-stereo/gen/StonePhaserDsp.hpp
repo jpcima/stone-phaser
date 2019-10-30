@@ -1,4 +1,5 @@
-//-----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
 // This file was generated using the Faust compiler (https://faust.grame.fr),
 // and the Faust post-processor (https://github.com/jpcima/faustpp).
 //
@@ -8,17 +9,18 @@
 // Copyright: 
 // License: CC0-1.0
 // Version: 1.2
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+
+
+
+
 
 #pragma once
 #ifndef StonePhaserDsp_Faust_pp_Gen_HPP_
 #define StonePhaserDsp_Faust_pp_Gen_HPP_
 
-#if __cplusplus < 201103L
-#   define noexcept
-#endif
-
-class mydsp;
+#include <memory>
 
 class StonePhaserDsp {
 public:
@@ -33,9 +35,9 @@ public:
         float *out0,float *out1,
         unsigned count) noexcept;
 
-    enum { inputs = 2 };
-    enum { outputs = 2 };
-    enum { parameters = 7 };
+    enum { NumInputs = 2 };
+    enum { NumOutputs = 2 };
+    enum { NumParameters = 7 };
 
     enum Parameter {
         p_bypass,
@@ -47,7 +49,6 @@ public:
         p_stereo_phase,
         
     };
-
 
     struct ParameterRange {
         float init;
@@ -91,18 +92,17 @@ public:
     void set_stereo_phase(float value) noexcept;
     
 
-private:
-    mydsp *fDsp;
-
-private:
-    StonePhaserDsp(const StonePhaserDsp &other);
-    StonePhaserDsp &operator=(const StonePhaserDsp &other);
-
-#if __cplusplus >= 201103L
 public:
-    StonePhaserDsp(StonePhaserDsp &&other) noexcept;
-    StonePhaserDsp &operator=(StonePhaserDsp &&other) noexcept;
-#endif
+    class BasicDsp;
+
+private:
+    std::unique_ptr<BasicDsp> fDsp;
+
+
+
 };
+
+
+
 
 #endif // StonePhaserDsp_Faust_pp_Gen_HPP_

@@ -12,15 +12,15 @@
 #include <cmath>
 #include <cstring>
 
-static_assert(DISTRHO_PLUGIN_NUM_INPUTS == StonePhaserDsp::inputs,
+static_assert(DISTRHO_PLUGIN_NUM_INPUTS == StonePhaserDsp::NumInputs,
               "The number of inputs does not match.");
-static_assert(DISTRHO_PLUGIN_NUM_OUTPUTS == StonePhaserDsp::outputs,
+static_assert(DISTRHO_PLUGIN_NUM_OUTPUTS == StonePhaserDsp::NumOutputs,
               "The number of outputs does not match.");
 
 // -----------------------------------------------------------------------
 
 PhaserPlugin::PhaserPlugin()
-    : Plugin(StonePhaserDsp::parameters, 0, 0)
+    : Plugin(StonePhaserDsp::NumParameters, 0, 0)
 {
     fDsp.init(getSampleRate());
 }
@@ -53,7 +53,7 @@ void PhaserPlugin::sampleRateChanged(double newSampleRate)
 */
 float PhaserPlugin::getParameterValue(uint32_t index) const
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters, 0);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, 0);
 
     return fDsp.get_parameter(index);
 }
@@ -63,7 +63,7 @@ float PhaserPlugin::getParameterValue(uint32_t index) const
 */
 void PhaserPlugin::setParameterValue(uint32_t index, float value)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::parameters,);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters,);
 
     fDsp.set_parameter(index, value);
 }
