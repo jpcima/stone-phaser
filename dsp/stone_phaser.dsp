@@ -1,7 +1,7 @@
 declare name "Stone Phaser";
 declare author "Jean Pierre Cimalando";
 declare version "1.2.2";
-declare license "CC0-1.0";
+declare license "CC0-1.0 or BSL-1.0";
 
 // Référence :
 //     Kiiski, R., Esqueda, F., & Välimäki, V. (2016).
