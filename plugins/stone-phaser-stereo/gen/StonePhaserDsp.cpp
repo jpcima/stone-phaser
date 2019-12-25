@@ -109,7 +109,7 @@ class mydspSIG0 {
 	
   FAUSTPP_PRIVATE:
 	
-	int iRec16[2];
+	int iRec15[2];
 	
   public:
 	
@@ -145,19 +145,19 @@ class mydspSIG0 {
 	}
 	
 	void instanceInitmydspSIG0(int sample_rate) {
-		for (int l11 = 0; (l11 < 2); l11 = (l11 + 1)) {
-			iRec16[l11] = 0;
+		for (int l10 = 0; (l10 < 2); l10 = (l10 + 1)) {
+			iRec15[l10] = 0;
 		}
 	}
 	
 	void fillmydspSIG0(int count, float* table) {
 		for (int i = 0; (i < count); i = (i + 1)) {
-			iRec16[0] = (iRec16[1] + 1);
-			float fTemp0 = (0.0078125f * float((iRec16[0] + -1)));
+			iRec15[0] = (iRec15[1] + 1);
+			float fTemp0 = (0.0078125f * float((iRec15[0] + -1)));
 			float fTemp1 = float(int(fTemp0));
 			float fTemp2 = (fTemp0 - fTemp1);
 			table[i] = (1.0f - (1.02564108f * std::sin((2.69344211f * ((fTemp2 < 0.5f) ? fTemp2 : (fTemp1 + (1.0f - fTemp0)))))));
-			iRec16[1] = iRec16[0];
+			iRec15[1] = iRec15[0];
 		}
 	}
 
@@ -185,34 +185,34 @@ class mydsp : public dsp {
 	float fConst0;
 	float fConst1;
 	float fConst2;
-	FAUSTFLOAT fCheckbox0;
-	float fRec0_perm[4];
 	FAUSTFLOAT fHslider0;
-	float fRec1_perm[4];
+	float fRec0_perm[4];
 	float fConst3;
-	float fRec7_perm[4];
+	float fRec6_perm[4];
 	float fConst4;
 	FAUSTFLOAT fHslider1;
-	float fRec9_perm[4];
-	FAUSTFLOAT fHslider2;
 	float fRec8_perm[4];
+	FAUSTFLOAT fHslider2;
+	float fRec7_perm[4];
 	FAUSTFLOAT fHslider3;
-	float fRec11_perm[4];
-	float fConst5;
 	float fRec10_perm[4];
+	float fConst5;
+	float fRec9_perm[4];
+	float fRec11_perm[4];
 	float fRec12_perm[4];
-	float fRec13_perm[4];
 	FAUSTFLOAT fHslider4;
-	float fRec15_perm[4];
 	float fRec14_perm[4];
+	float fRec13_perm[4];
 	float fConst6;
 	float fConst7;
 	float fConst8;
-	float fRec6_perm[4];
 	float fRec5_perm[4];
 	float fRec4_perm[4];
 	float fRec3_perm[4];
 	float fRec2_perm[4];
+	float fRec1_perm[4];
+	float fRec16_perm[4];
+	FAUSTFLOAT fCheckbox0;
 	float fRec17_perm[4];
 	FAUSTFLOAT fHbargraph0;
 	float fRec23_perm[4];
@@ -322,12 +322,12 @@ class mydsp : public dsp {
 	}
 	
 	FAUSTPP_VIRTUAL void instanceResetUserInterface() {
-		fCheckbox0 = FAUSTFLOAT(0.0f);
 		fHslider0 = FAUSTFLOAT(50.0f);
 		fHslider1 = FAUSTFLOAT(75.0f);
 		fHslider2 = FAUSTFLOAT(1.0f);
 		fHslider3 = FAUSTFLOAT(500.0f);
 		fHslider4 = FAUSTFLOAT(0.20000000000000001f);
+		fCheckbox0 = FAUSTFLOAT(0.0f);
 		fHslider5 = FAUSTFLOAT(0.0f);
 	}
 	
@@ -336,49 +336,49 @@ class mydsp : public dsp {
 			fRec0_perm[l0] = 0.0f;
 		}
 		for (int l1 = 0; (l1 < 4); l1 = (l1 + 1)) {
-			fRec1_perm[l1] = 0.0f;
+			fRec6_perm[l1] = 0.0f;
 		}
 		for (int l2 = 0; (l2 < 4); l2 = (l2 + 1)) {
-			fRec7_perm[l2] = 0.0f;
+			fRec8_perm[l2] = 0.0f;
 		}
 		for (int l3 = 0; (l3 < 4); l3 = (l3 + 1)) {
-			fRec9_perm[l3] = 0.0f;
+			fRec7_perm[l3] = 0.0f;
 		}
 		for (int l4 = 0; (l4 < 4); l4 = (l4 + 1)) {
-			fRec8_perm[l4] = 0.0f;
+			fRec10_perm[l4] = 0.0f;
 		}
 		for (int l5 = 0; (l5 < 4); l5 = (l5 + 1)) {
-			fRec11_perm[l5] = 0.0f;
+			fRec9_perm[l5] = 0.0f;
 		}
 		for (int l6 = 0; (l6 < 4); l6 = (l6 + 1)) {
-			fRec10_perm[l6] = 0.0f;
+			fRec11_perm[l6] = 0.0f;
 		}
 		for (int l7 = 0; (l7 < 4); l7 = (l7 + 1)) {
 			fRec12_perm[l7] = 0.0f;
 		}
 		for (int l8 = 0; (l8 < 4); l8 = (l8 + 1)) {
-			fRec13_perm[l8] = 0.0f;
+			fRec14_perm[l8] = 0.0f;
 		}
 		for (int l9 = 0; (l9 < 4); l9 = (l9 + 1)) {
-			fRec15_perm[l9] = 0.0f;
+			fRec13_perm[l9] = 0.0f;
 		}
-		for (int l10 = 0; (l10 < 4); l10 = (l10 + 1)) {
-			fRec14_perm[l10] = 0.0f;
+		for (int l11 = 0; (l11 < 4); l11 = (l11 + 1)) {
+			fRec5_perm[l11] = 0.0f;
 		}
 		for (int l12 = 0; (l12 < 4); l12 = (l12 + 1)) {
-			fRec6_perm[l12] = 0.0f;
+			fRec4_perm[l12] = 0.0f;
 		}
 		for (int l13 = 0; (l13 < 4); l13 = (l13 + 1)) {
-			fRec5_perm[l13] = 0.0f;
+			fRec3_perm[l13] = 0.0f;
 		}
 		for (int l14 = 0; (l14 < 4); l14 = (l14 + 1)) {
-			fRec4_perm[l14] = 0.0f;
+			fRec2_perm[l14] = 0.0f;
 		}
 		for (int l15 = 0; (l15 < 4); l15 = (l15 + 1)) {
-			fRec3_perm[l15] = 0.0f;
+			fRec1_perm[l15] = 0.0f;
 		}
 		for (int l16 = 0; (l16 < 4); l16 = (l16 + 1)) {
-			fRec2_perm[l16] = 0.0f;
+			fRec16_perm[l16] = 0.0f;
 		}
 		for (int l17 = 0; (l17 < 4); l17 = (l17 + 1)) {
 			fRec17_perm[l17] = 0.0f;
@@ -473,39 +473,36 @@ class mydsp : public dsp {
 		FAUSTFLOAT* input1_ptr = inputs[1];
 		FAUSTFLOAT* output0_ptr = outputs[0];
 		FAUSTFLOAT* output1_ptr = outputs[1];
-		float fSlow0 = (fConst2 * float((float(fCheckbox0) > 0.5f)));
+		float fSlow0 = (0.0157079641f * float(fHslider0));
+		float fSlow1 = (fConst2 * std::cos(fSlow0));
 		float fRec0_tmp[36];
 		float* fRec0 = &fRec0_tmp[4];
-		float fSlow1 = (0.0157079641f * float(fHslider0));
-		float fSlow2 = (fConst2 * std::cos(fSlow1));
-		float fRec1_tmp[36];
-		float* fRec1 = &fRec1_tmp[4];
-		float fRec7_tmp[36];
-		float* fRec7 = &fRec7_tmp[4];
-		float fSlow3 = (fConst4 * float(fHslider1));
-		float fRec9_tmp[36];
-		float* fRec9 = &fRec9_tmp[4];
-		int iSlow4 = int(float(fHslider2));
+		float fRec6_tmp[36];
+		float* fRec6 = &fRec6_tmp[4];
+		float fSlow2 = (fConst4 * float(fHslider1));
 		float fRec8_tmp[36];
 		float* fRec8 = &fRec8_tmp[4];
-		float fSlow5 = (fConst2 * float(fHslider3));
-		float fRec11_tmp[36];
-		float* fRec11 = &fRec11_tmp[4];
-		float fZec0[32];
+		int iSlow3 = int(float(fHslider2));
+		float fRec7_tmp[36];
+		float* fRec7 = &fRec7_tmp[4];
+		float fSlow4 = (fConst2 * float(fHslider3));
 		float fRec10_tmp[36];
 		float* fRec10 = &fRec10_tmp[4];
-		float fSlow6 = (fConst2 * (iSlow4 ? 39.4868202f : 62.3695068f));
+		float fZec0[32];
+		float fRec9_tmp[36];
+		float* fRec9 = &fRec9_tmp[4];
+		float fSlow5 = (fConst2 * (iSlow3 ? 39.4868202f : 62.3695068f));
+		float fRec11_tmp[36];
+		float* fRec11 = &fRec11_tmp[4];
+		float fSlow6 = (fConst2 * (iSlow3 ? 96.8631363f : 114.232643f));
 		float fRec12_tmp[36];
 		float* fRec12 = &fRec12_tmp[4];
-		float fSlow7 = (fConst2 * (iSlow4 ? 96.8631363f : 114.232643f));
-		float fRec13_tmp[36];
-		float* fRec13 = &fRec13_tmp[4];
-		float fSlow8 = (fConst2 * float(fHslider4));
-		float fRec15_tmp[36];
-		float* fRec15 = &fRec15_tmp[4];
-		float fZec1[32];
+		float fSlow7 = (fConst2 * float(fHslider4));
 		float fRec14_tmp[36];
 		float* fRec14 = &fRec14_tmp[4];
+		float fZec1[32];
+		float fRec13_tmp[36];
+		float* fRec13 = &fRec13_tmp[4];
 		float fZec2[32];
 		float fZec3[32];
 		float fZec4[32];
@@ -513,8 +510,6 @@ class mydsp : public dsp {
 		int iZec6[32];
 		float fZec7[32];
 		float fZec8[32];
-		float fRec6_tmp[36];
-		float* fRec6 = &fRec6_tmp[4];
 		float fRec5_tmp[36];
 		float* fRec5 = &fRec5_tmp[4];
 		float fRec4_tmp[36];
@@ -523,7 +518,12 @@ class mydsp : public dsp {
 		float* fRec3 = &fRec3_tmp[4];
 		float fRec2_tmp[36];
 		float* fRec2 = &fRec2_tmp[4];
-		float fSlow9 = (fConst2 * std::sin(fSlow1));
+		float fRec1_tmp[36];
+		float* fRec1 = &fRec1_tmp[4];
+		float fSlow8 = (fConst2 * std::sin(fSlow0));
+		float fRec16_tmp[36];
+		float* fRec16 = &fRec16_tmp[4];
+		float fSlow9 = (fConst2 * float((1 - (float(fCheckbox0) > 0.5f))));
 		float fRec17_tmp[36];
 		float* fRec17 = &fRec17_tmp[4];
 		float fZec9[32];
@@ -559,30 +559,30 @@ class mydsp : public dsp {
 			int vsize = 32;
 			/* Recursive loop 0 */
 			/* Pre code */
-			for (int j18 = 0; (j18 < 4); j18 = (j18 + 1)) {
-				fRec15_tmp[j18] = fRec15_perm[j18];
+			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
+				fRec14_tmp[j16] = fRec14_perm[j16];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec15[i] = (fSlow8 + (fConst1 * fRec15[(i - 1)]));
+				fRec14[i] = (fSlow7 + (fConst1 * fRec14[(i - 1)]));
 			}
 			/* Post code */
-			for (int j19 = 0; (j19 < 4); j19 = (j19 + 1)) {
-				fRec15_perm[j19] = fRec15_tmp[(vsize + j19)];
+			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
+				fRec14_perm[j17] = fRec14_tmp[(vsize + j17)];
 			}
 			/* Recursive loop 1 */
 			/* Pre code */
-			for (int j20 = 0; (j20 < 4); j20 = (j20 + 1)) {
-				fRec14_tmp[j20] = fRec14_perm[j20];
+			for (int j18 = 0; (j18 < 4); j18 = (j18 + 1)) {
+				fRec13_tmp[j18] = fRec13_perm[j18];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec1[i] = (fRec14[(i - 1)] + (fConst5 * fRec15[(i - 1)]));
-				fRec14[i] = (fZec1[i] - std::floor(fZec1[i]));
+				fZec1[i] = (fRec13[(i - 1)] + (fConst5 * fRec14[(i - 1)]));
+				fRec13[i] = (fZec1[i] - std::floor(fZec1[i]));
 			}
 			/* Post code */
-			for (int j21 = 0; (j21 < 4); j21 = (j21 + 1)) {
-				fRec14_perm[j21] = fRec14_tmp[(vsize + j21)];
+			for (int j19 = 0; (j19 < 4); j19 = (j19 + 1)) {
+				fRec13_perm[j19] = fRec13_tmp[(vsize + j19)];
 			}
 			/* Recursive loop 2 */
 			/* Pre code */
@@ -600,25 +600,25 @@ class mydsp : public dsp {
 			/* Vectorizable loop 3 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec10[i] = (fRec14[i] + fRec25[i]);
+				fZec10[i] = (fRec13[i] + fRec25[i]);
 			}
 			/* Recursive loop 4 */
 			/* Pre code */
-			for (int j10 = 0; (j10 < 4); j10 = (j10 + 1)) {
-				fRec11_tmp[j10] = fRec11_perm[j10];
+			for (int j8 = 0; (j8 < 4); j8 = (j8 + 1)) {
+				fRec10_tmp[j8] = fRec10_perm[j8];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec11[i] = (fSlow5 + (fConst1 * fRec11[(i - 1)]));
+				fRec10[i] = (fSlow4 + (fConst1 * fRec10[(i - 1)]));
 			}
 			/* Post code */
-			for (int j11 = 0; (j11 < 4); j11 = (j11 + 1)) {
-				fRec11_perm[j11] = fRec11_tmp[(vsize + j11)];
+			for (int j9 = 0; (j9 < 4); j9 = (j9 + 1)) {
+				fRec10_perm[j9] = fRec10_tmp[(vsize + j9)];
 			}
 			/* Vectorizable loop 5 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec5[i] = (128.0f * fRec14[i]);
+				fZec5[i] = (128.0f * fRec13[i]);
 			}
 			/* Vectorizable loop 6 */
 			/* Compute code */
@@ -628,9 +628,22 @@ class mydsp : public dsp {
 			/* Vectorizable loop 7 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec0[i] = std::exp((fConst5 * (0.0f - (6.28318548f * fRec11[i]))));
+				fZec0[i] = std::exp((fConst5 * (0.0f - (6.28318548f * fRec10[i]))));
 			}
 			/* Recursive loop 8 */
+			/* Pre code */
+			for (int j12 = 0; (j12 < 4); j12 = (j12 + 1)) {
+				fRec11_tmp[j12] = fRec11_perm[j12];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec11[i] = (fSlow5 + (fConst1 * fRec11[(i - 1)]));
+			}
+			/* Post code */
+			for (int j13 = 0; (j13 < 4); j13 = (j13 + 1)) {
+				fRec11_perm[j13] = fRec11_tmp[(vsize + j13)];
+			}
+			/* Recursive loop 9 */
 			/* Pre code */
 			for (int j14 = 0; (j14 < 4); j14 = (j14 + 1)) {
 				fRec12_tmp[j14] = fRec12_perm[j14];
@@ -642,19 +655,6 @@ class mydsp : public dsp {
 			/* Post code */
 			for (int j15 = 0; (j15 < 4); j15 = (j15 + 1)) {
 				fRec12_perm[j15] = fRec12_tmp[(vsize + j15)];
-			}
-			/* Recursive loop 9 */
-			/* Pre code */
-			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
-				fRec13_tmp[j16] = fRec13_perm[j16];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
-			}
-			/* Post code */
-			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
-				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
 			}
 			/* Vectorizable loop 10 */
 			/* Compute code */
@@ -668,16 +668,16 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 12 */
 			/* Pre code */
-			for (int j6 = 0; (j6 < 4); j6 = (j6 + 1)) {
-				fRec9_tmp[j6] = fRec9_perm[j6];
+			for (int j4 = 0; (j4 < 4); j4 = (j4 + 1)) {
+				fRec8_tmp[j4] = fRec8_perm[j4];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec9[i] = (fSlow3 + (fConst1 * fRec9[(i - 1)]));
+				fRec8[i] = (fSlow2 + (fConst1 * fRec8[(i - 1)]));
 			}
 			/* Post code */
-			for (int j7 = 0; (j7 < 4); j7 = (j7 + 1)) {
-				fRec9_perm[j7] = fRec9_tmp[(vsize + j7)];
+			for (int j5 = 0; (j5 < 4); j5 = (j5 + 1)) {
+				fRec8_perm[j5] = fRec8_tmp[(vsize + j5)];
 			}
 			/* Vectorizable loop 13 */
 			/* Compute code */
@@ -687,7 +687,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 14 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec4[i] = (fRec13[i] - fRec12[i]);
+				fZec4[i] = (fRec12[i] - fRec11[i]);
 			}
 			/* Vectorizable loop 15 */
 			/* Compute code */
@@ -701,52 +701,52 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 17 */
 			/* Pre code */
-			for (int j0 = 0; (j0 < 4); j0 = (j0 + 1)) {
-				fRec0_tmp[j0] = fRec0_perm[j0];
+			for (int j2 = 0; (j2 < 4); j2 = (j2 + 1)) {
+				fRec6_tmp[j2] = fRec6_perm[j2];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec0[i] = (fSlow0 + (fConst1 * fRec0[(i - 1)]));
+				fRec6[i] = (float(input0[i]) + (fConst3 * fRec6[(i - 1)]));
 			}
 			/* Post code */
-			for (int j1 = 0; (j1 < 4); j1 = (j1 + 1)) {
-				fRec0_perm[j1] = fRec0_tmp[(vsize + j1)];
+			for (int j3 = 0; (j3 < 4); j3 = (j3 + 1)) {
+				fRec6_perm[j3] = fRec6_tmp[(vsize + j3)];
 			}
 			/* Recursive loop 18 */
 			/* Pre code */
-			for (int j4 = 0; (j4 < 4); j4 = (j4 + 1)) {
-				fRec7_tmp[j4] = fRec7_perm[j4];
+			for (int j6 = 0; (j6 < 4); j6 = (j6 + 1)) {
+				fRec7_tmp[j6] = fRec7_perm[j6];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec7[i] = (float(input0[i]) + (fConst3 * fRec7[(i - 1)]));
+				fRec7[i] = ((fConst1 * fRec7[(i - 1)]) + (fConst2 * (iSlow3 ? fRec8[i] : (0.100000001f * fRec8[i]))));
 			}
 			/* Post code */
-			for (int j5 = 0; (j5 < 4); j5 = (j5 + 1)) {
-				fRec7_perm[j5] = fRec7_tmp[(vsize + j5)];
+			for (int j7 = 0; (j7 < 4); j7 = (j7 + 1)) {
+				fRec7_perm[j7] = fRec7_tmp[(vsize + j7)];
 			}
-			/* Recursive loop 19 */
-			/* Pre code */
-			for (int j8 = 0; (j8 < 4); j8 = (j8 + 1)) {
-				fRec8_tmp[j8] = fRec8_perm[j8];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec8[i] = ((fConst1 * fRec8[(i - 1)]) + (fConst2 * (iSlow4 ? fRec9[i] : (0.100000001f * fRec9[i]))));
-			}
-			/* Post code */
-			for (int j9 = 0; (j9 < 4); j9 = (j9 + 1)) {
-				fRec8_perm[j9] = fRec8_tmp[(vsize + j9)];
-			}
-			/* Vectorizable loop 20 */
+			/* Vectorizable loop 19 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
 				fZec3[i] = (0.0f - (0.5f * fZec2[i]));
 			}
-			/* Vectorizable loop 21 */
+			/* Vectorizable loop 20 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec8[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec12[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec6[i]] * (fZec7[i] + (1.0f - fZec5[i]))) + ((fZec5[i] - fZec7[i]) * ftbl0mydspSIG0[((iZec6[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+				fZec8[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec11[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec6[i]] * (fZec7[i] + (1.0f - fZec5[i]))) + ((fZec5[i] - fZec7[i]) * ftbl0mydspSIG0[((iZec6[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+			}
+			/* Recursive loop 21 */
+			/* Pre code */
+			for (int j32 = 0; (j32 < 4); j32 = (j32 + 1)) {
+				fRec17_tmp[j32] = fRec17_perm[j32];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec17[i] = (fSlow9 + (fConst1 * fRec17[(i - 1)]));
+			}
+			/* Post code */
+			for (int j33 = 0; (j33 < 4); j33 = (j33 + 1)) {
+				fRec17_perm[j33] = fRec17_tmp[(vsize + j33)];
 			}
 			/* Recursive loop 22 */
 			/* Pre code */
@@ -764,86 +764,86 @@ class mydsp : public dsp {
 			/* Vectorizable loop 23 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec14[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec12[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec12[i]] * (fZec13[i] + (1.0f - fZec11[i]))) + ((fZec11[i] - fZec13[i]) * ftbl0mydspSIG0[((iZec12[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+				fZec14[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec11[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec12[i]] * (fZec13[i] + (1.0f - fZec11[i]))) + ((fZec11[i] - fZec13[i]) * ftbl0mydspSIG0[((iZec12[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
 			}
 			/* Recursive loop 24 */
 			/* Pre code */
-			for (int j2 = 0; (j2 < 4); j2 = (j2 + 1)) {
-				fRec1_tmp[j2] = fRec1_perm[j2];
+			for (int j0 = 0; (j0 < 4); j0 = (j0 + 1)) {
+				fRec0_tmp[j0] = fRec0_perm[j0];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec1[i] = (fSlow2 + (fConst1 * fRec1[(i - 1)]));
+				fRec0[i] = (fSlow1 + (fConst1 * fRec0[(i - 1)]));
 			}
 			/* Post code */
-			for (int j3 = 0; (j3 < 4); j3 = (j3 + 1)) {
-				fRec1_perm[j3] = fRec1_tmp[(vsize + j3)];
+			for (int j1 = 0; (j1 < 4); j1 = (j1 + 1)) {
+				fRec0_perm[j1] = fRec0_tmp[(vsize + j1)];
 			}
 			/* Recursive loop 25 */
 			/* Pre code */
-			for (int j12 = 0; (j12 < 4); j12 = (j12 + 1)) {
-				fRec10_tmp[j12] = fRec10_perm[j12];
+			for (int j10 = 0; (j10 < 4); j10 = (j10 + 1)) {
+				fRec9_tmp[j10] = fRec9_perm[j10];
+			}
+			for (int j20 = 0; (j20 < 4); j20 = (j20 + 1)) {
+				fRec5_tmp[j20] = fRec5_perm[j20];
 			}
 			for (int j22 = 0; (j22 < 4); j22 = (j22 + 1)) {
-				fRec6_tmp[j22] = fRec6_perm[j22];
+				fRec4_tmp[j22] = fRec4_perm[j22];
 			}
 			for (int j24 = 0; (j24 < 4); j24 = (j24 + 1)) {
-				fRec5_tmp[j24] = fRec5_perm[j24];
+				fRec3_tmp[j24] = fRec3_perm[j24];
 			}
 			for (int j26 = 0; (j26 < 4); j26 = (j26 + 1)) {
-				fRec4_tmp[j26] = fRec4_perm[j26];
+				fRec2_tmp[j26] = fRec2_perm[j26];
 			}
 			for (int j28 = 0; (j28 < 4); j28 = (j28 + 1)) {
-				fRec3_tmp[j28] = fRec3_perm[j28];
-			}
-			for (int j30 = 0; (j30 < 4); j30 = (j30 + 1)) {
-				fRec2_tmp[j30] = fRec2_perm[j30];
+				fRec1_tmp[j28] = fRec1_perm[j28];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec10[i] = (fRec2[(i - 1)] + (fRec10[(i - 1)] * fZec0[i]));
-				fRec6[i] = (((fConst7 * fRec7[(i - 1)]) + ((fRec8[i] * ((0.5f * (fRec10[i] * fZec2[i])) + (fRec10[(i - 1)] * fZec3[i]))) + (fConst6 * fRec7[i]))) - (fRec6[(i - 1)] * fZec8[i]));
-				fRec5[i] = (fRec6[(i - 1)] + (fZec8[i] * (fRec6[i] - fRec5[(i - 1)])));
+				fRec9[i] = (fRec1[(i - 1)] + (fRec9[(i - 1)] * fZec0[i]));
+				fRec5[i] = (((fConst7 * fRec6[(i - 1)]) + ((fRec7[i] * ((0.5f * (fRec9[i] * fZec2[i])) + (fRec9[(i - 1)] * fZec3[i]))) + (fConst6 * fRec6[i]))) - (fRec5[(i - 1)] * fZec8[i]));
 				fRec4[i] = (fRec5[(i - 1)] + (fZec8[i] * (fRec5[i] - fRec4[(i - 1)])));
 				fRec3[i] = (fRec4[(i - 1)] + (fZec8[i] * (fRec4[i] - fRec3[(i - 1)])));
-				fRec2[i] = (fRec3[(i - 1)] + (fRec3[i] * fZec8[i]));
+				fRec2[i] = (fRec3[(i - 1)] + (fZec8[i] * (fRec3[i] - fRec2[(i - 1)])));
+				fRec1[i] = (fRec2[(i - 1)] + (fRec2[i] * fZec8[i]));
 			}
 			/* Post code */
-			for (int j13 = 0; (j13 < 4); j13 = (j13 + 1)) {
-				fRec10_perm[j13] = fRec10_tmp[(vsize + j13)];
+			for (int j11 = 0; (j11 < 4); j11 = (j11 + 1)) {
+				fRec9_perm[j11] = fRec9_tmp[(vsize + j11)];
+			}
+			for (int j21 = 0; (j21 < 4); j21 = (j21 + 1)) {
+				fRec5_perm[j21] = fRec5_tmp[(vsize + j21)];
 			}
 			for (int j23 = 0; (j23 < 4); j23 = (j23 + 1)) {
-				fRec6_perm[j23] = fRec6_tmp[(vsize + j23)];
+				fRec4_perm[j23] = fRec4_tmp[(vsize + j23)];
 			}
 			for (int j25 = 0; (j25 < 4); j25 = (j25 + 1)) {
-				fRec5_perm[j25] = fRec5_tmp[(vsize + j25)];
+				fRec3_perm[j25] = fRec3_tmp[(vsize + j25)];
 			}
 			for (int j27 = 0; (j27 < 4); j27 = (j27 + 1)) {
-				fRec4_perm[j27] = fRec4_tmp[(vsize + j27)];
+				fRec2_perm[j27] = fRec2_tmp[(vsize + j27)];
 			}
 			for (int j29 = 0; (j29 < 4); j29 = (j29 + 1)) {
-				fRec3_perm[j29] = fRec3_tmp[(vsize + j29)];
-			}
-			for (int j31 = 0; (j31 < 4); j31 = (j31 + 1)) {
-				fRec2_perm[j31] = fRec2_tmp[(vsize + j31)];
+				fRec1_perm[j29] = fRec1_tmp[(vsize + j29)];
 			}
 			/* Recursive loop 26 */
 			/* Pre code */
-			for (int j32 = 0; (j32 < 4); j32 = (j32 + 1)) {
-				fRec17_tmp[j32] = fRec17_perm[j32];
+			for (int j30 = 0; (j30 < 4); j30 = (j30 + 1)) {
+				fRec16_tmp[j30] = fRec16_perm[j30];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec17[i] = (fSlow9 + (fConst1 * fRec17[(i - 1)]));
+				fRec16[i] = (fSlow8 + (fConst1 * fRec16[(i - 1)]));
 			}
 			/* Post code */
-			for (int j33 = 0; (j33 < 4); j33 = (j33 + 1)) {
-				fRec17_perm[j33] = fRec17_tmp[(vsize + j33)];
+			for (int j31 = 0; (j31 < 4); j31 = (j31 + 1)) {
+				fRec16_perm[j31] = fRec16_tmp[(vsize + j31)];
 			}
 			/* Vectorizable loop 27 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec9[i] = (1.0f - fRec0[i]);
+				fZec9[i] = (1.0f - fRec17[i]);
 			}
 			/* Recursive loop 28 */
 			/* Pre code */
@@ -868,7 +868,7 @@ class mydsp : public dsp {
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
 				fRec24[i] = (fRec18[(i - 1)] + (fZec0[i] * fRec24[(i - 1)]));
-				fRec22[i] = (((fConst7 * fRec23[(i - 1)]) + ((fRec8[i] * ((0.5f * (fRec24[i] * fZec2[i])) + (fZec3[i] * fRec24[(i - 1)]))) + (fConst6 * fRec23[i]))) - (fRec22[(i - 1)] * fZec14[i]));
+				fRec22[i] = (((fConst7 * fRec23[(i - 1)]) + ((fRec7[i] * ((0.5f * (fRec24[i] * fZec2[i])) + (fZec3[i] * fRec24[(i - 1)]))) + (fConst6 * fRec23[i]))) - (fRec22[(i - 1)] * fZec14[i]));
 				fRec21[i] = (fRec22[(i - 1)] + (fZec14[i] * (fRec22[i] - fRec21[(i - 1)])));
 				fRec20[i] = (fRec21[(i - 1)] + (fZec14[i] * (fRec21[i] - fRec20[(i - 1)])));
 				fRec19[i] = (fRec20[(i - 1)] + (fZec14[i] * (fRec20[i] - fRec19[(i - 1)])));
@@ -896,13 +896,13 @@ class mydsp : public dsp {
 			/* Vectorizable loop 29 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fHbargraph0 = FAUSTFLOAT(fZec9[i]);
-				output0[i] = FAUSTFLOAT(((fZec9[i] * ((float(input0[i]) * fRec1[i]) + (fRec2[i] * fRec17[i]))) + (float(input0[i]) * fRec0[i])));
+				fHbargraph0 = FAUSTFLOAT(fRec17[i]);
+				output0[i] = FAUSTFLOAT(((((float(input0[i]) * fRec0[i]) + (fRec1[i] * fRec16[i])) * fRec17[i]) + (float(input0[i]) * fZec9[i])));
 			}
 			/* Vectorizable loop 30 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				output1[i] = FAUSTFLOAT(((float(input1[i]) * fRec0[i]) + (fZec9[i] * ((float(input1[i]) * fRec1[i]) + (fRec17[i] * fRec18[i])))));
+				output1[i] = FAUSTFLOAT(((float(input1[i]) * fZec9[i]) + (fRec17[i] * ((float(input1[i]) * fRec0[i]) + (fRec16[i] * fRec18[i])))));
 			}
 		}
 		/* Remaining frames */
@@ -914,30 +914,30 @@ class mydsp : public dsp {
 			int vsize = (count - vindex);
 			/* Recursive loop 0 */
 			/* Pre code */
-			for (int j18 = 0; (j18 < 4); j18 = (j18 + 1)) {
-				fRec15_tmp[j18] = fRec15_perm[j18];
+			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
+				fRec14_tmp[j16] = fRec14_perm[j16];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec15[i] = (fSlow8 + (fConst1 * fRec15[(i - 1)]));
+				fRec14[i] = (fSlow7 + (fConst1 * fRec14[(i - 1)]));
 			}
 			/* Post code */
-			for (int j19 = 0; (j19 < 4); j19 = (j19 + 1)) {
-				fRec15_perm[j19] = fRec15_tmp[(vsize + j19)];
+			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
+				fRec14_perm[j17] = fRec14_tmp[(vsize + j17)];
 			}
 			/* Recursive loop 1 */
 			/* Pre code */
-			for (int j20 = 0; (j20 < 4); j20 = (j20 + 1)) {
-				fRec14_tmp[j20] = fRec14_perm[j20];
+			for (int j18 = 0; (j18 < 4); j18 = (j18 + 1)) {
+				fRec13_tmp[j18] = fRec13_perm[j18];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec1[i] = (fRec14[(i - 1)] + (fConst5 * fRec15[(i - 1)]));
-				fRec14[i] = (fZec1[i] - std::floor(fZec1[i]));
+				fZec1[i] = (fRec13[(i - 1)] + (fConst5 * fRec14[(i - 1)]));
+				fRec13[i] = (fZec1[i] - std::floor(fZec1[i]));
 			}
 			/* Post code */
-			for (int j21 = 0; (j21 < 4); j21 = (j21 + 1)) {
-				fRec14_perm[j21] = fRec14_tmp[(vsize + j21)];
+			for (int j19 = 0; (j19 < 4); j19 = (j19 + 1)) {
+				fRec13_perm[j19] = fRec13_tmp[(vsize + j19)];
 			}
 			/* Recursive loop 2 */
 			/* Pre code */
@@ -955,25 +955,25 @@ class mydsp : public dsp {
 			/* Vectorizable loop 3 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec10[i] = (fRec14[i] + fRec25[i]);
+				fZec10[i] = (fRec13[i] + fRec25[i]);
 			}
 			/* Recursive loop 4 */
 			/* Pre code */
-			for (int j10 = 0; (j10 < 4); j10 = (j10 + 1)) {
-				fRec11_tmp[j10] = fRec11_perm[j10];
+			for (int j8 = 0; (j8 < 4); j8 = (j8 + 1)) {
+				fRec10_tmp[j8] = fRec10_perm[j8];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec11[i] = (fSlow5 + (fConst1 * fRec11[(i - 1)]));
+				fRec10[i] = (fSlow4 + (fConst1 * fRec10[(i - 1)]));
 			}
 			/* Post code */
-			for (int j11 = 0; (j11 < 4); j11 = (j11 + 1)) {
-				fRec11_perm[j11] = fRec11_tmp[(vsize + j11)];
+			for (int j9 = 0; (j9 < 4); j9 = (j9 + 1)) {
+				fRec10_perm[j9] = fRec10_tmp[(vsize + j9)];
 			}
 			/* Vectorizable loop 5 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec5[i] = (128.0f * fRec14[i]);
+				fZec5[i] = (128.0f * fRec13[i]);
 			}
 			/* Vectorizable loop 6 */
 			/* Compute code */
@@ -983,9 +983,22 @@ class mydsp : public dsp {
 			/* Vectorizable loop 7 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec0[i] = std::exp((fConst5 * (0.0f - (6.28318548f * fRec11[i]))));
+				fZec0[i] = std::exp((fConst5 * (0.0f - (6.28318548f * fRec10[i]))));
 			}
 			/* Recursive loop 8 */
+			/* Pre code */
+			for (int j12 = 0; (j12 < 4); j12 = (j12 + 1)) {
+				fRec11_tmp[j12] = fRec11_perm[j12];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec11[i] = (fSlow5 + (fConst1 * fRec11[(i - 1)]));
+			}
+			/* Post code */
+			for (int j13 = 0; (j13 < 4); j13 = (j13 + 1)) {
+				fRec11_perm[j13] = fRec11_tmp[(vsize + j13)];
+			}
+			/* Recursive loop 9 */
 			/* Pre code */
 			for (int j14 = 0; (j14 < 4); j14 = (j14 + 1)) {
 				fRec12_tmp[j14] = fRec12_perm[j14];
@@ -997,19 +1010,6 @@ class mydsp : public dsp {
 			/* Post code */
 			for (int j15 = 0; (j15 < 4); j15 = (j15 + 1)) {
 				fRec12_perm[j15] = fRec12_tmp[(vsize + j15)];
-			}
-			/* Recursive loop 9 */
-			/* Pre code */
-			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
-				fRec13_tmp[j16] = fRec13_perm[j16];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
-			}
-			/* Post code */
-			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
-				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
 			}
 			/* Vectorizable loop 10 */
 			/* Compute code */
@@ -1023,16 +1023,16 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 12 */
 			/* Pre code */
-			for (int j6 = 0; (j6 < 4); j6 = (j6 + 1)) {
-				fRec9_tmp[j6] = fRec9_perm[j6];
+			for (int j4 = 0; (j4 < 4); j4 = (j4 + 1)) {
+				fRec8_tmp[j4] = fRec8_perm[j4];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec9[i] = (fSlow3 + (fConst1 * fRec9[(i - 1)]));
+				fRec8[i] = (fSlow2 + (fConst1 * fRec8[(i - 1)]));
 			}
 			/* Post code */
-			for (int j7 = 0; (j7 < 4); j7 = (j7 + 1)) {
-				fRec9_perm[j7] = fRec9_tmp[(vsize + j7)];
+			for (int j5 = 0; (j5 < 4); j5 = (j5 + 1)) {
+				fRec8_perm[j5] = fRec8_tmp[(vsize + j5)];
 			}
 			/* Vectorizable loop 13 */
 			/* Compute code */
@@ -1042,7 +1042,7 @@ class mydsp : public dsp {
 			/* Vectorizable loop 14 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec4[i] = (fRec13[i] - fRec12[i]);
+				fZec4[i] = (fRec12[i] - fRec11[i]);
 			}
 			/* Vectorizable loop 15 */
 			/* Compute code */
@@ -1056,52 +1056,52 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 17 */
 			/* Pre code */
-			for (int j0 = 0; (j0 < 4); j0 = (j0 + 1)) {
-				fRec0_tmp[j0] = fRec0_perm[j0];
+			for (int j2 = 0; (j2 < 4); j2 = (j2 + 1)) {
+				fRec6_tmp[j2] = fRec6_perm[j2];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec0[i] = (fSlow0 + (fConst1 * fRec0[(i - 1)]));
+				fRec6[i] = (float(input0[i]) + (fConst3 * fRec6[(i - 1)]));
 			}
 			/* Post code */
-			for (int j1 = 0; (j1 < 4); j1 = (j1 + 1)) {
-				fRec0_perm[j1] = fRec0_tmp[(vsize + j1)];
+			for (int j3 = 0; (j3 < 4); j3 = (j3 + 1)) {
+				fRec6_perm[j3] = fRec6_tmp[(vsize + j3)];
 			}
 			/* Recursive loop 18 */
 			/* Pre code */
-			for (int j4 = 0; (j4 < 4); j4 = (j4 + 1)) {
-				fRec7_tmp[j4] = fRec7_perm[j4];
+			for (int j6 = 0; (j6 < 4); j6 = (j6 + 1)) {
+				fRec7_tmp[j6] = fRec7_perm[j6];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec7[i] = (float(input0[i]) + (fConst3 * fRec7[(i - 1)]));
+				fRec7[i] = ((fConst1 * fRec7[(i - 1)]) + (fConst2 * (iSlow3 ? fRec8[i] : (0.100000001f * fRec8[i]))));
 			}
 			/* Post code */
-			for (int j5 = 0; (j5 < 4); j5 = (j5 + 1)) {
-				fRec7_perm[j5] = fRec7_tmp[(vsize + j5)];
+			for (int j7 = 0; (j7 < 4); j7 = (j7 + 1)) {
+				fRec7_perm[j7] = fRec7_tmp[(vsize + j7)];
 			}
-			/* Recursive loop 19 */
-			/* Pre code */
-			for (int j8 = 0; (j8 < 4); j8 = (j8 + 1)) {
-				fRec8_tmp[j8] = fRec8_perm[j8];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec8[i] = ((fConst1 * fRec8[(i - 1)]) + (fConst2 * (iSlow4 ? fRec9[i] : (0.100000001f * fRec9[i]))));
-			}
-			/* Post code */
-			for (int j9 = 0; (j9 < 4); j9 = (j9 + 1)) {
-				fRec8_perm[j9] = fRec8_tmp[(vsize + j9)];
-			}
-			/* Vectorizable loop 20 */
+			/* Vectorizable loop 19 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
 				fZec3[i] = (0.0f - (0.5f * fZec2[i]));
 			}
-			/* Vectorizable loop 21 */
+			/* Vectorizable loop 20 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec8[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec12[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec6[i]] * (fZec7[i] + (1.0f - fZec5[i]))) + ((fZec5[i] - fZec7[i]) * ftbl0mydspSIG0[((iZec6[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+				fZec8[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec11[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec6[i]] * (fZec7[i] + (1.0f - fZec5[i]))) + ((fZec5[i] - fZec7[i]) * ftbl0mydspSIG0[((iZec6[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+			}
+			/* Recursive loop 21 */
+			/* Pre code */
+			for (int j32 = 0; (j32 < 4); j32 = (j32 + 1)) {
+				fRec17_tmp[j32] = fRec17_perm[j32];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec17[i] = (fSlow9 + (fConst1 * fRec17[(i - 1)]));
+			}
+			/* Post code */
+			for (int j33 = 0; (j33 < 4); j33 = (j33 + 1)) {
+				fRec17_perm[j33] = fRec17_tmp[(vsize + j33)];
 			}
 			/* Recursive loop 22 */
 			/* Pre code */
@@ -1119,86 +1119,86 @@ class mydsp : public dsp {
 			/* Vectorizable loop 23 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec14[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec12[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec12[i]] * (fZec13[i] + (1.0f - fZec11[i]))) + ((fZec11[i] - fZec13[i]) * ftbl0mydspSIG0[((iZec12[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
+				fZec14[i] = ((fConst8 * std::pow(2.0f, (0.0833333358f * ((fRec11[i] + (fZec4[i] * ((ftbl0mydspSIG0[iZec12[i]] * (fZec13[i] + (1.0f - fZec11[i]))) + ((fZec11[i] - fZec13[i]) * ftbl0mydspSIG0[((iZec12[i] + 1) % 128)])))) + -69.0f)))) + -1.0f);
 			}
 			/* Recursive loop 24 */
 			/* Pre code */
-			for (int j2 = 0; (j2 < 4); j2 = (j2 + 1)) {
-				fRec1_tmp[j2] = fRec1_perm[j2];
+			for (int j0 = 0; (j0 < 4); j0 = (j0 + 1)) {
+				fRec0_tmp[j0] = fRec0_perm[j0];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec1[i] = (fSlow2 + (fConst1 * fRec1[(i - 1)]));
+				fRec0[i] = (fSlow1 + (fConst1 * fRec0[(i - 1)]));
 			}
 			/* Post code */
-			for (int j3 = 0; (j3 < 4); j3 = (j3 + 1)) {
-				fRec1_perm[j3] = fRec1_tmp[(vsize + j3)];
+			for (int j1 = 0; (j1 < 4); j1 = (j1 + 1)) {
+				fRec0_perm[j1] = fRec0_tmp[(vsize + j1)];
 			}
 			/* Recursive loop 25 */
 			/* Pre code */
-			for (int j12 = 0; (j12 < 4); j12 = (j12 + 1)) {
-				fRec10_tmp[j12] = fRec10_perm[j12];
+			for (int j10 = 0; (j10 < 4); j10 = (j10 + 1)) {
+				fRec9_tmp[j10] = fRec9_perm[j10];
+			}
+			for (int j20 = 0; (j20 < 4); j20 = (j20 + 1)) {
+				fRec5_tmp[j20] = fRec5_perm[j20];
 			}
 			for (int j22 = 0; (j22 < 4); j22 = (j22 + 1)) {
-				fRec6_tmp[j22] = fRec6_perm[j22];
+				fRec4_tmp[j22] = fRec4_perm[j22];
 			}
 			for (int j24 = 0; (j24 < 4); j24 = (j24 + 1)) {
-				fRec5_tmp[j24] = fRec5_perm[j24];
+				fRec3_tmp[j24] = fRec3_perm[j24];
 			}
 			for (int j26 = 0; (j26 < 4); j26 = (j26 + 1)) {
-				fRec4_tmp[j26] = fRec4_perm[j26];
+				fRec2_tmp[j26] = fRec2_perm[j26];
 			}
 			for (int j28 = 0; (j28 < 4); j28 = (j28 + 1)) {
-				fRec3_tmp[j28] = fRec3_perm[j28];
-			}
-			for (int j30 = 0; (j30 < 4); j30 = (j30 + 1)) {
-				fRec2_tmp[j30] = fRec2_perm[j30];
+				fRec1_tmp[j28] = fRec1_perm[j28];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec10[i] = (fRec2[(i - 1)] + (fRec10[(i - 1)] * fZec0[i]));
-				fRec6[i] = (((fConst7 * fRec7[(i - 1)]) + ((fRec8[i] * ((0.5f * (fRec10[i] * fZec2[i])) + (fRec10[(i - 1)] * fZec3[i]))) + (fConst6 * fRec7[i]))) - (fRec6[(i - 1)] * fZec8[i]));
-				fRec5[i] = (fRec6[(i - 1)] + (fZec8[i] * (fRec6[i] - fRec5[(i - 1)])));
+				fRec9[i] = (fRec1[(i - 1)] + (fRec9[(i - 1)] * fZec0[i]));
+				fRec5[i] = (((fConst7 * fRec6[(i - 1)]) + ((fRec7[i] * ((0.5f * (fRec9[i] * fZec2[i])) + (fRec9[(i - 1)] * fZec3[i]))) + (fConst6 * fRec6[i]))) - (fRec5[(i - 1)] * fZec8[i]));
 				fRec4[i] = (fRec5[(i - 1)] + (fZec8[i] * (fRec5[i] - fRec4[(i - 1)])));
 				fRec3[i] = (fRec4[(i - 1)] + (fZec8[i] * (fRec4[i] - fRec3[(i - 1)])));
-				fRec2[i] = (fRec3[(i - 1)] + (fRec3[i] * fZec8[i]));
+				fRec2[i] = (fRec3[(i - 1)] + (fZec8[i] * (fRec3[i] - fRec2[(i - 1)])));
+				fRec1[i] = (fRec2[(i - 1)] + (fRec2[i] * fZec8[i]));
 			}
 			/* Post code */
-			for (int j13 = 0; (j13 < 4); j13 = (j13 + 1)) {
-				fRec10_perm[j13] = fRec10_tmp[(vsize + j13)];
+			for (int j11 = 0; (j11 < 4); j11 = (j11 + 1)) {
+				fRec9_perm[j11] = fRec9_tmp[(vsize + j11)];
+			}
+			for (int j21 = 0; (j21 < 4); j21 = (j21 + 1)) {
+				fRec5_perm[j21] = fRec5_tmp[(vsize + j21)];
 			}
 			for (int j23 = 0; (j23 < 4); j23 = (j23 + 1)) {
-				fRec6_perm[j23] = fRec6_tmp[(vsize + j23)];
+				fRec4_perm[j23] = fRec4_tmp[(vsize + j23)];
 			}
 			for (int j25 = 0; (j25 < 4); j25 = (j25 + 1)) {
-				fRec5_perm[j25] = fRec5_tmp[(vsize + j25)];
+				fRec3_perm[j25] = fRec3_tmp[(vsize + j25)];
 			}
 			for (int j27 = 0; (j27 < 4); j27 = (j27 + 1)) {
-				fRec4_perm[j27] = fRec4_tmp[(vsize + j27)];
+				fRec2_perm[j27] = fRec2_tmp[(vsize + j27)];
 			}
 			for (int j29 = 0; (j29 < 4); j29 = (j29 + 1)) {
-				fRec3_perm[j29] = fRec3_tmp[(vsize + j29)];
-			}
-			for (int j31 = 0; (j31 < 4); j31 = (j31 + 1)) {
-				fRec2_perm[j31] = fRec2_tmp[(vsize + j31)];
+				fRec1_perm[j29] = fRec1_tmp[(vsize + j29)];
 			}
 			/* Recursive loop 26 */
 			/* Pre code */
-			for (int j32 = 0; (j32 < 4); j32 = (j32 + 1)) {
-				fRec17_tmp[j32] = fRec17_perm[j32];
+			for (int j30 = 0; (j30 < 4); j30 = (j30 + 1)) {
+				fRec16_tmp[j30] = fRec16_perm[j30];
 			}
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec17[i] = (fSlow9 + (fConst1 * fRec17[(i - 1)]));
+				fRec16[i] = (fSlow8 + (fConst1 * fRec16[(i - 1)]));
 			}
 			/* Post code */
-			for (int j33 = 0; (j33 < 4); j33 = (j33 + 1)) {
-				fRec17_perm[j33] = fRec17_tmp[(vsize + j33)];
+			for (int j31 = 0; (j31 < 4); j31 = (j31 + 1)) {
+				fRec16_perm[j31] = fRec16_tmp[(vsize + j31)];
 			}
 			/* Vectorizable loop 27 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fZec9[i] = (1.0f - fRec0[i]);
+				fZec9[i] = (1.0f - fRec17[i]);
 			}
 			/* Recursive loop 28 */
 			/* Pre code */
@@ -1223,7 +1223,7 @@ class mydsp : public dsp {
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
 				fRec24[i] = (fRec18[(i - 1)] + (fZec0[i] * fRec24[(i - 1)]));
-				fRec22[i] = (((fConst7 * fRec23[(i - 1)]) + ((fRec8[i] * ((0.5f * (fRec24[i] * fZec2[i])) + (fZec3[i] * fRec24[(i - 1)]))) + (fConst6 * fRec23[i]))) - (fRec22[(i - 1)] * fZec14[i]));
+				fRec22[i] = (((fConst7 * fRec23[(i - 1)]) + ((fRec7[i] * ((0.5f * (fRec24[i] * fZec2[i])) + (fZec3[i] * fRec24[(i - 1)]))) + (fConst6 * fRec23[i]))) - (fRec22[(i - 1)] * fZec14[i]));
 				fRec21[i] = (fRec22[(i - 1)] + (fZec14[i] * (fRec22[i] - fRec21[(i - 1)])));
 				fRec20[i] = (fRec21[(i - 1)] + (fZec14[i] * (fRec21[i] - fRec20[(i - 1)])));
 				fRec19[i] = (fRec20[(i - 1)] + (fZec14[i] * (fRec20[i] - fRec19[(i - 1)])));
@@ -1251,13 +1251,13 @@ class mydsp : public dsp {
 			/* Vectorizable loop 29 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fHbargraph0 = FAUSTFLOAT(fZec9[i]);
-				output0[i] = FAUSTFLOAT(((fZec9[i] * ((float(input0[i]) * fRec1[i]) + (fRec2[i] * fRec17[i]))) + (float(input0[i]) * fRec0[i])));
+				fHbargraph0 = FAUSTFLOAT(fRec17[i]);
+				output0[i] = FAUSTFLOAT(((((float(input0[i]) * fRec0[i]) + (fRec1[i] * fRec16[i])) * fRec17[i]) + (float(input0[i]) * fZec9[i])));
 			}
 			/* Vectorizable loop 30 */
 			/* Compute code */
 			for (int i = 0; (i < vsize); i = (i + 1)) {
-				output1[i] = FAUSTFLOAT(((float(input1[i]) * fRec0[i]) + (fZec9[i] * ((float(input1[i]) * fRec1[i]) + (fRec17[i] * fRec18[i])))));
+				output1[i] = FAUSTFLOAT(((float(input1[i]) * fZec9[i]) + (fRec17[i] * ((float(input1[i]) * fRec0[i]) + (fRec16[i] * fRec18[i])))));
 			}
 		}
 	}
