@@ -420,7 +420,7 @@ class mydsp : public dsp {
 	FAUSTPP_VIRTUAL void compute(int count, FAUSTFLOAT** inputs, FAUSTFLOAT** outputs) {
 		FAUSTFLOAT* input0_ptr = inputs[0];
 		FAUSTFLOAT* output0_ptr = outputs[0];
-		float fSlow0 = (fConst2 * float(fCheckbox0));
+		float fSlow0 = (fConst2 * float((float(fCheckbox0) > 0.5f)));
 		float fRec0_tmp[36];
 		float* fRec0 = &fRec0_tmp[4];
 		float fSlow1 = (0.0157079641f * float(fHslider0));
@@ -548,19 +548,6 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 7 */
 			/* Pre code */
-			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
-				fRec13_tmp[j16] = fRec13_perm[j16];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
-			}
-			/* Post code */
-			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
-				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
-			}
-			/* Recursive loop 8 */
-			/* Pre code */
 			for (int j14 = 0; (j14 < 4); j14 = (j14 + 1)) {
 				fRec12_tmp[j14] = fRec12_perm[j14];
 			}
@@ -571,6 +558,19 @@ class mydsp : public dsp {
 			/* Post code */
 			for (int j15 = 0; (j15 < 4); j15 = (j15 + 1)) {
 				fRec12_perm[j15] = fRec12_tmp[(vsize + j15)];
+			}
+			/* Recursive loop 8 */
+			/* Pre code */
+			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
+				fRec13_tmp[j16] = fRec13_perm[j16];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
+			}
+			/* Post code */
+			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
+				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
 			}
 			/* Vectorizable loop 9 */
 			/* Compute code */
@@ -787,19 +787,6 @@ class mydsp : public dsp {
 			}
 			/* Recursive loop 7 */
 			/* Pre code */
-			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
-				fRec13_tmp[j16] = fRec13_perm[j16];
-			}
-			/* Compute code */
-			for (int i = 0; (i < vsize); i = (i + 1)) {
-				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
-			}
-			/* Post code */
-			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
-				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
-			}
-			/* Recursive loop 8 */
-			/* Pre code */
 			for (int j14 = 0; (j14 < 4); j14 = (j14 + 1)) {
 				fRec12_tmp[j14] = fRec12_perm[j14];
 			}
@@ -810,6 +797,19 @@ class mydsp : public dsp {
 			/* Post code */
 			for (int j15 = 0; (j15 < 4); j15 = (j15 + 1)) {
 				fRec12_perm[j15] = fRec12_tmp[(vsize + j15)];
+			}
+			/* Recursive loop 8 */
+			/* Pre code */
+			for (int j16 = 0; (j16 < 4); j16 = (j16 + 1)) {
+				fRec13_tmp[j16] = fRec13_perm[j16];
+			}
+			/* Compute code */
+			for (int i = 0; (i < vsize); i = (i + 1)) {
+				fRec13[i] = (fSlow7 + (fConst1 * fRec13[(i - 1)]));
+			}
+			/* Post code */
+			for (int j17 = 0; (j17 < 4); j17 = (j17 + 1)) {
+				fRec13_perm[j17] = fRec13_tmp[(vsize + j17)];
 			}
 			/* Vectorizable loop 9 */
 			/* Compute code */

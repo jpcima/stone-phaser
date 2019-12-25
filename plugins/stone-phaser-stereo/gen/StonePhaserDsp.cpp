@@ -473,7 +473,7 @@ class mydsp : public dsp {
 		FAUSTFLOAT* input1_ptr = inputs[1];
 		FAUSTFLOAT* output0_ptr = outputs[0];
 		FAUSTFLOAT* output1_ptr = outputs[1];
-		float fSlow0 = (fConst2 * float(fCheckbox0));
+		float fSlow0 = (fConst2 * float((float(fCheckbox0) > 0.5f)));
 		float fRec0_tmp[36];
 		float* fRec0 = &fRec0_tmp[4];
 		float fSlow1 = (0.0157079641f * float(fHslider0));
