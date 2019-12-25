@@ -3,7 +3,7 @@
 
 void InitParameter(uint32_t index, DISTRHO::Parameter &parameter)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters,);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumActives,);
 
     switch (index) {
     case StonePhaserDsp::p_bypass:

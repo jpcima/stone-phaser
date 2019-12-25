@@ -20,7 +20,7 @@ static_assert(DISTRHO_PLUGIN_NUM_OUTPUTS == StonePhaserDsp::NumOutputs,
 // -----------------------------------------------------------------------
 
 PhaserPlugin::PhaserPlugin()
-    : Plugin(StonePhaserDsp::NumParameters, 0, 0)
+    : Plugin(StonePhaserDsp::NumActives, 0, 0)
 {
     fDsp.init(getSampleRate());
 }
@@ -53,7 +53,7 @@ void PhaserPlugin::sampleRateChanged(double newSampleRate)
 */
 float PhaserPlugin::getParameterValue(uint32_t index) const
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters, 0);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumActives, 0);
 
     return fDsp.get_parameter(index);
 }
@@ -63,7 +63,7 @@ float PhaserPlugin::getParameterValue(uint32_t index) const
 */
 void PhaserPlugin::setParameterValue(uint32_t index, float value)
 {
-    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumParameters,);
+    DISTRHO_SAFE_ASSERT_RETURN(index < StonePhaserDsp::NumActives,);
 
     fDsp.set_parameter(index, value);
 }

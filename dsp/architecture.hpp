@@ -1,4 +1,4 @@
-{% block HeaderLicenseBlock %}
+{% block HeaderDescription %}
 //------------------------------------------------------------------------------
 // This file was generated using the Faust compiler (https://faust.grame.fr),
 // and the Faust post-processor (https://github.com/jpcima/faustpp).
@@ -40,10 +40,12 @@ public:
 
     enum { NumInputs = {{inputs}} };
     enum { NumOutputs = {{outputs}} };
-    enum { NumParameters = {{active|length}} };
+    enum { NumActives = {{active|length}} };
+    enum { NumPassives = {{passive|length}} };
+    enum { NumParameters = {{active|length + passive|length}} };
 
     enum Parameter {
-        {% for w in active %}p_{{cid(w.meta.symbol|default(w.label))}},
+        {% for w in active + passive %}p_{{cid(w.meta.symbol|default(w.label))}},
         {% endfor %}
     };
 
@@ -66,8 +68,10 @@ public:
     float get_parameter(unsigned index) const noexcept;
     void set_parameter(unsigned index, float value) noexcept;
 
-    {% for w in active %}
+    {% for w in active + passive %}
     float get_{{cid(w.meta.symbol|default(w.label))}}() const noexcept;
+    {% endfor %}
+    {% for w in active %}
     void set_{{cid(w.meta.symbol|default(w.label))}}(float value) noexcept;
     {% endfor %}
 
