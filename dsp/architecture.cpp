@@ -58,6 +58,7 @@ public:
     void addVerticalSlider(...) {}
     void addHorizontalSlider(...) {}
     void addVerticalBargraph(...) {}
+    void addHorizontalBargraph(...) {}
 };
 
 typedef {{Identifier}}::BasicDsp dsp;
