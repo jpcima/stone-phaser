@@ -7,7 +7,7 @@
 // Name: Stone Phaser Stereo
 // Author: Jean Pierre Cimalando
 // Copyright: 
-// License: CC0-1.0
+// License: CC0-1.0 or BSL-1.0
 // Version: 1.2
 //------------------------------------------------------------------------------
 
@@ -37,7 +37,9 @@ public:
 
     enum { NumInputs = 2 };
     enum { NumOutputs = 2 };
-    enum { NumParameters = 7 };
+    enum { NumActives = 7 };
+    enum { NumPassives = 1 };
+    enum { NumParameters = 8 };
 
     enum Parameter {
         p_bypass,
@@ -47,6 +49,7 @@ public:
         p_feedback_hpf_cutoff,
         p_mix,
         p_stereo_phase,
+        p_bypass_meter,
         
     };
 
@@ -71,24 +74,34 @@ public:
 
     
     float get_bypass() const noexcept;
-    void set_bypass(float value) noexcept;
     
     float get_color() const noexcept;
-    void set_color(float value) noexcept;
     
     float get_lfo_frequency() const noexcept;
-    void set_lfo_frequency(float value) noexcept;
     
     float get_feedback_depth() const noexcept;
-    void set_feedback_depth(float value) noexcept;
     
     float get_feedback_hpf_cutoff() const noexcept;
-    void set_feedback_hpf_cutoff(float value) noexcept;
     
     float get_mix() const noexcept;
-    void set_mix(float value) noexcept;
     
     float get_stereo_phase() const noexcept;
+    
+    float get_bypass_meter() const noexcept;
+    
+    
+    void set_bypass(float value) noexcept;
+    
+    void set_color(float value) noexcept;
+    
+    void set_lfo_frequency(float value) noexcept;
+    
+    void set_feedback_depth(float value) noexcept;
+    
+    void set_feedback_hpf_cutoff(float value) noexcept;
+    
+    void set_mix(float value) noexcept;
+    
     void set_stereo_phase(float value) noexcept;
     
 
