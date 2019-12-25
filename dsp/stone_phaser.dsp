@@ -23,6 +23,7 @@ dw = hslider("[5] Dry/wet mix [symbol:mix] [unit:%] [integer]", 50, 0, 100, 1) :
 w = sin(dw*(ma.PI/2)) : tsmooth;
 d = cos(dw*(ma.PI/2)) : tsmooth;
 ph = hslider("[6] Stereo phase [symbol:stereo_phase] [unit:deg] [integer]", 0., -180., +180., 1.) : /(360.) : +(1.) : tsmooth;
+bm = hbargraph("[7] Bypass meter [symbol:bypass_meter]", 0., 1.);
 
 //////////////////////////
 // All-pass filter unit //
@@ -78,7 +79,11 @@ lfoExponentialTriangle(roundness, slopeUp, slopeDown, pos, y1, y2) = val*(y2-y1)
 // Phaser //
 ////////////
 
-mono_phaser(x, lfo_pos) = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet) with {
+mono_phaser(x, lfo_pos, bypass_meter) =
+  attach(outputMix, 1. - fadeBypass : bypass_meter)
+with {
+  outputMix = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet);
+
   dry = x*d;
   wet = (x <: highpass1(33.0) : (+:a1:a2:a3:a4)~feedback)*w;
 
@@ -99,7 +104,11 @@ mono_phaser(x, lfo_pos) = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet) wit
   a4 = allpass1(modFreq);
 };
 
-stereo_phaser(x1, x2, lfo_pos) = mono_phaser(x1, lfo_pos), mono_phaser(x2, lfo_pos2) with {
+stereo_phaser(x1, x2, lfo_pos, bypass_meter) =
+  left_phaser, right_phaser
+with {
+  left_phaser = mono_phaser(x1, lfo_pos, bypass_meter);
+  right_phaser = mono_phaser(x2, lfo_pos2, _);
   lfo_pos2 = wrap(lfo_pos + ph);
   wrap(p) = p-float(int(p));
 };
@@ -167,6 +176,6 @@ expTri(roundness, slopeUp, slopeDown, pos) = lerp(tab, pos, ts) with {
 // Main //
 //////////
 
-process_mono(x) = mono_phaser(x, os.lf_sawpos(lf));
-process_stereo(x1, x2) = stereo_phaser(x1, x2, os.lf_sawpos(lf));
+process_mono(x) = mono_phaser(x, os.lf_sawpos(lf), bm);
+process_stereo(x1, x2) = stereo_phaser(x1, x2, os.lf_sawpos(lf), bm);
 process = process_mono;
