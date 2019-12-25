@@ -80,14 +80,14 @@ lfoExponentialTriangle(roundness, slopeUp, slopeDown, pos, y1, y2) = val*(y2-y1)
 ////////////
 
 mono_phaser(x, lfo_pos, bypass_meter) =
-  attach(outputMix, 1. - fadeBypass : bypass_meter)
+  attach(outputMix, fadeBypass : bypass_meter)
 with {
-  outputMix = (fadeBypass * x) + (1. - fadeBypass) * (dry + wet);
+  outputMix = (dry + wet, x) : (*(fadeBypass), *(1. - fadeBypass)) :> +;
 
   dry = x*d;
   wet = (x <: highpass1(33.0) : (+:a1:a2:a3:a4)~feedback)*w;
 
-  fadeBypass = bypass : tsmooth;
+  fadeBypass = (1 - bypass) : tsmooth;
 
   colorFb = ba.if(color, fb, 0.1*fb) : tsmooth;
   feedback = highpass1(fbHf) : *(colorFb);
