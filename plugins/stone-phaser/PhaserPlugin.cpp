@@ -73,17 +73,38 @@ void PhaserPlugin::setParameterValue(uint32_t index, float value)
 
 void PhaserPlugin::activate()
 {
-    fDsp.clear();
-}
+    StonePhaserDsp &dsp = fDsp;
 
+    dsp.clear();
+    fTrueBypass = dsp.get_bypass() > 0.5f;
+}
 
 void PhaserPlugin::run(const float **inputs, float **outputs, uint32_t frames)
 {
+    StonePhaserDsp &dsp = fDsp;
+
+    bool bypass = dsp.get_bypass() > 0.5f;
+    if (!bypass)
+        fTrueBypass = false;
+    else {
+        bool trueBypass = fTrueBypass;
+        if (!trueBypass && dsp.get_bypass_meter() < 1e-4) {
+            trueBypass = fTrueBypass = true;
+            dsp.clear();
+        }
+        if (trueBypass) {
+            for (unsigned i = 0; i < DISTRHO_PLUGIN_NUM_INPUTS; ++i)
+                std::memcpy(outputs[i], inputs[i], frames * sizeof(uint32_t));
+            return;
+        }
+    }
+
     WebCore::DenormalDisabler dd;
+
 #if DISTRHO_PLUGIN_NUM_INPUTS == 1
-    fDsp.process(inputs[0], outputs[0], frames);
+    dsp.process(inputs[0], outputs[0], frames);
 #elif DISTRHO_PLUGIN_NUM_INPUTS == 2
-    fDsp.process(inputs[0], inputs[1], outputs[0], outputs[1], frames);
+    dsp.process(inputs[0], inputs[1], outputs[0], outputs[1], frames);
 #endif
 }
 
