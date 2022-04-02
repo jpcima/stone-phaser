@@ -12,11 +12,6 @@
 #include <mutex>
 #include <cmath>
 
-#ifndef DISTRHO_UI_PATCH_INVERTED_BYPASS
-    #pragma message("Please patch DPF with `resources/patch/DPF-bypass.patch`")
-    #pragma message("The patch works around the value inversion issue (DISTRHO/DPF#150).")
-#endif
-
 static cairo_surface_u sImgBackground;
 static cairo_surface_u sImgSmallKnob;
 static cairo_surface_u sImgLargeKnob;

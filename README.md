@@ -43,21 +43,13 @@ cd stone-phaser
 git submodule update --init
 ```
 
-3. Patch DPF
-
-This recommended patch works around a current bug in LV2 graphical interfaces.
-
-```
-patch -d dpf -p 1 -i "`pwd`/resources/patch/DPF-bypass.patch"
-```
-
-4. Compile
+3. Compile
 
 ```
 make
 ```
 
-5. Install
+4. Install
 
 ```
 sudo make install  # to install in system directories, or
