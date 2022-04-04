@@ -1,7 +1,6 @@
 #include "PhaserUI.hpp"
 #include "PhaserShared.hpp"
 #include "Artwork.hpp"
-#include "Window.hpp"
 #include "ui/components/KnobSkin.hpp"
 #include "ui/components/SkinSlider.hpp"
 #include "ui/components/SkinToggleButton.hpp"
@@ -11,11 +10,6 @@
 #include "Cairo.hpp"
 #include <mutex>
 #include <cmath>
-
-#ifndef DISTRHO_UI_PATCH_INVERTED_BYPASS
-    #pragma message("Please patch DPF with `resources/patch/DPF-bypass.patch`")
-    #pragma message("The patch works around the value inversion issue (DISTRHO/DPF#150).")
-#endif
 
 static cairo_surface_u sImgBackground;
 static cairo_surface_u sImgSmallKnob;
@@ -98,7 +92,7 @@ PhaserUI::~PhaserUI()
 
 void PhaserUI::onDisplay()
 {
-    cairo_t *cr = getParentWindow().getGraphicsContext().cairo;
+    cairo_t *cr = static_cast<const CairoGraphicsContext &>(getGraphicsContext()).handle;
 
     cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
     cairo_paint(cr);
@@ -120,7 +114,7 @@ void PhaserUI::onDisplay()
     };
 
     auto widgetBounds =
-        [](Widget *w) -> Rect {
+        [](SubWidget *w) -> Rect {
             DISTRHO_SAFE_ASSERT_RETURN(w, Rect());
             return Rect(w->getAbsoluteX(), w->getAbsoluteY(), w->getWidth(), w->getHeight());
         };
