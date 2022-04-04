@@ -46,5 +46,5 @@ private:
     std::unique_ptr<SkinToggleButton *[]> fToggleButtonForParameter;
     std::unique_ptr<SkinIndicator *[]> fIndicatorForParameter;
     std::unique_ptr<FontEngine> fFontEngine;
-    std::list<std::unique_ptr<Widget>> fSubWidgets;
+    std::list<std::unique_ptr<SubWidget>> fSubWidgets;
 };
