@@ -1,0 +1,12 @@
+diff -ru dpf.orig/cmake/DPF-plugin.cmake dpf/cmake/DPF-plugin.cmake
+--- dpf.orig/cmake/DPF-plugin.cmake	2022-04-15 00:46:33.745861288 +0200
++++ dpf/cmake/DPF-plugin.cmake	2022-04-15 01:21:36.818881677 +0200
+@@ -382,7 +382,7 @@
+   target_compile_definitions(dgl-cairo-definitions INTERFACE "DGL_CAIRO" "HAVE_CAIRO" "HAVE_DGL")
+ 
+   target_include_directories(dgl-cairo PUBLIC ${CAIRO_INCLUDE_DIRS})
+-  if(MINGW)
++  if(WIN32)
+     target_link_libraries(dgl-cairo PRIVATE ${CAIRO_STATIC_LIBRARIES})
+   else()
+     target_link_libraries(dgl-cairo PRIVATE ${CAIRO_LIBRARIES})

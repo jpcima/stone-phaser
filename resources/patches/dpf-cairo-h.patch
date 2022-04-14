@@ -1,0 +1,48 @@
+diff -ru dpf.orig/dgl/Cairo.hpp dpf/dgl/Cairo.hpp
+--- dpf.orig/dgl/Cairo.hpp	2022-04-15 00:46:33.705854942 +0200
++++ dpf/dgl/Cairo.hpp	2022-04-15 00:46:57.959702185 +0200
+@@ -20,7 +20,7 @@
+ #include "ImageBase.hpp"
+ #include "ImageBaseWidgets.hpp"
+ 
+-#include <cairo/cairo.h>
++#include <cairo.h>
+ 
+ START_NAMESPACE_DGL
+ 
+diff -ru dpf.orig/dgl/src/pugl-custom/pugl_haiku.cpp dpf/dgl/src/pugl-custom/pugl_haiku.cpp
+--- dpf.orig/dgl/src/pugl-custom/pugl_haiku.cpp	2022-04-15 00:46:33.711855894 +0200
++++ dpf/dgl/src/pugl-custom/pugl_haiku.cpp	2022-04-15 00:47:04.784784812 +0200
+@@ -22,7 +22,7 @@
+ #include <interface/Window.h>
+ 
+ #ifdef PUGL_CAIRO
+-#include <cairo/cairo.h>
++#include <cairo.h>
+ typedef BView BViewType;
+ #endif
+ #ifdef PUGL_OPENGL
+diff -ru dpf.orig/dgl/src/pugl-custom/pugl_win.cpp dpf/dgl/src/pugl-custom/pugl_win.cpp
+--- dpf.orig/dgl/src/pugl-custom/pugl_win.cpp	2022-04-15 00:46:33.711855894 +0200
++++ dpf/dgl/src/pugl-custom/pugl_win.cpp	2022-04-15 00:47:04.784784812 +0200
+@@ -27,7 +27,7 @@
+ #include <windows.h>
+ #include <windowsx.h>
+ #ifdef PUGL_CAIRO
+-#include <cairo/cairo.h>
++#include <cairo.h>
+ #include <cairo/cairo-win32.h>
+ #endif
+ #ifdef PUGL_OPENGL
+diff -ru dpf.orig/dgl/src/pugl-custom/pugl_x11.c dpf/dgl/src/pugl-custom/pugl_x11.c
+--- dpf.orig/dgl/src/pugl-custom/pugl_x11.c	2022-04-15 00:46:33.711855894 +0200
++++ dpf/dgl/src/pugl-custom/pugl_x11.c	2022-04-15 00:47:04.784784812 +0200
+@@ -26,7 +26,7 @@
+ #include <string.h>
+ 
+ #ifdef PUGL_CAIRO
+-#include <cairo/cairo.h>
++#include <cairo.h>
+ #include <cairo/cairo-xlib.h>
+ #endif
+ #ifdef PUGL_OPENGL
