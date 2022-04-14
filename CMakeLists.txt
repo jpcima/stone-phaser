@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(stone-phaser)
+project(stone-phaser VERSION "0.1.3")
 
 add_subdirectory("dpf")
 
